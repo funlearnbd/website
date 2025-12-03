@@ -28,13 +28,10 @@
                     },
                     boxShadow: {
                         'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
-                        'md-light': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.02)',
-                        'lg-light': '0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04)',
                         'glow': '0 0 15px rgba(0, 106, 78, 0.3)',
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
-                        'float-delayed': 'float 6s ease-in-out 3s infinite',
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'bounce-fun': 'bounce-fun 1s infinite',
                         'fly': 'fly 4s ease-in-out infinite',
@@ -86,7 +83,6 @@
             background: white;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
             transition: transform 0.3s ease;
-            z-index: 20; /* Ensure phone is above background mascots */
         }
         
         .phone-mockup:hover {
@@ -178,14 +174,14 @@
         }
 
         .intro-logo {
-            width: 380px; /* Made bigger */
-            max-width: 90%;
+            width: 300px;
+            max-width: 80%;
             height: auto;
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease-out;
             z-index: 101;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
 
         .intro-logo.show {
@@ -225,7 +221,7 @@
                         <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-green transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <a href="#investors" class="text-sm font-semibold text-slate-600 hover:text-brand-green transition-colors relative group">
-                        Investors
+                        Mission & Vision
                         <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-green transition-all duration-300 group-hover:w-full"></span>
                     </a>
                 </div>
@@ -301,8 +297,6 @@
                             <img id="hero-mascot" src="mascot_waving.png" alt="Mascot" class="mascot-contain drop-shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer">
                         </div>
 
-                        <!-- Removed static mascots (Bunny, Doel, Peacock) from here as requested for a cleaner look -->
-                        
                         <!-- Phone Mockup with HTML Interface -->
                         <div class="phone-mockup w-[220px] md:w-[260px] h-[480px] md:h-[540px] bg-white z-10 mx-auto transform rotate-[-2deg] hover:rotate-0 transition-all duration-500">
                             <!-- Status Bar -->
@@ -506,6 +500,178 @@
             <p class="text-center text-sm text-slate-400 mt-16 italic fade-up delay-500">
                 <i class="fas fa-wifi mr-1"></i> Content is downloaded once and available offline.
             </p>
+        </div>
+    </section>
+
+    <!-- NEW Upcoming Projects Section (Enhanced 3D Design) -->
+    <section id="upcoming" class="py-24 bg-white relative overflow-hidden">
+        <!-- Background Decor -->
+        <div class="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] opacity-30"></div>
+        <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-brand-cream to-transparent"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <div class="inline-block px-4 py-1.5 bg-brand-orange/10 text-brand-orange rounded-full text-xs font-bold uppercase tracking-widest mb-4 border border-brand-orange/20 shadow-sm">
+                    Future Roadmap
+                </div>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">
+                    Growing With Your Child 🚀
+                </h2>
+                <p class="text-slate-500 max-w-2xl mx-auto text-lg">
+                    We are building a complete educational ecosystem. Here is what's coming next for primary education.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Class 1: The Beginning (Orange Theme) -->
+                <div class="relative bg-white rounded-3xl p-8 border-2 border-orange-100 border-b-[8px] border-b-orange-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
+                    <!-- 3D Floating Icon -->
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-orange-400 to-red-400 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">
+                        🎒
+                    </div>
+                    <!-- Background Blob -->
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-orange-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
+                    
+                    <div class="relative z-10 mt-4">
+                        <span class="bg-orange-100 text-orange-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-orange-200">Coming Soon</span>
+                        <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">Class 1</h3>
+                        <div class="h-1 w-12 bg-orange-400 rounded-full mb-4"></div>
+                        <p class="text-slate-500 font-medium leading-relaxed">
+                            Foundational literacy & numeracy modules designed to make the first step into school fun and engaging.
+                        </p>
+                        <div class="mt-6 flex gap-2">
+                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Math">🧮</span>
+                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Reading">📖</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class 2: Exploring (Blue Theme) -->
+                <div class="relative bg-white rounded-3xl p-8 border-2 border-blue-100 border-b-[8px] border-b-blue-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
+                    <!-- 3D Floating Icon -->
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">
+                        🔭
+                    </div>
+                    <!-- Background Blob -->
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
+                    
+                    <div class="relative z-10 mt-4">
+                        <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-blue-200">Coming Soon</span>
+                        <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">Class 2</h3>
+                        <div class="h-1 w-12 bg-blue-400 rounded-full mb-4"></div>
+                        <p class="text-slate-500 font-medium leading-relaxed">
+                            Expanding horizons with environmental studies and advanced language structures.
+                        </p>
+                        <div class="mt-6 flex gap-2">
+                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Science">🌱</span>
+                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Writing">✍️</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class 3: Discovering (Green Theme) -->
+                <div class="relative bg-white rounded-3xl p-8 border-2 border-green-100 border-b-[8px] border-b-green-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
+                    <!-- 3D Floating Icon -->
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">
+                        🌍
+                    </div>
+                    <!-- Background Blob -->
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-green-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
+                    
+                    <div class="relative z-10 mt-4">
+                        <span class="bg-green-100 text-green-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-green-200">Coming Soon</span>
+                        <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">Class 3</h3>
+                        <div class="h-1 w-12 bg-green-400 rounded-full mb-4"></div>
+                        <p class="text-slate-500 font-medium leading-relaxed">
+                            Introduction to broader scientific concepts, geography, and critical thinking puzzles.
+                        </p>
+                        <div class="mt-6 flex gap-2">
+                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Geography">🗺️</span>
+                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Logic">🧩</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class 4: Analyzing (Purple Theme) -->
+                <div class="relative bg-white rounded-3xl p-8 border-2 border-purple-100 border-b-[8px] border-b-purple-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
+                    <!-- 3D Floating Icon -->
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-purple-400 to-fuchsia-500 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">
+                        🔬
+                    </div>
+                    <!-- Background Blob -->
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-purple-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
+                    
+                    <div class="relative z-10 mt-4">
+                        <span class="bg-purple-100 text-purple-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-purple-200">Coming Soon</span>
+                        <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">Class 4</h3>
+                        <div class="h-1 w-12 bg-purple-400 rounded-full mb-4"></div>
+                        <p class="text-slate-500 font-medium leading-relaxed">
+                            Deep dives into grammar, complex arithmetic, and elementary science experiments.
+                        </p>
+                        <div class="mt-6 flex gap-2">
+                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Physics">⚛️</span>
+                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Tech">💻</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class 5: Mastering (Red Theme) -->
+                <div class="relative bg-white rounded-3xl p-8 border-2 border-rose-100 border-b-[8px] border-b-rose-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
+                    <!-- 3D Floating Icon -->
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-rose-400 to-pink-500 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">
+                        🎓
+                    </div>
+                    <!-- Background Blob -->
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-rose-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
+                    
+                    <div class="relative z-10 mt-4">
+                        <span class="bg-rose-100 text-rose-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-rose-200">Coming Soon</span>
+                        <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">Class 5</h3>
+                        <div class="h-1 w-12 bg-rose-400 rounded-full mb-4"></div>
+                        <p class="text-slate-500 font-medium leading-relaxed">
+                            Comprehensive preparatory system for secondary education and final primary exams.
+                        </p>
+                        <div class="mt-6 flex gap-2">
+                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Achievement">🏆</span>
+                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="History">📜</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class 6: Advanced (Cyan Theme) -->
+                <div class="relative bg-white rounded-3xl p-8 border-2 border-cyan-100 border-b-[8px] border-b-cyan-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
+                    <!-- 3D Floating Icon -->
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-cyan-400 to-teal-400 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">
+                        📐
+                    </div>
+                    <!-- Background Blob -->
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-cyan-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
+                    
+                    <div class="relative z-10 mt-4">
+                        <span class="bg-cyan-100 text-cyan-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-cyan-200">Coming Soon</span>
+                        <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">Class 6</h3>
+                        <div class="h-1 w-12 bg-cyan-400 rounded-full mb-4"></div>
+                        <p class="text-slate-500 font-medium leading-relaxed">
+                            Transitioning to secondary education with advanced algebra, geometry, and creative writing.
+                        </p>
+                        <div class="mt-6 flex gap-2">
+                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Geometry">📐</span>
+                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Literature">📚</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Placeholder for Future -->
+                <div class="relative bg-slate-50 rounded-3xl p-8 border-2 border-dashed border-slate-200 shadow-inner flex flex-col justify-center items-center text-center opacity-75">
+                    <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center text-3xl text-slate-300 mb-4">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-400">More to Come</h3>
+                    <p class="text-sm text-slate-400 mt-2">We are constantly innovating.</p>
+                </div>
+
+            </div>
         </div>
     </section>
 
