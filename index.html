@@ -174,14 +174,14 @@
         }
 
         .intro-logo {
-            width: 300px;
-            max-width: 80%;
+            width: 480px; /* Made bigger */
+            max-width: 90%;
             height: auto;
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease-out;
             z-index: 101;
-            margin-bottom: 40px;
+            margin-bottom: 200px; /* Increased from 150px to move it upper */
         }
 
         .intro-logo.show {
@@ -729,8 +729,8 @@
                     </div>
                     
                     <div class="relative fade-up delay-200">
-                        <!-- Happy Mascot -->
-                        <img src="mascot_happy.png" alt="Mascot Happy" loading="lazy" class="absolute -top-36 -right-10 w-64 h-64 object-cover z-20 hidden md:block mascot-float drop-shadow-2xl">
+                        <!-- Happy Mascot - Adjusted size (smaller) and position (higher) -->
+                        <img src="mascot_happy.png" alt="Mascot Happy" loading="lazy" class="absolute -top-40 -right-10 w-60 h-60 object-cover z-20 hidden md:block mascot-float drop-shadow-2xl">
 
                         <div class="grid grid-cols-2 gap-6">
                             <!-- Card 1: Updated to Individual Subscription -->
@@ -860,10 +860,10 @@
 
             // Using ONLY the generic filenames, consistent with request
             const mascots = [
-                { src: 'mascot_waving.png', style: 'bottom: 10%; left: 20%; width: 22%; max-width: 160px;' }, // Tiger
-                { src: 'mascot_happy.png', style: 'bottom: 10%; left: 35%; width: 22%; max-width: 160px;' }, // Bunny - Same visual size
-                { src: 'mascot_jumping.png', style: 'bottom: 10%; left: 50%; width: 22%; max-width: 160px;' }, // Doel
-                { src: 'mascot_talking.png', style: 'bottom: 10%; left: 65%; width: 22%; max-width: 160px;' } // Peacock
+                { src: 'mascot_waving.png', style: 'bottom: 10%; left: 10%; width: 28%; max-width: 200px;' }, // Tiger - Moved further left
+                { src: 'mascot_happy.png', style: 'bottom: 10%; left: 25%; width: 45%; max-width: 320px;' }, // Bunny - Moved left
+                { src: 'mascot_jumping.png', style: 'bottom: 10%; left: 60%; width: 28%; max-width: 200px;' }, // Doel - Moved right
+                { src: 'mascot_talking.png', style: 'bottom: 10%; left: 80%; width: 28%; max-width: 200px;' } // Peacock - Moved further right
             ];
 
             // 1. Inject Mascots
@@ -881,6 +881,19 @@
                     }, 600);
                 }, 100 + (index * 400));
             });
+
+            // Inject Bangladesh Map
+            const mapImg = document.createElement('img');
+            mapImg.src = 'bangladesh.png';
+            mapImg.className = 'intro-mascot drop-shadow-2xl';
+            // Center the map between the mascots
+            mapImg.style.cssText = 'bottom: 15%; left: 50%; transform: translateX(-50%); width: 36%; max-width: 300px;';
+            introContainer.appendChild(mapImg);
+            setTimeout(() => {
+                mapImg.classList.add('show');
+                // No animation for the map
+            }, 900); // Delay after mascots
+
 
             // 2. Show Logo & Play Audio
             setTimeout(() => {
