@@ -670,7 +670,7 @@
                     msg.volume = 1;
                     msg.pitch = pitch;
                     msg.rate = rate;
-                    msg.lang = 'en-US';
+                    msg.lang = 'en-US'; // Keeping en-US often pronounces generic phrases okay, or it might fall back to device default
 
                     // Try to find a nice female voice
                     const voices = synth.getVoices();
@@ -685,8 +685,8 @@
                 }
 
                 // Sequence of "Emotions"
-                // 1. Excited Greeting
-                speakChunk("Hi friends!", 1.4, 1.1);
+                // 1. Warm Greeting (Updated)
+                speakChunk("Assalamu Alaikum!", 1.2, 0.9);
                 
                 // 2. Warm Welcome
                 speakChunk("Welcome to Fun Learn B D!", 1.1, 0.9);
