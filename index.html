@@ -15,12 +15,12 @@
                 extend: {
                     colors: {
                         brand: {
-                            green: '#006a4e',  /* Bangladesh Green */
-                            red: '#f42a41',    /* Bangladesh Red */
-                            orange: '#FF9933', /* Tiger Orange */
+                            green: '#006a4e',
+                            red: '#f42a41',
+                            orange: '#FF9933',
                             yellow: '#FFC107',
-                            cream: '#FDFCF7',  /* Slightly warmer off-white */
-                            dark: '#0f172a'    /* Deeper dark blue for professionalism */
+                            cream: '#FDFCF7',
+                            dark: '#0f172a'
                         }
                     },
                     fontFamily: {
@@ -64,17 +64,36 @@
         }
 
         .phone-mockup {
-            border-radius: 2.5rem;
-            border: 8px solid #1e293b;
+            /* Realistic Phone Bezel */
+            border-radius: 3rem;
+            border: 12px solid #1e293b;
             overflow: hidden;
             position: relative;
             background: white;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
-            transition: transform 0.3s ease;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: perspective(1000px) rotateY(-3deg) rotateX(2deg);
+        }
+        
+        /* Camera Notch */
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 24px;
+            background: #1e293b;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            z-index: 20;
         }
         
         .phone-mockup:hover {
-            transform: translateY(-5px);
+            transform: perspective(1000px) rotateY(2deg) rotateX(2deg) translateY(-10px);
         }
 
         /* Enhanced Animations */
@@ -96,6 +115,17 @@
             animation: float 5s ease-in-out infinite;
         }
 
+        /* New Phone Tilting Animation */
+        @keyframes phone-rock {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+        
+        .phone-animate {
+            animation: phone-rock 6s ease-in-out infinite;
+            transform-origin: center center;
+        }
+
         @keyframes pulse-soft {
             0% { box-shadow: 0 0 0 0 rgba(0, 106, 78, 0.4); }
             70% { box-shadow: 0 0 0 10px rgba(0, 106, 78, 0); }
@@ -106,7 +136,6 @@
             animation: pulse-soft 2s infinite;
         }
 
-        /* Card Hover Effects */
         .hover-lift {
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
         }
@@ -116,7 +145,6 @@
             border-color: rgba(0, 106, 78, 0.2);
         }
 
-        /* Gradient Text */
         .text-gradient {
             background: linear-gradient(135deg, #006a4e 0%, #0d9488 100%);
             -webkit-background-clip: text;
@@ -124,7 +152,6 @@
             background-clip: text;
         }
 
-        /* Staggered Animation Delays */
         .delay-100 { animation-delay: 100ms; }
         .delay-200 { animation-delay: 200ms; }
         .delay-300 { animation-delay: 300ms; }
@@ -141,7 +168,7 @@
     <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-slate-100 shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center cursor-pointer group">
+                <div class="flex items-center cursor-pointer group" onclick="window.scrollTo(0,0)">
                     <img src="logo.png" alt="Logo" class="h-16 w-auto rounded-lg shadow-sm transform group-hover:scale-105 transition-transform duration-300">
                 </div>
                 
@@ -169,11 +196,9 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with "Live" Mascot Animation -->
     <header class="relative overflow-hidden bg-brand-cream border-b border-orange-50/50">
         <div class="absolute inset-0 bg-pattern pointer-events-none text-brand-green"></div>
-        
-        <!-- Decorative background gradient orb -->
         <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-b from-green-50 to-transparent rounded-full blur-3xl opacity-60 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 relative z-10">
@@ -223,45 +248,108 @@
                     </div>
                 </div>
                 
-                <!-- Visual / Mockup with Waving Mascot -->
+                <!-- Visual / Mockup with Cycling Mascot Animation -->
                 <div class="relative fade-up delay-200">
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-brand-orange/20 to-brand-green/20 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
                     
                     <div class="relative flex justify-center items-center">
-                        <img src="mascot_waving.png" alt="Mascot Waving" class="absolute -right-12 -bottom-8 w-56 z-20 drop-shadow-2xl hidden md:block mascot-float hover:scale-105 transition-transform duration-500 cursor-pointer">
+                        <!-- ID added for animation script -->
+                        <!-- UPDATED: Removed 'hidden md:block', added responsive sizing (w-36 for mobile, w-56 for desktop) and positioning -->
+                        <img id="hero-mascot" src="mascot_waving.png" alt="Mascot" class="absolute -right-4 -bottom-4 w-36 md:-right-12 md:-bottom-8 md:w-56 z-20 drop-shadow-2xl block mascot-float cursor-pointer transition-opacity duration-300">
                         
-                        <div class="phone-mockup w-[280px] h-[580px] bg-white z-10 mx-auto transform rotate-[-2deg] hover:rotate-0 transition-all duration-500">
-                            <div class="h-7 w-full bg-slate-100 flex items-center justify-between px-5 text-[10px] text-slate-500 border-b border-slate-200">
-                                <span class="font-bold">9:41</span>
-                                <div class="flex gap-1.5">
+                        <!-- Updated Phone Mockup with Rocking Animation & Specific Content -->
+                        <div class="phone-mockup w-[300px] h-[600px] bg-white z-10 mx-auto phone-animate">
+                            <!-- Status Bar -->
+                            <div class="h-8 w-full bg-white flex items-end justify-between px-6 pb-1 text-[10px] font-medium text-slate-900 z-10 relative">
+                                <span>9:41</span>
+                                <div class="flex gap-1.5 items-center">
                                     <i class="fas fa-signal"></i>
                                     <i class="fas fa-wifi"></i>
-                                    <i class="fas fa-battery-full"></i>
+                                    <i class="fas fa-battery-full text-xs"></i>
                                 </div>
                             </div>
-                            <div class="p-5 h-full bg-brand-cream overflow-hidden">
-                                <div class="flex justify-between items-center mb-8">
-                                    <div class="w-10 h-10 bg-brand-orange/20 rounded-full flex items-center justify-center text-brand-orange">
-                                        <i class="fas fa-bars"></i>
-                                    </div>
-                                    <div class="w-28 h-5 bg-slate-200/50 rounded-full"></div>
-                                </div>
-                                <div class="space-y-5">
-                                    <div class="h-36 bg-white rounded-3xl shadow-sm border border-slate-100 p-4 flex items-center justify-center relative overflow-hidden group cursor-pointer">
-                                        <div class="absolute inset-0 bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                        <div class="text-center relative z-10">
-                                            <span class="text-5xl block mb-2 transform group-hover:scale-110 transition-transform">🅰️</span>
-                                            <div class="mt-2 text-xs font-bold text-slate-400 uppercase tracking-widest">English</div>
+                            
+                            <!-- App Content -->
+                            <div class="h-full bg-slate-50 overflow-hidden relative flex flex-col">
+                                <!-- Top Header Section -->
+                                <div class="px-5 pt-4 pb-6 bg-white rounded-b-[2rem] shadow-sm relative z-10">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <div>
+                                            <h3 class="text-lg font-extrabold text-slate-800 leading-tight">Hi, Friend! 👋</h3>
+                                            <p class="text-xs text-slate-500 font-medium">Ready to play?</p>
+                                        </div>
+                                        <div class="w-10 h-10 bg-brand-cream rounded-full flex items-center justify-center text-brand-orange shadow-sm border border-orange-100">
+                                            <i class="fas fa-star"></i>
                                         </div>
                                     </div>
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <div class="h-28 bg-brand-green/10 rounded-2xl border border-green-100"></div>
-                                        <div class="h-28 bg-brand-red/10 rounded-2xl border border-red-100"></div>
+                                    
+                                    <!-- Daily Challenge / Hero Card -->
+                                    <div class="bg-gradient-to-r from-brand-orange to-orange-400 p-4 rounded-3xl shadow-lg text-white mb-6 relative overflow-hidden">
+                                        <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3"></div>
+                                        
+                                        <!-- Added Mascot Inside Phone Screen -->
+                                        <img src="mascot_happy.png" alt="Tiny Mascot" class="absolute -bottom-2 right-2 w-16 h-16 object-contain transform rotate-[-10deg]">
+                                        
+                                        <h4 class="text-base font-bold mb-1 relative z-10">Daily Challenge 🚀</h4>
+                                        <p class="text-xs opacity-90 relative z-10 mb-3 max-w-[60%]">Learn 5 new animals today!</p>
+                                        <button class="bg-white text-brand-orange text-xs font-bold px-4 py-2 rounded-full shadow-sm relative z-10">
+                                            Start Now
+                                        </button>
                                     </div>
-                                    <div class="h-24 bg-slate-900 rounded-2xl flex items-center justify-center text-white text-xs font-bold shadow-lg mt-4">
-                                        Unlock Full Access
+
+                                    <!-- App Menu Grid Preview -->
+                                    <div class="flex-1">
+                                        <!-- English -->
+                                        <div class="bg-white p-3 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.05)] border-2 border-slate-50 flex flex-col items-center justify-center text-center aspect-square group active:translate-y-1 active:shadow-none transition-all">
+                                            <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center text-xl mb-2 group-hover:scale-110 transition-transform">
+                                                🅰️
+                                            </div>
+                                             <span class="text-[10px] font-bold text-slate-600">English</span>
+                                        </div>
+                                        <!-- Bangla -->
+                                        <div class="bg-white p-3 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.05)] border-2 border-slate-50 flex flex-col items-center justify-center text-center aspect-square group active:translate-y-1 active:shadow-none transition-all">
+                                            <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-xl mb-2 font-bold text-brand-green group-hover:scale-110 transition-transform">
+                                                অ
+                                            </div>
+                                             <span class="text-[10px] font-bold text-slate-600">Bangla</span>
+                                        </div>
+                                        <!-- Arabic -->
+                                        <div class="bg-white p-3 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.05)] border-2 border-slate-50 flex flex-col items-center justify-center text-center aspect-square group active:translate-y-1 active:shadow-none transition-all">
+                                            <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center text-xl mb-2 font-bold text-amber-500 group-hover:scale-110 transition-transform">
+‎                                                ا
+                                            </div>
+                                             <span class="text-[10px] font-bold text-slate-600">Arabic</span>
+                                        </div>
+                                        <!-- Brain Booster -->
+                                        <div class="bg-white p-3 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.05)] border-2 border-slate-50 flex flex-col items-center justify-center text-center aspect-square group active:translate-y-1 active:shadow-none transition-all">
+                                            <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-xl mb-2 text-purple-500 group-hover:scale-110 transition-transform">
+                                                <i class="fas fa-brain"></i>
+                                            </div>
+                                             <span class="text-[10px] font-bold text-slate-600">Brain Booster</span>
+                                        </div>
                                     </div>
                                 </div>
+                                
+                                <!-- Bottom Nav Bar (Fake) -->
+                                <div class="h-20 bg-white border-t border-slate-50 flex items-start pt-3 justify-around px-4 relative z-10 pb-6">
+                                    <div class="flex flex-col items-center text-brand-green gap-1">
+                                        <i class="fas fa-home text-lg"></i>
+                                        <span class="text-[9px] font-bold">Home</span>
+                                    </div>
+                                    <div class="flex flex-col items-center text-slate-300 gap-1">
+                                        <i class="fas fa-book text-lg"></i>
+                                        <span class="text-[9px] font-bold">Learn</span>
+                                    </div>
+                                    <div class="flex flex-col items-center text-slate-300 gap-1">
+                                        <i class="fas fa-gamepad text-lg"></i>
+                                        <span class="text-[9px] font-bold">Play</span>
+                                    </div>
+                                    <div class="flex flex-col items-center text-slate-300 gap-1">
+                                        <i class="fas fa-user text-lg"></i>
+                                        <span class="text-[9px] font-bold">Profile</span>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -270,8 +358,8 @@
         </div>
     </header>
 
-    <!-- Value Proposition with Talking Mascot -->
-    <section id="features" class="py-24 bg-white relative overflow-hidden">
+    <!-- Value Proposition -->
+    <section id="features" class="py-24 bg-white relative overflow-hidden" onmouseenter="changeMascot('happy')" onmouseleave="changeMascot('talking')">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col md:flex-row items-center gap-12 mb-20">
                 <div class="md:w-2/3 fade-up">
@@ -279,8 +367,8 @@
                     <p class="text-slate-500 leading-relaxed text-lg border-l-4 border-brand-orange pl-6">We prioritize education quality, child safety, and cultural relevance above all else. Our content is crafted by experts.</p>
                 </div>
                 <div class="md:w-1/3 flex justify-center fade-up delay-100">
-                    <!-- Talking mascot placed here to emphasize features/language -->
-                    <img src="mascot_talking.png" alt="Mascot Talking" class="w-40 h-40 object-cover rounded-full border-8 border-slate-50 shadow-2xl hover:rotate-3 transition-transform duration-300">
+                    <!-- Dynamic ID for interaction -->
+                    <img id="feature-mascot" src="mascot_talking.png" alt="Mascot" loading="lazy" class="w-40 h-40 object-cover rounded-full border-8 border-slate-50 shadow-2xl hover:rotate-3 transition-transform duration-300">
                 </div>
             </div>
 
@@ -318,10 +406,10 @@
         </div>
     </section>
 
-    <!-- Curriculum Preview with Jumping Mascot -->
-    <section id="curriculum" class="py-24 bg-brand-cream relative border-t border-orange-50/50">
-        <!-- Jumping mascot decoration -->
-        <img src="mascot_jumping.png" alt="Mascot Jumping" class="absolute top-12 right-6 md:right-24 w-32 md:w-48 opacity-90 mascot-float transform rotate-6 z-0 hidden md:block drop-shadow-xl hover:rotate-12 transition-transform duration-300">
+    <!-- Curriculum Preview with FIXED Layout -->
+    <section id="curriculum" class="py-24 bg-brand-cream relative border-t border-orange-50/50 overflow-hidden">
+        <!-- FIXED: Mascot moved behind text, further right, and reduced opacity to not block buttons -->
+        <img src="mascot_jumping.png" alt="Mascot Jumping" loading="lazy" class="absolute top-12 -right-4 md:right-10 w-32 md:w-48 opacity-60 mascot-float transform rotate-6 z-0 hidden md:block drop-shadow-xl pointer-events-none">
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 fade-up">
@@ -331,7 +419,8 @@
                         16+ Modules covering everything from basic literacy to logic and cognitive skills. Explore the learning journey.
                     </p>
                 </div>
-                <button class="text-brand-green font-bold hover:text-green-700 transition-colors flex items-center gap-2 group text-sm uppercase tracking-wide">
+                <!-- Button is now safely clickable due to z-index and spacing -->
+                <button class="relative z-20 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-lg text-brand-green font-bold hover:text-green-700 hover:bg-white transition-all flex items-center gap-2 group text-sm uppercase tracking-wide border border-green-100 shadow-sm">
                     View Full Syllabus <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                 </button>
             </div>
@@ -350,26 +439,21 @@
                     <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Arabic</span>
                 </div>
                 
-
-                <!-- English Numbers -->
                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-200">
                     <span class="text-4xl mb-3 text-blue-600 font-extrabold font-display">123</span>
                     <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">English #</span>
                 </div>
 
-                <!-- Bangla Numbers -->
                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-200">
                     <span class="text-4xl mb-3 text-brand-green font-extrabold font-display">১২৩</span>
                     <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Bangla #</span>
                 </div>
 
-                <!-- Arabic Numbers -->
                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-200">
                     <span class="text-4xl mb-3 text-amber-600 font-extrabold font-display">١٢٣</span>
                     <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Arabic #</span>
                 </div>
                 
-
                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-300">
                     <i class="fas fa-shapes text-4xl mb-3 text-purple-600"></i>
                     <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Shapes</span>
@@ -398,14 +482,10 @@
                     <i class="fas fa-person-running text-4xl mb-3 text-indigo-600"></i>
                     <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Actions</span>
                 </div>
-                
-
                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
                     <i class="fas fa-arrows-left-right text-4xl mb-3 text-cyan-600"></i>
                     <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Opposites</span>
                 </div>
-
-                <!-- New Countries & Flags Module -->
                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
                     <i class="fas fa-flag text-4xl mb-3 text-teal-600"></i>
                     <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Countries</span>
@@ -418,7 +498,7 @@
         </div>
     </section>
 
-    <!-- Investor / Mission Section with Happy Mascot -->
+    <!-- Investor / Mission Section -->
     <section id="investors" class="py-24 bg-white border-t border-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-brand-dark rounded-[3rem] p-10 md:p-20 text-white relative overflow-hidden shadow-2xl">
@@ -440,10 +520,8 @@
                         </div>
                     </div>
                     
-                    <!-- Stats Grid with Happy Mascot integrated -->
                     <div class="relative fade-up delay-200">
-                        <!-- Happy Mascot celebrating growth -->
-                        <img src="mascot_happy.png" alt="Mascot Happy" class="absolute -top-16 -right-8 w-36 h-36 object-cover rounded-full border-[6px] border-brand-dark shadow-2xl z-20 hidden md:block mascot-float">
+                        <img src="mascot_happy.png" alt="Mascot Happy" loading="lazy" class="absolute -top-16 -right-8 w-36 h-36 object-cover rounded-full border-[6px] border-brand-dark shadow-2xl z-20 hidden md:block mascot-float">
 
                         <div class="grid grid-cols-2 gap-6">
                             <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
@@ -475,8 +553,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                 <div class="col-span-1 md:col-span-1">
                     <div class="mb-6">
-                         <!-- Updated to Logo only (Bigger) as requested -->
-                        <img src="logo.png" alt="FunLearnBD Logo" class="h-20 w-auto rounded-lg shadow-sm transform hover:scale-105 transition-transform duration-300">
+                        <img src="logo.png" alt="FunLearnBD Logo" loading="lazy" class="h-20 w-auto rounded-lg shadow-sm transform hover:scale-105 transition-transform duration-300">
                     </div>
                     <p class="text-sm text-slate-500 leading-relaxed">
                         Making learning accessible, fun, and culturally relevant for every child in Bangladesh.
@@ -517,6 +594,47 @@
             </div>
         </div>
     </footer>
+
+    <!-- Script for Live Mascot Cycle -->
+    <script>
+        // Hero Mascot Cycle Script
+        const poses = [
+            'mascot_waving.png',
+            'mascot_talking.png',
+            'mascot_idle.png'
+        ];
+        let currentPoseIndex = 0;
+        const heroMascot = document.getElementById('hero-mascot');
+
+        // Cycle pose every 3 seconds to make it feel "live"
+        setInterval(() => {
+            if (heroMascot) {
+                // Fade out
+                heroMascot.style.opacity = '0.8'; 
+                
+                setTimeout(() => {
+                    // Change src
+                    currentPoseIndex = (currentPoseIndex + 1) % poses.length;
+                    heroMascot.src = poses[currentPoseIndex];
+                    // Fade in
+                    heroMascot.style.opacity = '1';
+                }, 200);
+            }
+        }, 3000);
+
+        // Feature Mascot Interaction
+        function changeMascot(pose) {
+            const mascot = document.getElementById('feature-mascot');
+            if (mascot) {
+                const filename = pose === 'happy' ? 'mascot_happy.png' : 'mascot_talking.png';
+                mascot.style.transform = 'scale(0.9) rotate(-5deg)';
+                setTimeout(() => {
+                    mascot.src = filename;
+                    mascot.style.transform = 'scale(1) rotate(0deg)';
+                }, 200);
+            }
+        }
+    </script>
 
 </body>
 </html>
