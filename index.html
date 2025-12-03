@@ -28,6 +28,8 @@
                     },
                     boxShadow: {
                         'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                        'md-light': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.02)',
+                        'lg-light': '0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04)',
                         'glow': '0 0 15px rgba(0, 106, 78, 0.3)',
                     },
                     animation: {
@@ -294,25 +296,12 @@
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] lg:w-[500px] h-[300px] lg:h-[500px] bg-gradient-to-tr from-brand-orange/20 to-brand-green/20 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
                     
                     <div class="relative flex justify-center items-center w-full">
-                        <!-- 1. Tiger (Waving) - Bottom Right -->
+                        <!-- Cycling Mascot (Bottom Right) -->
                         <div class="absolute -right-4 bottom-0 md:-right-8 md:bottom-4 z-20 mascot-float w-36 h-36 md:w-48 md:h-48">
-                            <img id="hero-mascot" src="mascot_waving.png" alt="Mascot Waving" class="mascot-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500 cursor-pointer">
+                            <img id="hero-mascot" src="mascot_waving.png" alt="Mascot" class="mascot-contain drop-shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer">
                         </div>
 
-                        <!-- 2. Bunny (Happy) - Bottom Left -->
-                        <div class="absolute -left-4 bottom-0 md:-left-8 md:bottom-4 z-20 mascot-float w-36 h-36 md:w-44 md:h-44 animation-delay-200">
-                            <img src="mascot_happy.png" alt="Mascot Happy" class="mascot-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500 cursor-pointer">
-                        </div>
-
-                        <!-- 3. Doel (Jumping/Flying) - Top Right Peeking -->
-                        <div class="absolute -right-0 top-10 md:-right-4 md:top-20 z-10 w-24 h-24 md:w-32 md:h-32 animate-bounce-fun">
-                            <img src="mascot_jumping.png" alt="Mascot Jumping" class="mascot-contain drop-shadow-xl transform rotate-12">
-                        </div>
-
-                        <!-- 4. Peacock (Talking) - Top Left Peeking -->
-                        <div class="absolute -left-0 top-10 md:-left-4 md:top-20 z-10 w-28 h-28 md:w-36 md:h-36 animate-float-delayed">
-                            <img src="mascot_talking.png" alt="Mascot Talking" class="mascot-contain drop-shadow-xl transform -rotate-6">
-                        </div>
+                        <!-- Removed static mascots (Bunny, Doel, Peacock) from here as requested for a cleaner look -->
                         
                         <!-- Phone Mockup with HTML Interface -->
                         <div class="phone-mockup w-[220px] md:w-[260px] h-[480px] md:h-[540px] bg-white z-10 mx-auto transform rotate-[-2deg] hover:rotate-0 transition-all duration-500">
@@ -728,21 +717,33 @@
         });
 
         // Hero Mascot Cycle Script
-        const heroPoses = ['mascot_waving.png', 'mascot_talking.png', 'mascot_idle.png'];
+        // Cycle: Tiger -> Doel -> Bunny -> Peacock
+        const heroPoses = [
+            'mascot_waving.png',   // Tiger
+            'mascot_jumping.png',  // Doel
+            'mascot_happy.png',    // Bunny
+            'mascot_talking.png'   // Peacock
+        ];
         let currentPoseIndex = 0;
         const heroMascot = document.getElementById('hero-mascot');
 
         setInterval(() => {
             if (heroMascot) {
-                heroMascot.style.opacity = '0.8'; 
+                // Fade out
+                heroMascot.style.opacity = '0'; 
+                heroMascot.style.transform = 'scale(0.9)';
                 
                 setTimeout(() => {
+                    // Change Image
                     currentPoseIndex = (currentPoseIndex + 1) % heroPoses.length;
                     heroMascot.src = heroPoses[currentPoseIndex];
+                    
+                    // Fade in
                     heroMascot.style.opacity = '1';
-                }, 200);
+                    heroMascot.style.transform = 'scale(1)';
+                }, 500); // Wait for fade out to complete
             }
-        }, 3000);
+        }, 4000); // Change every 4 seconds
 
         function changeMascot(pose) {
             const mascot = document.getElementById('feature-mascot');
