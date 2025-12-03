@@ -35,6 +35,18 @@
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-fun': 'bounce-fun 1s infinite',
+                        'fly': 'fly 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'bounce-fun': {
+                            '0%, 100%': { transform: 'translateY(-5%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
+                        },
+                        'fly': {
+                            '0%, 100%': { transform: 'translateY(0) rotate(6deg)' },
+                            '50%': { transform: 'translateY(-20px) rotate(0deg)' },
+                        }
                     }
                 }
             }
@@ -42,6 +54,9 @@
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Updated Manifest to use PNG -->
+    <link rel="manifest" href='data:application/manifest+json;base64,eyJuYW1lIjoiRnVuTGVhcm5CRCIs"short_name":"FunLearn","start_url":".","display":"standalone","background_color":"#FFFDF5","theme_color":"#006a4e","icons":[{"src":"logo.png","sizes":"192x192","type":"image/png"}]}'>
 
     <style>
         body {
@@ -64,7 +79,6 @@
         }
 
         .phone-mockup {
-            /* Realistic Phone Bezel */
             border-radius: 3rem;
             border: 12px solid #1e293b;
             overflow: hidden;
@@ -77,7 +91,6 @@
             transform: perspective(1000px) rotateY(-3deg) rotateX(2deg);
         }
         
-        /* Camera Notch */
         .phone-mockup::before {
             content: '';
             position: absolute;
@@ -96,7 +109,6 @@
             transform: perspective(1000px) rotateY(2deg) rotateX(2deg) translateY(-10px);
         }
 
-        /* Enhanced Animations */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -115,7 +127,6 @@
             animation: float 5s ease-in-out infinite;
         }
 
-        /* New Phone Tilting Animation */
         @keyframes phone-rock {
             0%, 100% { transform: translateY(0) rotate(-3deg); }
             50% { transform: translateY(-15px) rotate(3deg); }
@@ -160,9 +171,63 @@
 
         .text-logo-green { color: var(--tw-colors-brand-green); }
         .text-logo-red { color: var(--tw-colors-brand-red); }
+
+        /* Intro Animation Styles */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #FFFDF5;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+        }
+
+        .intro-mascot {
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.5) translateY(100px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .intro-mascot.show {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Intro Logo Style */
+        .intro-logo {
+            width: 450px;
+            height: auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
+            z-index: 101;
+            margin-bottom: 250px;
+        }
+
+        .intro-logo.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
-<body class="antialiased flex flex-col min-h-screen">
+<body class="antialiased flex flex-col min-h-screen overflow-hidden" id="main-body">
+
+    <!-- INTRO OVERLAY -->
+    <div id="intro-overlay">
+        <!-- Replaced text with Logo -->
+        <img id="intro-logo" src="logo.png" alt="FunLearnBD Logo" class="intro-logo">
+        
+        <div id="intro-mascots-container" class="absolute w-full h-full flex justify-center items-center pointer-events-none">
+            <!-- Mascots will be injected here via JS -->
+        </div>
+    </div>
 
     <!-- Navbar -->
     <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-slate-100 shadow-sm transition-all duration-300">
@@ -196,7 +261,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section with "Live" Mascot Animation -->
+    <!-- Hero Section -->
     <header class="relative overflow-hidden bg-brand-cream border-b border-orange-50/50">
         <div class="absolute inset-0 bg-pattern pointer-events-none text-brand-green"></div>
         <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-b from-green-50 to-transparent rounded-full blur-3xl opacity-60 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
@@ -248,16 +313,16 @@
                     </div>
                 </div>
                 
-                <!-- Visual / Mockup with Cycling Mascot Animation -->
+                <!-- Visual / Mockup with Hero Tiger (Fixed Size) -->
                 <div class="relative fade-up delay-200">
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-brand-orange/20 to-brand-green/20 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
                     
                     <div class="relative flex justify-center items-center">
-                        <!-- ID added for animation script -->
-                        <!-- UPDATED: Removed 'hidden md:block', added responsive sizing (w-36 for mobile, w-56 for desktop) and positioning -->
-                        <img id="hero-mascot" src="mascot_waving.png" alt="Mascot" class="absolute -right-4 -bottom-4 w-36 md:-right-12 md:-bottom-8 md:w-56 z-20 drop-shadow-2xl block mascot-float cursor-pointer transition-opacity duration-300">
+                        <!-- Constrained Width & Height container for Hero Mascot to prevent layout shifts -->
+                        <div class="absolute -right-4 -bottom-4 md:-right-12 md:-bottom-8 z-20 w-36 h-48 md:w-56 md:h-72">
+                            <img id="hero-mascot" src="mascot_tiger_06_waving.png" alt="Mascot" loading="lazy" class="w-full h-full object-contain object-bottom drop-shadow-2xl transition-opacity duration-300">
+                        </div>
                         
-                        <!-- Updated Phone Mockup with Rocking Animation & Specific Content -->
                         <div class="phone-mockup w-[300px] h-[600px] bg-white z-10 mx-auto phone-animate">
                             <!-- Status Bar -->
                             <div class="h-8 w-full bg-white flex items-end justify-between px-6 pb-1 text-[10px] font-medium text-slate-900 z-10 relative">
@@ -271,7 +336,6 @@
                             
                             <!-- App Content -->
                             <div class="h-full bg-slate-50 overflow-hidden relative flex flex-col">
-                                <!-- Top Header Section -->
                                 <div class="px-5 pt-4 pb-6 bg-white rounded-b-[2rem] shadow-sm relative z-10">
                                     <div class="flex justify-between items-center mb-4">
                                         <div>
@@ -287,8 +351,8 @@
                                     <div class="bg-gradient-to-r from-brand-orange to-orange-400 p-4 rounded-3xl shadow-lg text-white mb-6 relative overflow-hidden">
                                         <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3"></div>
                                         
-                                        <!-- Added Mascot Inside Phone Screen -->
-                                        <img src="mascot_happy.png" alt="Tiny Mascot" class="absolute -bottom-2 right-2 w-16 h-16 object-contain transform rotate-[-10deg]">
+                                        <!-- Happy Tiger inside phone -->
+                                        <img src="mascot_tiger_03_happy.png" alt="Tiny Mascot" class="absolute -bottom-2 right-2 w-16 h-16 object-contain transform rotate-[-10deg]">
                                         
                                         <h4 class="text-base font-bold mb-1 relative z-10">Daily Challenge 🚀</h4>
                                         <p class="text-xs opacity-90 relative z-10 mb-3 max-w-[60%]">Learn 5 new animals today!</p>
@@ -299,57 +363,34 @@
 
                                     <!-- App Menu Grid Preview -->
                                     <div class="flex-1">
-                                        <!-- English -->
-                                        <div class="bg-white p-3 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.05)] border-2 border-slate-50 flex flex-col items-center justify-center text-center aspect-square group active:translate-y-1 active:shadow-none transition-all">
-                                            <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center text-xl mb-2 group-hover:scale-110 transition-transform">
-                                                🅰️
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div class="bg-white p-3 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.05)] border-2 border-slate-50 flex flex-col items-center justify-center text-center aspect-square group active:translate-y-1 active:shadow-none transition-all">
+                                                <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center text-xl mb-2 group-hover:scale-110 transition-transform">🅰️</div>
+                                                 <span class="text-[10px] font-bold text-slate-600">English</span>
                                             </div>
-                                             <span class="text-[10px] font-bold text-slate-600">English</span>
-                                        </div>
-                                        <!-- Bangla -->
-                                        <div class="bg-white p-3 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.05)] border-2 border-slate-50 flex flex-col items-center justify-center text-center aspect-square group active:translate-y-1 active:shadow-none transition-all">
-                                            <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-xl mb-2 font-bold text-brand-green group-hover:scale-110 transition-transform">
-                                                অ
+                                            <div class="bg-white p-3 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.05)] border-2 border-slate-50 flex flex-col items-center justify-center text-center aspect-square group active:translate-y-1 active:shadow-none transition-all">
+                                                <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-xl mb-2 font-bold text-brand-green group-hover:scale-110 transition-transform">অ</div>
+                                                 <span class="text-[10px] font-bold text-slate-600">Bangla</span>
                                             </div>
-                                             <span class="text-[10px] font-bold text-slate-600">Bangla</span>
-                                        </div>
-                                        <!-- Arabic -->
-                                        <div class="bg-white p-3 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.05)] border-2 border-slate-50 flex flex-col items-center justify-center text-center aspect-square group active:translate-y-1 active:shadow-none transition-all">
-                                            <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center text-xl mb-2 font-bold text-amber-500 group-hover:scale-110 transition-transform">
-‎                                                ا
+                                            <div class="bg-white p-3 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.05)] border-2 border-slate-50 flex flex-col items-center justify-center text-center aspect-square group active:translate-y-1 active:shadow-none transition-all">
+                                                <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center text-xl mb-2 font-bold text-amber-500 group-hover:scale-110 transition-transform">ا</div>
+                                                 <span class="text-[10px] font-bold text-slate-600">Arabic</span>
                                             </div>
-                                             <span class="text-[10px] font-bold text-slate-600">Arabic</span>
-                                        </div>
-                                        <!-- Brain Booster -->
-                                        <div class="bg-white p-3 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.05)] border-2 border-slate-50 flex flex-col items-center justify-center text-center aspect-square group active:translate-y-1 active:shadow-none transition-all">
-                                            <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-xl mb-2 text-purple-500 group-hover:scale-110 transition-transform">
-                                                <i class="fas fa-brain"></i>
+                                            <div class="bg-white p-3 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.05)] border-2 border-slate-50 flex flex-col items-center justify-center text-center aspect-square group active:translate-y-1 active:shadow-none transition-all">
+                                                <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-xl mb-2 text-purple-500 group-hover:scale-110 transition-transform"><i class="fas fa-brain"></i></div>
+                                                 <span class="text-[10px] font-bold text-slate-600">Brain Booster</span>
                                             </div>
-                                             <span class="text-[10px] font-bold text-slate-600">Brain Booster</span>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <!-- Bottom Nav Bar (Fake) -->
+                                <!-- Bottom Nav Bar -->
                                 <div class="h-20 bg-white border-t border-slate-50 flex items-start pt-3 justify-around px-4 relative z-10 pb-6">
-                                    <div class="flex flex-col items-center text-brand-green gap-1">
-                                        <i class="fas fa-home text-lg"></i>
-                                        <span class="text-[9px] font-bold">Home</span>
-                                    </div>
-                                    <div class="flex flex-col items-center text-slate-300 gap-1">
-                                        <i class="fas fa-book text-lg"></i>
-                                        <span class="text-[9px] font-bold">Learn</span>
-                                    </div>
-                                    <div class="flex flex-col items-center text-slate-300 gap-1">
-                                        <i class="fas fa-gamepad text-lg"></i>
-                                        <span class="text-[9px] font-bold">Play</span>
-                                    </div>
-                                    <div class="flex flex-col items-center text-slate-300 gap-1">
-                                        <i class="fas fa-user text-lg"></i>
-                                        <span class="text-[9px] font-bold">Profile</span>
-                                    </div>
+                                    <div class="flex flex-col items-center text-brand-green gap-1"><i class="fas fa-home text-lg"></i><span class="text-[9px] font-bold">Home</span></div>
+                                    <div class="flex flex-col items-center text-slate-300 gap-1"><i class="fas fa-book text-lg"></i><span class="text-[9px] font-bold">Learn</span></div>
+                                    <div class="flex flex-col items-center text-slate-300 gap-1"><i class="fas fa-gamepad text-lg"></i><span class="text-[9px] font-bold">Play</span></div>
+                                    <div class="flex flex-col items-center text-slate-300 gap-1"><i class="fas fa-user text-lg"></i><span class="text-[9px] font-bold">Profile</span></div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -367,8 +408,8 @@
                     <p class="text-slate-500 leading-relaxed text-lg border-l-4 border-brand-orange pl-6">We prioritize education quality, child safety, and cultural relevance above all else. Our content is crafted by experts.</p>
                 </div>
                 <div class="md:w-1/3 flex justify-center fade-up delay-100">
-                    <!-- Dynamic ID for interaction -->
-                    <img id="feature-mascot" src="mascot_talking.png" alt="Mascot" loading="lazy" class="w-40 h-40 object-cover rounded-full border-8 border-slate-50 shadow-2xl hover:rotate-3 transition-transform duration-300">
+                    <!-- Talking Bunny -->
+                    <img id="feature-mascot" src="mascot_bunny_02_talking.png" alt="Mascot" loading="lazy" class="w-40 h-40 object-cover rounded-full border-8 border-slate-50 shadow-2xl hover:rotate-3 transition-transform duration-300">
                 </div>
             </div>
 
@@ -406,10 +447,10 @@
         </div>
     </section>
 
-    <!-- Curriculum Preview with FIXED Layout -->
+    <!-- Curriculum Preview with Flying Doel -->
     <section id="curriculum" class="py-24 bg-brand-cream relative border-t border-orange-50/50 overflow-hidden">
-        <!-- FIXED: Mascot moved behind text, further right, and reduced opacity to not block buttons -->
-        <img src="mascot_jumping.png" alt="Mascot Jumping" loading="lazy" class="absolute top-12 -right-4 md:right-10 w-32 md:w-48 opacity-60 mascot-float transform rotate-6 z-0 hidden md:block drop-shadow-xl pointer-events-none">
+        <!-- Flying Doel Animation -->
+        <img src="mascot_doel_07_jumping.png" alt="Mascot Flying" loading="lazy" class="absolute top-12 -right-4 md:right-10 w-32 md:w-48 opacity-90 animate-fly z-0 hidden md:block drop-shadow-xl pointer-events-none">
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 fade-up">
@@ -419,76 +460,80 @@
                         16+ Modules covering everything from basic literacy to logic and cognitive skills. Explore the learning journey.
                     </p>
                 </div>
-                <!-- Button is now safely clickable due to z-index and spacing -->
                 <button class="relative z-20 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-lg text-brand-green font-bold hover:text-green-700 hover:bg-white transition-all flex items-center gap-2 group text-sm uppercase tracking-wide border border-green-100 shadow-sm">
                     View Full Syllabus <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                 </button>
             </div>
 
+            <!-- Curriculum Grid with Colorful Backgrounds & Emojis -->
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-100">
-                    <span class="text-4xl mb-3 text-red-500 font-extrabold">Aa</span>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">English</span>
+                
+                <!-- Alphabets -->
+                <div class="bg-red-50 p-5 rounded-2xl border border-red-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-100">
+                    <span class="text-4xl mb-3 text-red-500 font-extrabold drop-shadow-sm">Aa</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">English</span>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-100">
-                    <span class="text-4xl mb-3 text-brand-green font-extrabold">অ</span>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Bangla</span>
+                <div class="bg-green-50 p-5 rounded-2xl border border-green-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-100">
+                    <span class="text-4xl mb-3 text-brand-green font-extrabold drop-shadow-sm">অ</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Bangla</span>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-100">
-                    <span class="text-4xl mb-3 text-amber-600 font-extrabold">ا</span>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Arabic</span>
+                <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-100">
+                    <span class="text-4xl mb-3 text-amber-600 font-extrabold drop-shadow-sm">ا</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Arabic</span>
                 </div>
                 
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-200">
-                    <span class="text-4xl mb-3 text-blue-600 font-extrabold font-display">123</span>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">English #</span>
+                <!-- Numbers -->
+                <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-200">
+                    <span class="text-4xl mb-3 text-blue-600 font-extrabold font-display drop-shadow-sm">123</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">English #</span>
                 </div>
-
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-200">
-                    <span class="text-4xl mb-3 text-brand-green font-extrabold font-display">১২৩</span>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Bangla #</span>
+                <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-200">
+                    <span class="text-4xl mb-3 text-emerald-600 font-extrabold font-display drop-shadow-sm">১২৩</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Bangla #</span>
                 </div>
-
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-200">
-                    <span class="text-4xl mb-3 text-amber-600 font-extrabold font-display">١٢٣</span>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Arabic #</span>
+                <div class="bg-orange-50 p-5 rounded-2xl border border-orange-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-200">
+                    <span class="text-4xl mb-3 text-orange-600 font-extrabold font-display drop-shadow-sm">١٢٣</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Arabic #</span>
                 </div>
                 
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-300">
-                    <i class="fas fa-shapes text-4xl mb-3 text-purple-600"></i>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Shapes</span>
+                <!-- Topics with Colorful Emojis -->
+                <div class="bg-purple-50 p-5 rounded-2xl border border-purple-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-300">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🔷</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Shapes</span>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-300">
-                    <i class="fas fa-palette text-4xl mb-3 text-pink-600"></i>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Colors</span>
+                <div class="bg-pink-50 p-5 rounded-2xl border border-pink-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-300">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🌈</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Colors</span>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-300">
-                    <i class="fas fa-paw text-4xl mb-3 text-orange-600"></i>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Animals</span>
+                <div class="bg-yellow-50 p-5 rounded-2xl border border-yellow-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-300">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🐯</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Animals</span>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-400">
-                    <i class="fas fa-dove text-4xl mb-3 text-sky-600"></i>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Birds</span>
+                <div class="bg-sky-50 p-5 rounded-2xl border border-sky-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-400">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🦜</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Birds</span>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-400">
-                    <i class="fas fa-bug text-4xl mb-3 text-lime-600"></i>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Insects</span>
+                <div class="bg-lime-50 p-5 rounded-2xl border border-lime-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-400">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🦋</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Insects</span>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-400">
-                    <i class="fas fa-car text-4xl mb-3 text-gray-600"></i>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Objects</span>
+                <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-400">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🪁</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Objects</span>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
-                    <i class="fas fa-person-running text-4xl mb-3 text-indigo-600"></i>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Actions</span>
+                <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🤸</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Actions</span>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
-                    <i class="fas fa-arrows-left-right text-4xl mb-3 text-cyan-600"></i>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Opposites</span>
+                <div class="bg-cyan-50 p-5 rounded-2xl border border-cyan-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🌗</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Opposites</span>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
-                    <i class="fas fa-flag text-4xl mb-3 text-teal-600"></i>
-                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wide">Countries</span>
+                
+                <!-- Bangladesh Flag -->
+                <div class="bg-teal-50 p-5 rounded-2xl border border-teal-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🇧🇩</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Countries</span>
                 </div>
             </div>
             
@@ -507,7 +552,7 @@
                 <div class="relative z-10 grid md:grid-cols-2 gap-16 items-center">
                     <div class="fade-up">
                         <div class="inline-block px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-white/5">
-                            Investor Relations
+                            Mission & Vision
                         </div>
                         <h2 class="text-3xl md:text-5xl font-extrabold mb-8 leading-tight">Building the Future of Education in Bangladesh</h2>
                         <p class="text-slate-300 mb-10 leading-relaxed text-lg">
@@ -521,24 +566,32 @@
                     </div>
                     
                     <div class="relative fade-up delay-200">
-                        <img src="mascot_happy.png" alt="Mascot Happy" loading="lazy" class="absolute -top-16 -right-8 w-36 h-36 object-cover rounded-full border-[6px] border-brand-dark shadow-2xl z-20 hidden md:block mascot-float">
+                        <!-- Happy Peacock - Bigger & Higher & No Border -->
+                        <img src="mascot_peacock_05_surprised.png" alt="Mascot Happy" loading="lazy" class="absolute -top-36 -right-10 w-64 h-64 object-cover z-20 hidden md:block mascot-float drop-shadow-2xl">
 
                         <div class="grid grid-cols-2 gap-6">
+                            <!-- Card 1: Updated to Individual Subscription -->
                             <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
-                                <div class="text-4xl font-extrabold text-brand-green mb-2">50k+</div>
-                                <div class="text-xs text-slate-400 font-bold uppercase tracking-wide">Projected Users Year 1</div>
+                                <div class="text-4xl font-extrabold text-brand-green mb-2">B2C</div>
+                                <div class="text-xs text-slate-400 font-bold uppercase tracking-wide">Individual Subscription</div>
                             </div>
+                            
+                            <!-- Card 2: Core Languages -->
                             <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
                                 <div class="text-4xl font-extrabold text-brand-red mb-2">3</div>
                                 <div class="text-xs text-slate-400 font-bold uppercase tracking-wide">Core Languages</div>
                             </div>
+                            
+                            <!-- Card 3: Learning Modules -->
                             <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
                                 <div class="text-4xl font-extrabold text-brand-yellow mb-2">16+</div>
                                 <div class="text-xs text-slate-400 font-bold uppercase tracking-wide">Learning Modules</div>
                             </div>
+                            
+                            <!-- Card 4: Updated to B2B to avoid duplicate -->
                             <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
-                                <div class="text-4xl font-extrabold text-white mb-2">B2C</div>
-                                <div class="text-xs text-slate-400 font-bold uppercase tracking-wide">Subscription Model</div>
+                                <div class="text-4xl font-extrabold text-white mb-2">B2B</div>
+                                <div class="text-xs text-slate-400 font-bold uppercase tracking-wide">School Partnerships</div>
                             </div>
                         </div>
                     </div>
@@ -552,8 +605,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                 <div class="col-span-1 md:col-span-1">
-                    <div class="mb-6">
+                    <div class="mb-6 flex gap-4 items-center">
                         <img src="logo.png" alt="FunLearnBD Logo" loading="lazy" class="h-20 w-auto rounded-lg shadow-sm transform hover:scale-105 transition-transform duration-300">
+                        <!-- Idle Tiger in Footer -->
+                        <img src="mascot_tiger_01_idle.png" class="h-16 w-16 object-contain">
                     </div>
                     <p class="text-sm text-slate-500 leading-relaxed">
                         Making learning accessible, fun, and culturally relevant for every child in Bangladesh.
@@ -595,13 +650,133 @@
         </div>
     </footer>
 
-    <!-- Script for Live Mascot Cycle -->
+    <!-- Script for Live Mascot Cycle & Intro -->
     <script>
+        // Intro Animation Sequence
+        window.addEventListener('DOMContentLoaded', () => {
+            const introContainer = document.getElementById('intro-mascots-container');
+            const introLogo = document.getElementById('intro-logo');
+            const overlay = document.getElementById('intro-overlay');
+            const body = document.getElementById('main-body');
+
+            // Advanced Voiceover Function with Emotion Simulation
+            function speakIntro() {
+                const synth = window.speechSynthesis;
+                synth.cancel(); // Clear queue
+
+                // Helper to speak a chunk with specific emotion
+                function speakChunk(text, pitch, rate) {
+                    const msg = new SpeechSynthesisUtterance(text);
+                    msg.volume = 1;
+                    msg.pitch = pitch;
+                    msg.rate = rate;
+                    msg.lang = 'en-US';
+
+                    // Try to find a nice female voice
+                    const voices = synth.getVoices();
+                    const preferredVoice = voices.find(voice => 
+                        voice.name.includes('Google US English') || 
+                        voice.name.includes('Samantha') || 
+                        voice.name.includes('Female')
+                    );
+                    if (preferredVoice) msg.voice = preferredVoice;
+
+                    synth.speak(msg);
+                }
+
+                // Sequence of "Emotions"
+                // 1. Excited Greeting
+                speakChunk("Hi friends!", 1.4, 1.1);
+                
+                // 2. Warm Welcome
+                speakChunk("Welcome to Fun Learn B D!", 1.1, 0.9);
+                
+                // 3. Question
+                speakChunk("Are you ready to play and learn?", 1.3, 1.0);
+                
+                // 4. energetic finish
+                speakChunk("Let's go!", 1.5, 1.2);
+            }
+
+            // Chrome loads voices asynchronously
+            if (window.speechSynthesis.getVoices().length === 0) {
+                window.speechSynthesis.onvoiceschanged = () => {
+                    // Pre-load voices but don't speak yet
+                };
+            }
+
+            // Mascots for intro: Tiger, Bunny, Doel, Peacock
+            // FIXED: Using strict width percentages and positioning to guarantee no overlap on any screen
+            const mascots = [
+                { src: 'mascot_tiger_06_waving.png', style: 'bottom: 10%; left: 22%; width: 22%; max-width: 150px;' }, 
+                { src: 'mascot_bunny_03_happy.png', style: 'bottom: 10%; left: 37%; width: 18%; max-width: 130px;' }, 
+                { src: 'mascot_doel_07_jumping.png', style: 'bottom: 10%; left: 52%; width: 20%; max-width: 140px;' }, 
+                { src: 'mascot_peacock_05_surprised.png', style: 'bottom: 10%; left: 67%; width: 24%; max-width: 160px;' } 
+            ];
+
+            // 1. Inject Mascots
+            mascots.forEach((m, index) => {
+                const img = document.createElement('img');
+                img.src = m.src;
+                img.className = 'intro-mascot drop-shadow-2xl'; 
+                img.style.cssText = m.style; 
+                introContainer.appendChild(img);
+                
+                // Staggered Entrance
+                setTimeout(() => {
+                    img.classList.add('show');
+                    // Add bounce after entrance
+                    setTimeout(() => {
+                        img.classList.add('animate-bounce-fun');
+                    }, 600);
+                }, 100 + (index * 400));
+            });
+
+            // 2. Show Logo & Play Audio
+            setTimeout(() => {
+                introLogo.classList.add('show');
+                speakIntro(); // Trigger Emotional Voiceover
+            }, 1800);
+
+            // 3. Exit Animation (Fly Away)
+            setTimeout(() => {
+                // Fade logo
+                introLogo.style.opacity = '0';
+                introLogo.style.transform = 'translateY(-20px)';
+                
+                // Fly mascots
+                const images = document.querySelectorAll('.intro-mascot');
+                images.forEach((img, i) => {
+                    img.classList.remove('animate-bounce-fun');
+                    img.style.transition = 'all 0.8s ease-in';
+                    img.style.opacity = '0';
+                    
+                    // Fly towards different directions
+                    const directions = [
+                        { x: -100, y: 100 }, // Bottom Left
+                        { x: -50, y: -100 }, // Top Left
+                        { x: 50, y: -100 },  // Top Right
+                        { x: 100, y: 100 }   // Bottom Right
+                    ];
+                    
+                    const dir = directions[i % 4];
+                    img.style.transform = `translate(${dir.x}vw, ${dir.y}vh) rotate(${Math.random() * 360}deg)`;
+                });
+            }, 5500); // Extended time for the longer voiceover
+
+            // 4. Remove Overlay
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                overlay.style.visibility = 'hidden';
+                body.style.overflowY = 'auto'; // Re-enable scroll
+            }, 6300);
+        });
+
         // Hero Mascot Cycle Script
-        const poses = [
-            'mascot_waving.png',
-            'mascot_talking.png',
-            'mascot_idle.png'
+        const heroPoses = [
+            'mascot_tiger_06_waving.png',
+            'mascot_tiger_02_talking.png',
+            'mascot_tiger_01_idle.png'
         ];
         let currentPoseIndex = 0;
         const heroMascot = document.getElementById('hero-mascot');
@@ -614,8 +789,8 @@
                 
                 setTimeout(() => {
                     // Change src
-                    currentPoseIndex = (currentPoseIndex + 1) % poses.length;
-                    heroMascot.src = poses[currentPoseIndex];
+                    currentPoseIndex = (currentPoseIndex + 1) % heroPoses.length;
+                    heroMascot.src = heroPoses[currentPoseIndex];
                     // Fade in
                     heroMascot.style.opacity = '1';
                 }, 200);
@@ -626,7 +801,7 @@
         function changeMascot(pose) {
             const mascot = document.getElementById('feature-mascot');
             if (mascot) {
-                const filename = pose === 'happy' ? 'mascot_happy.png' : 'mascot_talking.png';
+                const filename = pose === 'happy' ? 'mascot_bunny_03_happy.png' : 'mascot_bunny_02_talking.png';
                 mascot.style.transform = 'scale(0.9) rotate(-5deg)';
                 setTimeout(() => {
                     mascot.src = filename;
