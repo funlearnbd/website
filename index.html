@@ -145,7 +145,7 @@
         .delay-400 { animation-delay: 400ms; }
         .delay-500 { animation-delay: 500ms; }
 
-        /* Intro Animation Styles */
+        /* --- INTRO ANIMATION RESPONSIVE STYLES --- */
         #intro-overlay {
             position: fixed;
             top: 0;
@@ -166,7 +166,7 @@
             opacity: 0;
             transform: scale(0.5) translateY(100px);
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 101; /* Ensure mascots are in front */
+            z-index: 101; 
         }
 
         .intro-mascot.show {
@@ -174,30 +174,67 @@
             transform: scale(1) translateY(0);
         }
 
-        /* New class for the map background */
+        /* Mascot Positioning Classes (Responsive) */
+        /* Mobile First (Default) */
+        .mascot-pos-0 { bottom: 18%; left: 2%; width: 32%; max-width: 160px; }   /* Tiger */
+        .mascot-pos-1 { bottom: 18%; left: 28%; width: 45%; max-width: 220px; z-index: 102; } /* Bunny (Center-left) */
+        .mascot-pos-2 { bottom: 18%; right: 22%; width: 30%; max-width: 160px; }  /* Doel */
+        .mascot-pos-3 { bottom: 18%; right: 2%; width: 30%; max-width: 160px; }   /* Peacock */
+
+        /* Desktop Overrides (min-width: 768px) */
+        @media (min-width: 768px) {
+            .mascot-pos-0 { left: 14%; width: 26%; max-width: 190px; }
+            .mascot-pos-1 { left: 25%; width: 42%; max-width: 300px; }
+            .mascot-pos-2 { right: auto; left: 60%; width: 26%; max-width: 190px; }
+            .mascot-pos-3 { right: auto; left: 73%; width: 26%; max-width: 190px; }
+        }
+
+        /* Map Background */
         .intro-map-bg {
             position: absolute;
             opacity: 0;
-            transform: scale(0.2) translateX(-50%); /* Start small and centered */
+            transform: scale(0.2) translateX(-50%);
             transform-origin: center bottom;
             transition: all 1s ease-out;
-            z-index: 90; /* Behind mascots */
+            z-index: 90;
+            
+            /* Mobile */
+            bottom: 15%; 
+            left: 50%; 
+            width: 95%; 
+            max-width: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .intro-map-bg {
+                width: 108%;
+                max-width: 840px;
+            }
         }
 
         .intro-map-bg.show {
-            opacity: 0.4; /* Slightly transparent as background */
+            opacity: 0.4;
             transform: scale(1) translateX(-50%);
         }
 
+        /* Logo */
         .intro-logo {
-            width: 480px; /* Made bigger */
-            max-width: 90%;
-            height: auto;
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease-out;
-            z-index: 102; /* In front of everything */
-            margin-bottom: 330px; /* Increased margin to push it up */
+            z-index: 102;
+            
+            /* Mobile */
+            width: 280px;
+            max-width: 85%;
+            margin-bottom: 220px; 
+        }
+
+        @media (min-width: 768px) {
+            .intro-logo {
+                width: 480px;
+                margin-bottom: 330px;
+            }
         }
 
         .intro-logo.show {
@@ -205,17 +242,11 @@
             transform: translateY(0);
         }
         
-        .intro-text.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
+        /* Text */
         .intro-text {
             position: absolute;
-            bottom: 5%;
-            font-size: 1.5rem;
             font-weight: 800;
-            color: #006a4e; /* Brand green */
+            color: #006a4e;
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease-out;
@@ -223,6 +254,10 @@
             letter-spacing: 0.05em;
             text-align: center;
             width: 100%;
+
+            /* Mobile */
+            font-size: 1.2rem;
+            bottom: 8%;
         }
 
         @media (min-width: 768px) {
@@ -230,6 +265,11 @@
                 font-size: 2rem;
                 bottom: 8%;
             }
+        }
+        
+        .intro-text.show {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -909,10 +949,10 @@
 
             // Using ONLY the generic filenames, consistent with request
             const mascots = [
-                { src: 'mascot_waving.png', style: 'bottom: 18%; left: 14%; width: 26%; max-width: 190px;' }, // Tiger
-                { src: 'mascot_happy.png', style: 'bottom: 18%; left: 25%; width: 42%; max-width: 300px;' }, // Bunny
-                { src: 'mascot_jumping.png', style: 'bottom: 18%; left: 60%; width: 26%; max-width: 190px;' }, // Doel
-                { src: 'mascot_talking.png', style: 'bottom: 18%; left: 73%; width: 26%; max-width: 190px;' } // Peacock
+                { src: 'mascot_waving.png', style: 'bottom: 8%; left: 5%; width: 26%; max-width: 190px;' }, // Tiger - Adjusted gap
+                { src: 'mascot_happy.png', style: 'bottom: 8%; left: 22%; width: 42%; max-width: 300px;' }, // Bunny - Adjusted gap
+                { src: 'mascot_jumping.png', style: 'bottom: 8%; left: 58%; width: 26%; max-width: 190px;' }, // Doel - Adjusted gap
+                { src: 'mascot_talking.png', style: 'bottom: 8%; left: 77%; width: 26%; max-width: 190px;' } // Peacock - Adjusted gap
             ];
 
             // 1. Inject Mascots
@@ -936,7 +976,7 @@
             mapImg.src = 'bangladesh.png';
             mapImg.className = 'intro-map-bg';
             // Center the map, make it much bigger for background
-            mapImg.style.cssText = 'bottom: 5%; left: 50%; width: 108%; max-width: 840px;';
+            mapImg.style.cssText = 'bottom: 5%; left: 50%; width: 90%; max-width: 700px;';
             introContainer.appendChild(mapImg);
             
             // Appear from far to close
