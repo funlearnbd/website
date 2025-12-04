@@ -166,11 +166,27 @@
             opacity: 0;
             transform: scale(0.5) translateY(100px);
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 101; /* Ensure mascots are in front */
         }
 
         .intro-mascot.show {
             opacity: 1;
             transform: scale(1) translateY(0);
+        }
+
+        /* New class for the map background */
+        .intro-map-bg {
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.2) translateX(-50%); /* Start small and centered */
+            transform-origin: center bottom;
+            transition: all 1s ease-out;
+            z-index: 90; /* Behind mascots */
+        }
+
+        .intro-map-bg.show {
+            opacity: 0.4; /* Slightly transparent as background */
+            transform: scale(1) translateX(-50%);
         }
 
         .intro-logo {
@@ -180,13 +196,40 @@
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease-out;
-            z-index: 101;
-            margin-bottom: 200px; /* Increased from 150px to move it upper */
+            z-index: 102; /* In front of everything */
+            margin-bottom: 330px; /* Increased margin to push it up */
         }
 
         .intro-logo.show {
             opacity: 1;
             transform: translateY(0);
+        }
+        
+        .intro-text.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .intro-text {
+            position: absolute;
+            bottom: 5%;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #006a4e; /* Brand green */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
+            z-index: 102;
+            letter-spacing: 0.05em;
+            text-align: center;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .intro-text {
+                font-size: 2rem;
+                bottom: 8%;
+            }
         }
     </style>
 </head>
@@ -199,6 +242,11 @@
         
         <div id="intro-mascots-container" class="absolute w-full h-full flex justify-center items-center pointer-events-none">
             <!-- Mascots will be injected here via JS -->
+        </div>
+
+        <!-- New Text Container -->
+        <div id="intro-text-container" class="absolute w-full h-full flex justify-center items-end pointer-events-none">
+            <p id="intro-text" class="intro-text animate-pulse-slow">PROUD TO BE BANGLADESHI!</p>
         </div>
     </div>
 
@@ -820,6 +868,7 @@
             const introLogo = document.getElementById('intro-logo');
             const overlay = document.getElementById('intro-overlay');
             const body = document.getElementById('main-body');
+            const introText = document.getElementById('intro-text');
 
             // Advanced Voiceover Function with Emotion Simulation
             function speakIntro() {
@@ -860,10 +909,10 @@
 
             // Using ONLY the generic filenames, consistent with request
             const mascots = [
-                { src: 'mascot_waving.png', style: 'bottom: 10%; left: 10%; width: 28%; max-width: 200px;' }, // Tiger - Moved further left
-                { src: 'mascot_happy.png', style: 'bottom: 10%; left: 25%; width: 45%; max-width: 320px;' }, // Bunny - Moved left
-                { src: 'mascot_jumping.png', style: 'bottom: 10%; left: 60%; width: 28%; max-width: 200px;' }, // Doel - Moved right
-                { src: 'mascot_talking.png', style: 'bottom: 10%; left: 80%; width: 28%; max-width: 200px;' } // Peacock - Moved further right
+                { src: 'mascot_waving.png', style: 'bottom: 18%; left: 14%; width: 26%; max-width: 190px;' }, // Tiger
+                { src: 'mascot_happy.png', style: 'bottom: 18%; left: 25%; width: 42%; max-width: 300px;' }, // Bunny
+                { src: 'mascot_jumping.png', style: 'bottom: 18%; left: 60%; width: 26%; max-width: 190px;' }, // Doel
+                { src: 'mascot_talking.png', style: 'bottom: 18%; left: 73%; width: 26%; max-width: 190px;' } // Peacock
             ];
 
             // 1. Inject Mascots
@@ -879,21 +928,21 @@
                     setTimeout(() => {
                         img.classList.add('animate-bounce-fun');
                     }, 600);
-                }, 100 + (index * 400));
+                }, 300 + (index * 400)); // Slightly later start
             });
 
-            // Inject Bangladesh Map
+            // Inject Bangladesh Map (as background, appearing from far)
             const mapImg = document.createElement('img');
             mapImg.src = 'bangladesh.png';
-            mapImg.className = 'intro-mascot drop-shadow-2xl';
-            // Center the map between the mascots
-            mapImg.style.cssText = 'bottom: 15%; left: 50%; transform: translateX(-50%); width: 36%; max-width: 300px;';
+            mapImg.className = 'intro-map-bg';
+            // Center the map, make it much bigger for background
+            mapImg.style.cssText = 'bottom: 5%; left: 50%; width: 108%; max-width: 840px;';
             introContainer.appendChild(mapImg);
+            
+            // Appear from far to close
             setTimeout(() => {
                 mapImg.classList.add('show');
-                // No animation for the map
-            }, 900); // Delay after mascots
-
+            }, 100); // Start early
 
             // 2. Show Logo & Play Audio
             setTimeout(() => {
@@ -901,19 +950,31 @@
                 // Try to speak immediately. Note: Browsers may block this without interaction.
                 speakIntro(); 
             }, 1800);
+            
+            // 2.5 Show Text
+            setTimeout(() => {
+                introText.classList.add('show');
+            }, 2200);
+
 
             // 3. Exit Animation
             setTimeout(() => {
                 introLogo.style.opacity = '0';
                 introLogo.style.transform = 'translateY(-20px)';
+                introText.style.opacity = '0';
+                introText.style.transform = 'translateY(20px)';
                 
+                mapImg.style.opacity = '0';
+                mapImg.style.transform = 'scale(1.2) translateX(-50%)'; // Fade out expanding
+                mapImg.style.transition = 'all 0.8s ease-in';
+
                 const images = document.querySelectorAll('.intro-mascot');
                 images.forEach((img, i) => {
                     img.classList.remove('animate-bounce-fun');
                     img.style.transition = 'all 0.8s ease-in';
                     img.style.opacity = '0';
-                    const directions = [{ x: -100, y: 100 }, { x: -50, y: -100 }, { x: 50, y: -100 }, { x: 100, y: 100 }];
-                    const dir = directions[i % 4];
+                    const directions = [{ x: -100, y: 100 }, { x: -50, y: -100 }, { x: 50, y: -100 }, { x: 100, y: 100 }, { x: 0, y: 100 }];
+                    const dir = directions[i % 5];
                     img.style.transform = `translate(${dir.x}vw, ${dir.y}vh) rotate(${Math.random() * 360}deg)`;
                 });
             }, 5500);
