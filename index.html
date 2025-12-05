@@ -168,28 +168,10 @@
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 101; /* Ensure mascots are in front */
         }
-        
-        /* Mobile specific intro mascot class */
-        .intro-mascot-mobile {
-            position: absolute;
-            opacity: 0;
-            bottom: 20%;
-            left: 50%;
-            width: 60%;
-            max-width: 250px;
-            transform: translateX(-50%) scale(0.5) translateY(50px);
-            transition: all 0.5s ease-in-out;
-            z-index: 101;
-        }
 
         .intro-mascot.show {
             opacity: 1;
             transform: scale(1) translateY(0);
-        }
-
-        .intro-mascot-mobile.show {
-            opacity: 1;
-            transform: translateX(-50%) scale(1) translateY(0);
         }
 
         /* New class for the map background */
@@ -208,22 +190,14 @@
         }
 
         .intro-logo {
+            width: 480px; /* Made bigger */
+            max-width: 90%;
+            height: auto;
             opacity: 0;
             transform: translateY(20px);
-            transition: all 0.5s ease-out;
+            transition: all 0.8s ease-out;
             z-index: 102; /* In front of everything */
-            margin-bottom: 330px;
-            
-            /* Mobile Logo Size */
-            width: 280px; 
-            max-width: 80%;
-        }
-        
-        /* Laptop Logo Size */
-        @media (min-width: 768px) {
-            .intro-logo {
-                width: 480px;
-            }
+            margin-bottom: 330px; /* Increased margin to push it up */
         }
 
         .intro-logo.show {
@@ -317,7 +291,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 lg:pt-16 pb-24 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 <div class="fade-up order-2 lg:order-1 text-center lg:text-left">
-                    <!-- ... existing content ... -->
                     <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-green-100 text-brand-green text-xs font-bold uppercase tracking-wide mb-6 shadow-sm">
                         <span class="relative flex h-2 w-2">
                           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -921,10 +894,9 @@
                 }
 
                 // Sequence of "Emotions"
-                speakChunk("Assalamu Alaikum!", 1.2, 0.9);
-                speakChunk("Welcome to Fun Learn B D!", 1.1, 0.9);
-                speakChunk("Are you ready to play and learn?", 1.3, 1.0);
-                speakChunk("Let's go!", 1.5, 1.2);
+                speakChunk("Welcome to FunLearnBD", 1.2, 0.9);
+                speakChunk("Are you ready to Play and Learn", 1.3, 1.0);
+                speakChunk("Lets Go!", 1.5, 1.2);
             }
 
             if (window.speechSynthesis.getVoices().length === 0) {
@@ -933,28 +905,24 @@
                 };
             }
 
-            // Check if Mobile
-            const isMobile = window.matchMedia("(max-width: 767px)").matches;
-
             // Using ONLY the generic filenames, consistent with request
             // We'll adjust specific positions via JS if not covered by CSS classes for fine-tuning, 
             // but the CSS classes .intro-mascot-mobile handles the center logic for mobile.
             // For Desktop, we stick to the layout that worked:
             const mascots = [
-                { src: 'mascot_waving.png', style: 'bottom: 8%; left: 5%; width: 26%; max-width: 190px;' }, // Tiger
-                { src: 'mascot_happy.png', style: 'bottom: 8%; left: 22%; width: 42%; max-width: 300px;' }, // Bunny
-                { src: 'mascot_jumping.png', style: 'bottom: 8%; left: 58%; width: 26%; max-width: 190px;' }, // Doel
-                { src: 'mascot_talking.png', style: 'bottom: 8%; left: 77%; width: 26%; max-width: 190px;' } // Peacock
+                { src: 'mascot_waving.png', style: 'bottom: 18%; left: 14%; width: 26%; max-width: 190px;' }, // Tiger
+                { src: 'mascot_happy.png', style: 'bottom: 18%; left: 25%; width: 42%; max-width: 300px;' }, // Bunny
+                { src: 'mascot_jumping.png', style: 'bottom: 18%; left: 60%; width: 26%; max-width: 190px;' }, // Doel
+                { src: 'mascot_talking.png', style: 'bottom: 18%; left: 73%; width: 26%; max-width: 190px;' } // Peacock
             ];
 
-            // Inject Mascots
+            // 1. Inject Mascots
             mascots.forEach((m, index) => {
                 const img = document.createElement('img');
                 img.src = m.src;
                 
-                if (isMobile) {
+                if (window.matchMedia("(max-width: 767px)").matches) {
                     img.className = 'intro-mascot-mobile drop-shadow-2xl';
-                    // Sequential appearance handled below
                 } else {
                     img.className = 'intro-mascot drop-shadow-2xl'; 
                     img.style.cssText = m.style; 
@@ -963,44 +931,49 @@
                     setTimeout(() => {
                         img.classList.add('show');
                         setTimeout(() => img.classList.add('animate-bounce-fun'), 600);
-                    }, 300 + (index * 400));
+                    }, 1000 + (index * 400)); // Delayed start after map
                 }
                 introContainer.appendChild(img);
             });
 
+            const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
             // Mobile Specific Sequencing
             if (isMobile) {
                 const mascotEls = document.querySelectorAll('.intro-mascot-mobile');
-                const cycleTime = 1200; // 1.2s per mascot
+                const cycleTime = 1200; 
                 
-                mascotEls.forEach((el, i) => {
-                    setTimeout(() => {
-                        // Hide previous if exists
-                        if(i > 0) {
-                             mascotEls[i-1].classList.remove('show');
-                             mascotEls[i-1].style.opacity = '0'; // Force hide
-                        }
-                        // Show current
-                        el.classList.add('show');
-                    }, i * cycleTime);
-                });
+                // Start sequence after map appears
+                setTimeout(() => {
+                    mascotEls.forEach((el, i) => {
+                        setTimeout(() => {
+                            // Hide previous if exists
+                            if(i > 0) {
+                                 mascotEls[i-1].classList.remove('show');
+                                 mascotEls[i-1].style.opacity = '0'; 
+                            }
+                            // Show current
+                            el.classList.add('show');
+                        }, i * cycleTime);
+                    });
+                }, 1000);
             }
 
-            // Inject Bangladesh Map (as background)
+            // Inject Bangladesh Map (First!)
             const mapImg = document.createElement('img');
             mapImg.src = 'bangladesh.png';
             mapImg.className = 'intro-map-bg';
             
             // Center the map, bigger for background
-            // Mobile: 95% width, Desktop: 108% width
+            // Mobile: 70% width (Request #2)
             const mapStyle = isMobile 
-                ? 'bottom: 15%; left: 50%; width: 95%; max-width: 400px;' 
-                : 'bottom: 5%; left: 50%; width: 108%; max-width: 840px;';
+                ? 'bottom: 20%; left: 50%; width: 70%; max-width: 500px;' 
+                : 'bottom: 10%; left: 50%; width: 60%; max-width: 800px;';
             
             mapImg.style.cssText = mapStyle;
             introContainer.appendChild(mapImg);
             
-            // Appear from far to close
+            // Appear from far to close immediately
             setTimeout(() => {
                 mapImg.classList.add('show');
             }, 100); 
@@ -1008,9 +981,9 @@
             // 2. Show Logo & Play Audio
             setTimeout(() => {
                 introLogo.classList.add('show');
-                // Try to speak
+                // Try to speak immediately. Note: Browsers may block this without interaction.
                 speakIntro(); 
-            }, 1800);
+            }, 100); // Show with map
             
             // 2.5 Show Text
             setTimeout(() => {
@@ -1048,14 +1021,14 @@
                         img.style.transform = `translate(${dir.x}vw, ${dir.y}vh) rotate(${Math.random() * 360}deg)`;
                     });
                 }
-            }, 5500);
+            }, 6000); // Slightly longer for sequence
 
             // 4. Remove Overlay
             setTimeout(() => {
                 overlay.style.opacity = '0';
                 overlay.style.visibility = 'hidden';
                 body.style.overflowY = 'auto'; 
-            }, 6300);
+            }, 6800);
         });
 
         // Hero Mascot Cycle Script
