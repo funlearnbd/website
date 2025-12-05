@@ -145,7 +145,7 @@
         .delay-400 { animation-delay: 400ms; }
         .delay-500 { animation-delay: 500ms; }
 
-        /* Intro Animation Styles */
+        /* --- INTRO ANIMATION STYLES (Mobile Focused) --- */
         #intro-overlay {
             position: fixed;
             top: 0;
@@ -159,77 +159,106 @@
             align-items: center;
             flex-direction: column;
             transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
-        }
-
-        .intro-mascot {
-            position: absolute;
-            opacity: 0;
-            transform: scale(0.5) translateY(100px);
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 101; /* Ensure mascots are in front */
-        }
-
-        .intro-mascot.show {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-
-        /* New class for the map background */
-        .intro-map-bg {
-            position: absolute;
-            opacity: 0;
-            transform: scale(0.2) translateX(-50%); /* Start small and centered */
-            transform-origin: center bottom;
-            transition: all 1.5s ease-out;
-            z-index: 90; /* Behind mascots */
-        }
-
-        .intro-map-bg.show {
-            opacity: 0.4; /* Slightly transparent as background */
-            transform: scale(1) translateX(-50%);
+            overflow: hidden; /* Prevent scrollbars during animation */
         }
 
         .intro-logo {
-            width: 480px; /* Made bigger */
-            max-width: 90%;
+            width: 60%;           /* Relative width for mobile */
+            max-width: 300px;     /* Max cap */
             height: auto;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(-20px);
             transition: all 0.8s ease-out;
-            z-index: 102; /* In front of everything */
-            margin-bottom: 330px; /* Increased margin to push it up */
+            z-index: 105;         /* Highest priority */
+            margin-bottom: auto;  /* Push to top section */
+            margin-top: 15vh;     /* Space from top */
+        }
+        
+        @media (min-width: 768px) {
+            .intro-logo {
+                width: 400px;
+                max-width: 400px;
+                margin-top: 10vh;
+            }
         }
 
         .intro-logo.show {
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Map Background - Centered & Large */
+        .intro-map-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            width: 120%;           /* Good coverage on mobile */
+            max-width: 800px;
+            opacity: 0;
+            transition: all 1.2s ease-out;
+            z-index: 90;          /* Behind mascots */
+        }
+
+        .intro-map-bg.show {
+            opacity: 0.3;         /* Subtle background */
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        @media (min-width: 768px) {
+            .intro-map-bg {
+                width: 90%;
+                max-width: 1200px;
+            }
+        }
+
+        /* Unified Mascot Style (One by One Center) */
+        .intro-mascot-single {
+            position: absolute;
+            bottom: 25%;          /* Positioned in lower half */
+            left: 50%;
+            transform: translateX(-50%) scale(0.5);
+            width: 50%;           /* Perfect mobile size */
+            max-width: 280px;     /* Cap for desktop */
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy */
+            z-index: 100;
+        }
+
+        .intro-mascot-single.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+        
+        #intro-text-container {
+            position: absolute;
+            bottom: 5%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 102;
+        }
+
+        /* Text at bottom */
+        .intro-text {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #006a4e;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
+            letter-spacing: 0.05em;
+            padding: 0 20px;
+        }
         
         .intro-text.show {
             opacity: 1;
             transform: translateY(0);
         }
-        
-        .intro-text {
-            position: absolute;
-            bottom: 5%;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #006a4e; /* Brand green */
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease-out;
-            z-index: 102;
-            letter-spacing: 0.05em;
-            text-align: center;
-            width: 100%;
-        }
 
         @media (min-width: 768px) {
-            .intro-text {
-                font-size: 2rem;
-                bottom: 8%;
-            }
+            .intro-text { font-size: 2rem; }
         }
     </style>
 </head>
@@ -237,15 +266,17 @@
 
     <!-- INTRO OVERLAY -->
     <div id="intro-overlay">
-        <!-- Logo -->
         <img id="intro-logo" src="logo.png" alt="FunLearnBD Logo" class="intro-logo">
         
-        <div id="intro-mascots-container" class="absolute w-full h-full flex justify-center items-center pointer-events-none">
-            <!-- Mascots will be injected here via JS -->
+        <!-- Container for the single cycling mascot -->
+        <div id="intro-mascots-container">
+            <!-- Mascots injected by JS -->
         </div>
+        
+        <!-- Map Background -->
+        <img id="intro-map" src="bangladesh.png" alt="Map" class="intro-map-bg">
 
-        <!-- New Text Container -->
-        <div id="intro-text-container" class="absolute w-full h-full flex justify-center items-end pointer-events-none">
+        <div id="intro-text-container">
             <p id="intro-text" class="intro-text animate-pulse-slow">PROUD TO BE BANGLADESHI!</p>
         </div>
     </div>
@@ -255,7 +286,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center cursor-pointer group" onclick="window.scrollTo(0,0)">
-                    <!-- Logo Only -->
                     <img src="logo.png" alt="FunLearnBD Logo" class="h-14 md:h-20 w-auto rounded-lg shadow-sm transform group-hover:scale-105 transition-transform duration-300">
                 </div>
                 
@@ -416,7 +446,6 @@
                     <p class="text-slate-500 leading-relaxed text-lg border-l-4 border-brand-orange pl-6">We prioritize education quality, child safety, and cultural relevance above all else. Our content is crafted by experts.</p>
                 </div>
                 <div class="md:w-1/3 flex justify-center fade-up delay-100">
-                    <!-- Talking mascot placed here to emphasize features/language -->
                     <img id="feature-mascot" src="mascot_talking.png" alt="Mascot Talking" class="w-40 h-40 object-cover rounded-full border-8 border-slate-50 shadow-2xl hover:rotate-3 transition-transform duration-300">
                 </div>
             </div>
@@ -457,7 +486,6 @@
 
     <!-- Curriculum Preview with Jumping Mascot -->
     <section id="curriculum" class="py-24 bg-brand-cream relative border-t border-orange-50/50 overflow-hidden">
-        <!-- Jumping mascot decoration -->
         <img src="mascot_jumping.png" alt="Mascot Jumping" class="absolute top-12 right-4 md:right-10 w-32 md:w-48 opacity-90 animate-fly z-0 hidden md:block drop-shadow-xl pointer-events-none">
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -473,7 +501,6 @@
                 </button>
             </div>
 
-            <!-- Curriculum Grid with Colorful Backgrounds & Emojis -->
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
                 
                 <!-- Alphabets -->
@@ -504,13 +531,12 @@
                     <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Arabic #</span>
                 </div>
                 
-                <!-- Topics with Colorful Emojis -->
+                <!-- Topics -->
                 <div class="bg-purple-50 p-5 rounded-2xl border border-purple-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-300">
                     <span class="text-4xl mb-3 filter drop-shadow-sm">🔷</span>
                     <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Shapes</span>
                 </div>
                 <div class="bg-pink-50 p-5 rounded-2xl border border-pink-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-300">
-                    <!-- Changed from Rainbow to Artist Palette -->
                     <span class="text-4xl mb-3 filter drop-shadow-sm">🎨</span>
                     <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Colors</span>
                 </div>
@@ -539,37 +565,31 @@
                     <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Opposites</span>
                 </div>
                 
-                <!-- Bangladesh Flag -->
                 <div class="bg-teal-50 p-5 rounded-2xl border border-teal-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
                     <span class="text-4xl mb-3 filter drop-shadow-sm">🇧🇩</span>
                     <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Countries</span>
                 </div>
 
-                <!-- Human Body -->
                 <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
                     <span class="text-4xl mb-3 filter drop-shadow-sm">💪</span>
                     <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Body Parts</span>
                 </div>
 
-                <!-- Solar System -->
                 <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
                     <span class="text-4xl mb-3 filter drop-shadow-sm">🪐</span>
                     <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Solar System</span>
                 </div>
 
-                <!-- Furniture -->
                 <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
                     <span class="text-4xl mb-3 filter drop-shadow-sm">🪑</span>
                     <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Furniture</span>
                 </div>
 
-                <!-- Crockeries -->
                 <div class="bg-cyan-50 p-5 rounded-2xl border border-cyan-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
                     <span class="text-4xl mb-3 filter drop-shadow-sm">🍽️</span>
                     <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Crockeries</span>
                 </div>
 
-                <!-- Vehicles -->
                 <div class="bg-yellow-50 p-5 rounded-2xl border border-yellow-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
                     <span class="text-4xl mb-3 filter drop-shadow-sm">🚍</span>
                     <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Vehicles</span>
@@ -582,9 +602,8 @@
         </div>
     </section>
 
-    <!-- NEW Upcoming Projects Section (Enhanced 3D Design) -->
+    <!-- NEW Upcoming Projects Section -->
     <section id="upcoming" class="py-24 bg-white relative overflow-hidden">
-        <!-- Background Decor -->
         <div class="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] opacity-30"></div>
         <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-brand-cream to-transparent"></div>
         
@@ -602,154 +621,90 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Class 1: The Beginning (Orange Theme) -->
+                <!-- Class 1 -->
                 <div class="relative bg-white rounded-3xl p-8 border-2 border-orange-100 border-b-[8px] border-b-orange-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
-                    <!-- 3D Floating Icon -->
-                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-orange-400 to-red-400 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">
-                        🎒
-                    </div>
-                    <!-- Background Blob -->
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-orange-400 to-red-400 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">🎒</div>
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-orange-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
-                    
                     <div class="relative z-10 mt-4">
                         <span class="bg-orange-100 text-orange-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-orange-200">Coming Soon</span>
                         <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">Class 1</h3>
                         <div class="h-1 w-12 bg-orange-400 rounded-full mb-4"></div>
-                        <p class="text-slate-500 font-medium leading-relaxed">
-                            Foundational literacy & numeracy modules designed to make the first step into school fun and engaging.
-                        </p>
-                        <div class="mt-6 flex gap-2">
-                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Math">🧮</span>
-                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Reading">📖</span>
-                        </div>
+                        <p class="text-slate-500 font-medium leading-relaxed">Foundational literacy & numeracy modules designed to make the first step into school fun and engaging.</p>
+                        <div class="mt-6 flex gap-2"><span class="text-2xl opacity-50 hover:opacity-100 transition">🧮</span><span class="text-2xl opacity-50 hover:opacity-100 transition">📖</span></div>
                     </div>
                 </div>
 
-                <!-- Class 2: Exploring (Blue Theme) -->
+                <!-- Class 2 -->
                 <div class="relative bg-white rounded-3xl p-8 border-2 border-blue-100 border-b-[8px] border-b-blue-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
-                    <!-- 3D Floating Icon -->
-                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">
-                        🔭
-                    </div>
-                    <!-- Background Blob -->
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">🔭</div>
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
-                    
                     <div class="relative z-10 mt-4">
                         <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-blue-200">Coming Soon</span>
                         <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">Class 2</h3>
                         <div class="h-1 w-12 bg-blue-400 rounded-full mb-4"></div>
-                        <p class="text-slate-500 font-medium leading-relaxed">
-                            Expanding horizons with environmental studies and advanced language structures.
-                        </p>
-                        <div class="mt-6 flex gap-2">
-                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Science">🌱</span>
-                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Writing">✍️</span>
-                        </div>
+                        <p class="text-slate-500 font-medium leading-relaxed">Expanding horizons with environmental studies and advanced language structures.</p>
+                        <div class="mt-6 flex gap-2"><span class="text-2xl opacity-50 hover:opacity-100 transition">🌱</span><span class="text-2xl opacity-50 hover:opacity-100 transition">✍️</span></div>
                     </div>
                 </div>
 
-                <!-- Class 3: Discovering (Green Theme) -->
+                <!-- Class 3 -->
                 <div class="relative bg-white rounded-3xl p-8 border-2 border-green-100 border-b-[8px] border-b-green-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
-                    <!-- 3D Floating Icon -->
-                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">
-                        🌍
-                    </div>
-                    <!-- Background Blob -->
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">🌍</div>
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-green-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
-                    
                     <div class="relative z-10 mt-4">
                         <span class="bg-green-100 text-green-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-green-200">Coming Soon</span>
                         <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">Class 3</h3>
                         <div class="h-1 w-12 bg-green-400 rounded-full mb-4"></div>
-                        <p class="text-slate-500 font-medium leading-relaxed">
-                            Introduction to broader scientific concepts, geography, and critical thinking puzzles.
-                        </p>
-                        <div class="mt-6 flex gap-2">
-                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Geography">🗺️</span>
-                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Logic">🧩</span>
-                        </div>
+                        <p class="text-slate-500 font-medium leading-relaxed">Introduction to broader scientific concepts, geography, and critical thinking puzzles.</p>
+                        <div class="mt-6 flex gap-2"><span class="text-2xl opacity-50 hover:opacity-100 transition">🗺️</span><span class="text-2xl opacity-50 hover:opacity-100 transition">🧩</span></div>
                     </div>
                 </div>
 
-                <!-- Class 4: Analyzing (Purple Theme) -->
+                <!-- Class 4 -->
                 <div class="relative bg-white rounded-3xl p-8 border-2 border-purple-100 border-b-[8px] border-b-purple-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
-                    <!-- 3D Floating Icon -->
-                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-purple-400 to-fuchsia-500 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">
-                        🔬
-                    </div>
-                    <!-- Background Blob -->
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-purple-400 to-fuchsia-500 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">🔬</div>
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-purple-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
-                    
                     <div class="relative z-10 mt-4">
                         <span class="bg-purple-100 text-purple-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-purple-200">Coming Soon</span>
                         <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">Class 4</h3>
                         <div class="h-1 w-12 bg-purple-400 rounded-full mb-4"></div>
-                        <p class="text-slate-500 font-medium leading-relaxed">
-                            Deep dives into grammar, complex arithmetic, and elementary science experiments.
-                        </p>
-                        <div class="mt-6 flex gap-2">
-                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Physics">⚛️</span>
-                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Tech">💻</span>
-                        </div>
+                        <p class="text-slate-500 font-medium leading-relaxed">Deep dives into grammar, complex arithmetic, and elementary science experiments.</p>
+                        <div class="mt-6 flex gap-2"><span class="text-2xl opacity-50 hover:opacity-100 transition">⚛️</span><span class="text-2xl opacity-50 hover:opacity-100 transition">💻</span></div>
                     </div>
                 </div>
 
-                <!-- Class 5: Mastering (Red Theme) -->
+                <!-- Class 5 -->
                 <div class="relative bg-white rounded-3xl p-8 border-2 border-rose-100 border-b-[8px] border-b-rose-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
-                    <!-- 3D Floating Icon -->
-                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-rose-400 to-pink-500 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">
-                        🎓
-                    </div>
-                    <!-- Background Blob -->
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-rose-400 to-pink-500 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">🎓</div>
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-rose-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
-                    
                     <div class="relative z-10 mt-4">
                         <span class="bg-rose-100 text-rose-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-rose-200">Coming Soon</span>
                         <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">Class 5</h3>
                         <div class="h-1 w-12 bg-rose-400 rounded-full mb-4"></div>
-                        <p class="text-slate-500 font-medium leading-relaxed">
-                            Comprehensive preparatory system for secondary education and final primary exams.
-                        </p>
-                        <div class="mt-6 flex gap-2">
-                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Achievement">🏆</span>
-                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="History">📜</span>
-                        </div>
+                        <p class="text-slate-500 font-medium leading-relaxed">Comprehensive preparatory system for secondary education and final primary exams.</p>
+                        <div class="mt-6 flex gap-2"><span class="text-2xl opacity-50 hover:opacity-100 transition">🏆</span><span class="text-2xl opacity-50 hover:opacity-100 transition">📜</span></div>
                     </div>
                 </div>
 
-                <!-- Class 6: Advanced (Cyan Theme) -->
+                <!-- Class 6 -->
                 <div class="relative bg-white rounded-3xl p-8 border-2 border-cyan-100 border-b-[8px] border-b-cyan-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
-                    <!-- 3D Floating Icon -->
-                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-cyan-400 to-teal-400 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">
-                        📐
-                    </div>
-                    <!-- Background Blob -->
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-cyan-400 to-teal-400 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">📐</div>
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-cyan-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
-                    
                     <div class="relative z-10 mt-4">
                         <span class="bg-cyan-100 text-cyan-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-cyan-200">Coming Soon</span>
                         <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">Class 6</h3>
                         <div class="h-1 w-12 bg-cyan-400 rounded-full mb-4"></div>
-                        <p class="text-slate-500 font-medium leading-relaxed">
-                            Transitioning to secondary education with advanced algebra, geometry, and creative writing.
-                        </p>
-                        <div class="mt-6 flex gap-2">
-                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Geometry">📐</span>
-                            <span class="text-2xl filter grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition cursor-help" title="Literature">📚</span>
-                        </div>
+                        <p class="text-slate-500 font-medium leading-relaxed">Transitioning to secondary education with advanced algebra, geometry, and creative writing.</p>
+                        <div class="mt-6 flex gap-2"><span class="text-2xl opacity-50 hover:opacity-100 transition">📐</span><span class="text-2xl opacity-50 hover:opacity-100 transition">📚</span></div>
                     </div>
                 </div>
-
-                <!-- Placeholder for Future -->
+                
+                <!-- Placeholder -->
                 <div class="relative bg-slate-50 rounded-3xl p-8 border-2 border-dashed border-slate-200 shadow-inner flex flex-col justify-center items-center text-center opacity-75">
-                    <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center text-3xl text-slate-300 mb-4">
-                        <i class="fas fa-plus"></i>
-                    </div>
+                    <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center text-3xl text-slate-300 mb-4"><i class="fas fa-plus"></i></div>
                     <h3 class="text-xl font-bold text-slate-400">More to Come</h3>
                     <p class="text-sm text-slate-400 mt-2">We are constantly innovating.</p>
                 </div>
-
             </div>
         </div>
     </section>
@@ -762,44 +717,29 @@
                 
                 <div class="relative z-10 grid md:grid-cols-2 gap-16 items-center">
                     <div class="fade-up">
-                        <div class="inline-block px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-white/5">
-                            Mission & Vision
-                        </div>
+                        <div class="inline-block px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-white/5">Mission & Vision</div>
                         <h2 class="text-3xl md:text-5xl font-extrabold mb-8 leading-tight">Building the Future of Education in Bangladesh</h2>
-                        <p class="text-slate-300 mb-10 leading-relaxed text-lg">
-                            With over 45 million students in Bangladesh, the demand for quality, accessible digital education is skyrocketing. FunLearnBD is positioned to lead the early childhood EdTech market with our proprietary trilingual curriculum. We are seeking partners to expand our reach and impact.
-                        </p>
+                        <p class="text-slate-300 mb-10 leading-relaxed text-lg">With over 45 million students in Bangladesh, the demand for quality, accessible digital education is skyrocketing. FunLearnBD is positioned to lead the early childhood EdTech market with our proprietary trilingual curriculum. We are seeking partners to expand our reach and impact.</p>
                         <div class="flex gap-4">
-                            <button class="bg-brand-orange text-white px-8 py-4 rounded-2xl font-bold hover:bg-orange-600 transition shadow-lg hover:shadow-orange-500/30 hover:-translate-y-1">
-                                Request Pitch Deck
-                            </button>
+                            <button class="bg-brand-orange text-white px-8 py-4 rounded-2xl font-bold hover:bg-orange-600 transition shadow-lg hover:shadow-orange-500/30 hover:-translate-y-1">Request Pitch Deck</button>
                         </div>
                     </div>
                     
                     <div class="relative fade-up delay-200">
-                        <!-- Happy Mascot - Adjusted size (smaller) and position (higher) -->
                         <img src="mascot_happy.png" alt="Mascot Happy" loading="lazy" class="absolute -top-40 -right-10 w-60 h-60 object-cover z-20 hidden md:block mascot-float drop-shadow-2xl">
-
                         <div class="grid grid-cols-2 gap-6">
-                            <!-- Card 1: Updated to Individual Subscription -->
                             <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
                                 <div class="text-4xl font-extrabold text-brand-green mb-2">B2C</div>
                                 <div class="text-xs text-slate-400 font-bold uppercase tracking-wide">Individual Subscription</div>
                             </div>
-                            
-                            <!-- Card 2: Core Languages -->
                             <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
                                 <div class="text-4xl font-extrabold text-brand-red mb-2">3</div>
                                 <div class="text-xs text-slate-400 font-bold uppercase tracking-wide">Core Languages</div>
                             </div>
-                            
-                            <!-- Card 3: Learning Modules -->
                             <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
                                 <div class="text-4xl font-extrabold text-brand-yellow mb-2">16+</div>
                                 <div class="text-xs text-slate-400 font-bold uppercase tracking-wide">Learning Modules</div>
                             </div>
-                            
-                            <!-- Card 4: Updated to B2B to avoid duplicate -->
                             <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
                                 <div class="text-4xl font-extrabold text-white mb-2">B2B</div>
                                 <div class="text-xs text-slate-400 font-bold uppercase tracking-wide">School Partnerships</div>
@@ -818,12 +758,9 @@
                 <div class="col-span-1 md:col-span-1">
                     <div class="mb-6 flex gap-4 items-center">
                         <img src="logo.png" alt="FunLearnBD Logo" loading="lazy" class="h-20 w-auto rounded-lg shadow-sm transform hover:scale-105 transition-transform duration-300">
-                        <!-- Idle Mascot in Footer -->
                         <img src="mascot_idle.png" class="h-16 w-16 object-contain">
                     </div>
-                    <p class="text-sm text-slate-500 leading-relaxed">
-                        Making learning accessible, fun, and culturally relevant for every child in Bangladesh.
-                    </p>
+                    <p class="text-sm text-slate-500 leading-relaxed">Making learning accessible, fun, and culturally relevant for every child in Bangladesh.</p>
                 </div>
                 <div>
                     <h4 class="font-bold text-slate-900 mb-6 text-sm uppercase tracking-wider">Product</h4>
@@ -862,19 +799,16 @@
     </footer>
 
     <script>
-        // Intro Animation Sequence & Audio Logic
         window.addEventListener('DOMContentLoaded', () => {
             const introContainer = document.getElementById('intro-mascots-container');
             const introLogo = document.getElementById('intro-logo');
             const overlay = document.getElementById('intro-overlay');
             const body = document.getElementById('main-body');
 
-            // Advanced Voiceover Function with Emotion Simulation
             function speakIntro() {
                 const synth = window.speechSynthesis;
-                synth.cancel(); // Clear queue
+                synth.cancel(); 
 
-                // Helper to speak a chunk with specific emotion
                 function speakChunk(text, pitch, rate) {
                     const msg = new SpeechSynthesisUtterance(text);
                     msg.volume = 1;
@@ -893,79 +827,66 @@
                     synth.speak(msg);
                 }
 
-                // Sequence of "Emotions"
                 speakChunk("Welcome to FunLearnBD", 1.2, 0.9);
                 speakChunk("Are you ready to Play and Learn", 1.3, 1.0);
                 speakChunk("Lets Go!", 1.5, 1.2);
             }
 
             if (window.speechSynthesis.getVoices().length === 0) {
-                window.speechSynthesis.onvoiceschanged = () => {
-                    // Pre-load voices
-                };
+                window.speechSynthesis.onvoiceschanged = () => { };
             }
 
-            // Using ONLY the generic filenames, consistent with request
-            // We'll adjust specific positions via JS if not covered by CSS classes for fine-tuning, 
-            // but the CSS classes .intro-mascot-mobile handles the center logic for mobile.
-            // For Desktop, we stick to the layout that worked:
+            const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
+            // Using ONLY the generic filenames
             const mascots = [
-                { src: 'mascot_waving.png', style: 'bottom: 18%; left: 14%; width: 26%; max-width: 190px;' }, // Tiger
-                { src: 'mascot_happy.png', style: 'bottom: 18%; left: 25%; width: 42%; max-width: 300px;' }, // Bunny
+                { src: 'mascot_waving.png', style: 'bottom: 18%; left: 14%; width: 18%; max-width: 133px;' }, // Tiger - Reduced by 30%
+                { src: 'mascot_happy.png', style: 'bottom: 18%; left: 25%; width: 63%; max-width: 450px;' }, // Bunny - Increased by 50%
                 { src: 'mascot_jumping.png', style: 'bottom: 18%; left: 60%; width: 26%; max-width: 190px;' }, // Doel
-                { src: 'mascot_talking.png', style: 'bottom: 18%; left: 73%; width: 26%; max-width: 190px;' } // Peacock
+                { src: 'mascot_talking.png', style: 'bottom: 18%; left: 73%; width: 30%; max-width: 218px;' } // Peacock - Increased by ~15%
             ];
 
-            // 1. Inject Mascots
             mascots.forEach((m, index) => {
                 const img = document.createElement('img');
                 img.src = m.src;
                 
-                if (window.matchMedia("(max-width: 767px)").matches) {
-                    img.className = 'intro-mascot-mobile drop-shadow-2xl';
+                if (isMobile) {
+                    img.className = 'intro-mascot-single drop-shadow-2xl';
                 } else {
                     img.className = 'intro-mascot drop-shadow-2xl'; 
                     img.style.cssText = m.style; 
                     
-                    // Desktop Staggered Entrance
                     setTimeout(() => {
                         img.classList.add('show');
                         setTimeout(() => img.classList.add('animate-bounce-fun'), 600);
-                    }, 1000 + (index * 400)); // Delayed start after map
+                    }, 1000 + (index * 400)); 
                 }
                 introContainer.appendChild(img);
             });
 
-            const isMobile = window.matchMedia("(max-width: 767px)").matches;
-
-            // Mobile Specific Sequencing
             if (isMobile) {
-                const mascotEls = document.querySelectorAll('.intro-mascot-mobile');
-                const cycleTime = 1200; 
+                const mascotEls = document.querySelectorAll('.intro-mascot-single');
+                const cycleTime = 1500; 
                 
                 // Start sequence after map appears
                 setTimeout(() => {
                     mascotEls.forEach((el, i) => {
                         setTimeout(() => {
-                            // Hide previous if exists
                             if(i > 0) {
                                  mascotEls[i-1].classList.remove('show');
                                  mascotEls[i-1].style.opacity = '0'; 
                             }
-                            // Show current
                             el.classList.add('show');
                         }, i * cycleTime);
                     });
                 }, 1000);
             }
 
-            // Inject Bangladesh Map (First!)
+            // Inject Bangladesh Map
             const mapImg = document.createElement('img');
             mapImg.src = 'bangladesh.png';
             mapImg.className = 'intro-map-bg';
             
-            // Center the map, bigger for background
-            // Mobile: 90% width (Increased size)
             const mapStyle = isMobile 
                 ? 'bottom: 20%; left: 50%; width: 90%; max-width: 600px;' 
                 : 'bottom: 10%; left: 50%; width: 60%; max-width: 800px;';
@@ -973,25 +894,20 @@
             mapImg.style.cssText = mapStyle;
             introContainer.appendChild(mapImg);
             
-            // Appear from far to close immediately
             setTimeout(() => {
                 mapImg.classList.add('show');
             }, 100); 
 
-            // 2. Show Logo & Play Audio
             setTimeout(() => {
                 introLogo.classList.add('show');
-                // Try to speak immediately. Note: Browsers may block this without interaction.
                 speakIntro(); 
-            }, 100); // Show with map
+            }, 100); 
             
-            // 2.5 Show Text
             setTimeout(() => {
                 const textEl = document.getElementById('intro-text');
                 if(textEl) textEl.classList.add('show');
             }, 2200);
 
-            // 3. Exit Animation
             setTimeout(() => {
                 const textEl = document.getElementById('intro-text');
                 introLogo.style.opacity = '0';
@@ -1006,11 +922,9 @@
                 mapImg.style.transition = 'all 0.8s ease-in';
 
                 if (isMobile) {
-                     // Fade out last mobile mascot
-                    const mobileMascots = document.querySelectorAll('.intro-mascot-mobile');
+                    const mobileMascots = document.querySelectorAll('.intro-mascot-single');
                     mobileMascots.forEach(el => el.style.opacity = '0');
                 } else {
-                    // Fly out desktop mascots
                     const images = document.querySelectorAll('.intro-mascot');
                     images.forEach((img, i) => {
                         img.classList.remove('animate-bounce-fun');
@@ -1021,33 +935,28 @@
                         img.style.transform = `translate(${dir.x}vw, ${dir.y}vh) rotate(${Math.random() * 360}deg)`;
                     });
                 }
-            }, 6000); // Slightly longer for sequence
+            }, 7500); // Increased to allow full cycle
 
-            // 4. Remove Overlay
             setTimeout(() => {
                 overlay.style.opacity = '0';
                 overlay.style.visibility = 'hidden';
                 body.style.overflowY = 'auto'; 
-            }, 6800);
+            }, 8300);
         });
 
-        // Hero Mascot Cycle Script
         const heroPoses = ['mascot_waving.png', 'mascot_talking.png', 'mascot_idle.png'];
         let currentPoseIndex = 0;
         const heroMascot = document.getElementById('hero-mascot');
 
         setInterval(() => {
             if (heroMascot) {
-                // Fade out
                 heroMascot.style.opacity = '0'; 
                 heroMascot.style.transform = 'scale(0.9)';
                 
                 setTimeout(() => {
-                    // Change Image
                     currentPoseIndex = (currentPoseIndex + 1) % heroPoses.length;
                     heroMascot.src = heroPoses[currentPoseIndex];
                     
-                    // Fade in
                     heroMascot.style.opacity = '1';
                     heroMascot.style.transform = 'scale(1)';
                 }, 500); 
