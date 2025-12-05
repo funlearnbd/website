@@ -145,7 +145,7 @@
         .delay-400 { animation-delay: 400ms; }
         .delay-500 { animation-delay: 500ms; }
 
-        /* --- INTRO ANIMATION RESPONSIVE STYLES --- */
+        /* Intro Animation Styles */
         #intro-overlay {
             position: fixed;
             top: 0;
@@ -166,7 +166,20 @@
             opacity: 0;
             transform: scale(0.5) translateY(100px);
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 101; 
+            z-index: 101; /* Ensure mascots are in front */
+        }
+        
+        /* Mobile specific intro mascot class */
+        .intro-mascot-mobile {
+            position: absolute;
+            opacity: 0;
+            bottom: 20%;
+            left: 50%;
+            width: 60%;
+            max-width: 250px;
+            transform: translateX(-50%) scale(0.5) translateY(50px);
+            transition: all 0.5s ease-in-out;
+            z-index: 101;
         }
 
         .intro-mascot.show {
@@ -174,66 +187,42 @@
             transform: scale(1) translateY(0);
         }
 
-        /* Mascot Positioning Classes (Responsive) */
-        /* Mobile First (Default) */
-        .mascot-pos-0 { bottom: 18%; left: 2%; width: 32%; max-width: 160px; }   /* Tiger */
-        .mascot-pos-1 { bottom: 18%; left: 28%; width: 45%; max-width: 220px; z-index: 102; } /* Bunny (Center-left) */
-        .mascot-pos-2 { bottom: 18%; right: 22%; width: 30%; max-width: 160px; }  /* Doel */
-        .mascot-pos-3 { bottom: 18%; right: 2%; width: 30%; max-width: 160px; }   /* Peacock */
-
-        /* Desktop Overrides (min-width: 768px) */
-        @media (min-width: 768px) {
-            .mascot-pos-0 { left: 14%; width: 26%; max-width: 190px; }
-            .mascot-pos-1 { left: 25%; width: 42%; max-width: 300px; }
-            .mascot-pos-2 { right: auto; left: 60%; width: 26%; max-width: 190px; }
-            .mascot-pos-3 { right: auto; left: 73%; width: 26%; max-width: 190px; }
+        .intro-mascot-mobile.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1) translateY(0);
         }
 
-        /* Map Background */
+        /* New class for the map background */
         .intro-map-bg {
             position: absolute;
             opacity: 0;
-            transform: scale(0.2) translateX(-50%);
+            transform: scale(0.2) translateX(-50%); /* Start small and centered */
             transform-origin: center bottom;
-            transition: all 1s ease-out;
-            z-index: 90;
-            
-            /* Mobile */
-            bottom: 15%; 
-            left: 50%; 
-            width: 95%; 
-            max-width: 400px;
-        }
-
-        @media (min-width: 768px) {
-            .intro-map-bg {
-                width: 108%;
-                max-width: 840px;
-            }
+            transition: all 1.5s ease-out;
+            z-index: 90; /* Behind mascots */
         }
 
         .intro-map-bg.show {
-            opacity: 0.4;
+            opacity: 0.4; /* Slightly transparent as background */
             transform: scale(1) translateX(-50%);
         }
 
-        /* Logo */
         .intro-logo {
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease-out;
-            z-index: 102;
+            z-index: 102; /* In front of everything */
+            margin-bottom: 330px;
             
-            /* Mobile */
-            width: 280px;
-            max-width: 85%;
-            margin-bottom: 220px; 
+            /* Mobile Logo Size */
+            width: 280px; 
+            max-width: 80%;
         }
-
+        
+        /* Laptop Logo Size */
         @media (min-width: 768px) {
             .intro-logo {
                 width: 480px;
-                margin-bottom: 330px;
             }
         }
 
@@ -242,11 +231,17 @@
             transform: translateY(0);
         }
         
-        /* Text */
+        .intro-text.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         .intro-text {
             position: absolute;
+            bottom: 5%;
+            font-size: 1.5rem;
             font-weight: 800;
-            color: #006a4e;
+            color: #006a4e; /* Brand green */
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease-out;
@@ -254,10 +249,6 @@
             letter-spacing: 0.05em;
             text-align: center;
             width: 100%;
-
-            /* Mobile */
-            font-size: 1.2rem;
-            bottom: 8%;
         }
 
         @media (min-width: 768px) {
@@ -265,11 +256,6 @@
                 font-size: 2rem;
                 bottom: 8%;
             }
-        }
-        
-        .intro-text.show {
-            opacity: 1;
-            transform: translateY(0);
         }
     </style>
 </head>
@@ -331,6 +317,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 lg:pt-16 pb-24 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 <div class="fade-up order-2 lg:order-1 text-center lg:text-left">
+                    <!-- ... existing content ... -->
                     <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-green-100 text-brand-green text-xs font-bold uppercase tracking-wide mb-6 shadow-sm">
                         <span class="relative flex h-2 w-2">
                           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -908,7 +895,6 @@
             const introLogo = document.getElementById('intro-logo');
             const overlay = document.getElementById('intro-overlay');
             const body = document.getElementById('main-body');
-            const introText = document.getElementById('intro-text');
 
             // Advanced Voiceover Function with Emotion Simulation
             function speakIntro() {
@@ -947,76 +933,121 @@
                 };
             }
 
+            // Check if Mobile
+            const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
             // Using ONLY the generic filenames, consistent with request
+            // We'll adjust specific positions via JS if not covered by CSS classes for fine-tuning, 
+            // but the CSS classes .intro-mascot-mobile handles the center logic for mobile.
+            // For Desktop, we stick to the layout that worked:
             const mascots = [
-                { src: 'mascot_waving.png', style: 'bottom: 8%; left: 5%; width: 26%; max-width: 190px;' }, // Tiger - Adjusted gap
-                { src: 'mascot_happy.png', style: 'bottom: 8%; left: 22%; width: 42%; max-width: 300px;' }, // Bunny - Adjusted gap
-                { src: 'mascot_jumping.png', style: 'bottom: 8%; left: 58%; width: 26%; max-width: 190px;' }, // Doel - Adjusted gap
-                { src: 'mascot_talking.png', style: 'bottom: 8%; left: 77%; width: 26%; max-width: 190px;' } // Peacock - Adjusted gap
+                { src: 'mascot_waving.png', style: 'bottom: 8%; left: 5%; width: 26%; max-width: 190px;' }, // Tiger
+                { src: 'mascot_happy.png', style: 'bottom: 8%; left: 22%; width: 42%; max-width: 300px;' }, // Bunny
+                { src: 'mascot_jumping.png', style: 'bottom: 8%; left: 58%; width: 26%; max-width: 190px;' }, // Doel
+                { src: 'mascot_talking.png', style: 'bottom: 8%; left: 77%; width: 26%; max-width: 190px;' } // Peacock
             ];
 
-            // 1. Inject Mascots
+            // Inject Mascots
             mascots.forEach((m, index) => {
                 const img = document.createElement('img');
                 img.src = m.src;
-                img.className = 'intro-mascot drop-shadow-2xl'; 
-                img.style.cssText = m.style; 
-                introContainer.appendChild(img);
                 
-                setTimeout(() => {
-                    img.classList.add('show');
+                if (isMobile) {
+                    img.className = 'intro-mascot-mobile drop-shadow-2xl';
+                    // Sequential appearance handled below
+                } else {
+                    img.className = 'intro-mascot drop-shadow-2xl'; 
+                    img.style.cssText = m.style; 
+                    
+                    // Desktop Staggered Entrance
                     setTimeout(() => {
-                        img.classList.add('animate-bounce-fun');
-                    }, 600);
-                }, 300 + (index * 400)); // Slightly later start
+                        img.classList.add('show');
+                        setTimeout(() => img.classList.add('animate-bounce-fun'), 600);
+                    }, 300 + (index * 400));
+                }
+                introContainer.appendChild(img);
             });
 
-            // Inject Bangladesh Map (as background, appearing from far)
+            // Mobile Specific Sequencing
+            if (isMobile) {
+                const mascotEls = document.querySelectorAll('.intro-mascot-mobile');
+                const cycleTime = 1200; // 1.2s per mascot
+                
+                mascotEls.forEach((el, i) => {
+                    setTimeout(() => {
+                        // Hide previous if exists
+                        if(i > 0) {
+                             mascotEls[i-1].classList.remove('show');
+                             mascotEls[i-1].style.opacity = '0'; // Force hide
+                        }
+                        // Show current
+                        el.classList.add('show');
+                    }, i * cycleTime);
+                });
+            }
+
+            // Inject Bangladesh Map (as background)
             const mapImg = document.createElement('img');
             mapImg.src = 'bangladesh.png';
             mapImg.className = 'intro-map-bg';
-            // Center the map, make it much bigger for background
-            mapImg.style.cssText = 'bottom: 5%; left: 50%; width: 90%; max-width: 700px;';
+            
+            // Center the map, bigger for background
+            // Mobile: 95% width, Desktop: 108% width
+            const mapStyle = isMobile 
+                ? 'bottom: 15%; left: 50%; width: 95%; max-width: 400px;' 
+                : 'bottom: 5%; left: 50%; width: 108%; max-width: 840px;';
+            
+            mapImg.style.cssText = mapStyle;
             introContainer.appendChild(mapImg);
             
             // Appear from far to close
             setTimeout(() => {
                 mapImg.classList.add('show');
-            }, 100); // Start early
+            }, 100); 
 
             // 2. Show Logo & Play Audio
             setTimeout(() => {
                 introLogo.classList.add('show');
-                // Try to speak immediately. Note: Browsers may block this without interaction.
+                // Try to speak
                 speakIntro(); 
             }, 1800);
             
             // 2.5 Show Text
             setTimeout(() => {
-                introText.classList.add('show');
+                const textEl = document.getElementById('intro-text');
+                if(textEl) textEl.classList.add('show');
             }, 2200);
-
 
             // 3. Exit Animation
             setTimeout(() => {
+                const textEl = document.getElementById('intro-text');
                 introLogo.style.opacity = '0';
                 introLogo.style.transform = 'translateY(-20px)';
-                introText.style.opacity = '0';
-                introText.style.transform = 'translateY(20px)';
+                if(textEl) {
+                    textEl.style.opacity = '0';
+                    textEl.style.transform = 'translateY(20px)';
+                }
                 
                 mapImg.style.opacity = '0';
-                mapImg.style.transform = 'scale(1.2) translateX(-50%)'; // Fade out expanding
+                mapImg.style.transform = 'scale(1.2) translateX(-50%)'; 
                 mapImg.style.transition = 'all 0.8s ease-in';
 
-                const images = document.querySelectorAll('.intro-mascot');
-                images.forEach((img, i) => {
-                    img.classList.remove('animate-bounce-fun');
-                    img.style.transition = 'all 0.8s ease-in';
-                    img.style.opacity = '0';
-                    const directions = [{ x: -100, y: 100 }, { x: -50, y: -100 }, { x: 50, y: -100 }, { x: 100, y: 100 }, { x: 0, y: 100 }];
-                    const dir = directions[i % 5];
-                    img.style.transform = `translate(${dir.x}vw, ${dir.y}vh) rotate(${Math.random() * 360}deg)`;
-                });
+                if (isMobile) {
+                     // Fade out last mobile mascot
+                    const mobileMascots = document.querySelectorAll('.intro-mascot-mobile');
+                    mobileMascots.forEach(el => el.style.opacity = '0');
+                } else {
+                    // Fly out desktop mascots
+                    const images = document.querySelectorAll('.intro-mascot');
+                    images.forEach((img, i) => {
+                        img.classList.remove('animate-bounce-fun');
+                        img.style.transition = 'all 0.8s ease-in';
+                        img.style.opacity = '0';
+                        const directions = [{ x: -100, y: 100 }, { x: -50, y: -100 }, { x: 50, y: -100 }, { x: 100, y: 100 }];
+                        const dir = directions[i % 4];
+                        img.style.transform = `translate(${dir.x}vw, ${dir.y}vh) rotate(${Math.random() * 360}deg)`;
+                    });
+                }
             }, 5500);
 
             // 4. Remove Overlay
@@ -1028,13 +1059,7 @@
         });
 
         // Hero Mascot Cycle Script
-        // Cycle: Tiger -> Doel -> Bunny -> Peacock
-        const heroPoses = [
-            'mascot_waving.png',   // Tiger
-            'mascot_jumping.png',  // Doel
-            'mascot_happy.png',    // Bunny
-            'mascot_talking.png'   // Peacock
-        ];
+        const heroPoses = ['mascot_waving.png', 'mascot_talking.png', 'mascot_idle.png'];
         let currentPoseIndex = 0;
         const heroMascot = document.getElementById('hero-mascot');
 
@@ -1052,9 +1077,9 @@
                     // Fade in
                     heroMascot.style.opacity = '1';
                     heroMascot.style.transform = 'scale(1)';
-                }, 500); // Wait for fade out to complete
+                }, 500); 
             }
-        }, 4000); // Change every 4 seconds
+        }, 4000); 
 
         function changeMascot(pose) {
             const mascot = document.getElementById('feature-mascot');
