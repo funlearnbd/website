@@ -849,81 +849,94 @@
             let currentMascotIndex = 0;
             let mascotElement = null;
 
-            // Timeline (Total: ~7 seconds)
-            // 0ms: Logo appears
-            setTimeout(() => {
-                logo.classList.add('show');
-            }, 100);
+            // ===== PRELOAD ALL IMAGES =====
+            const imagesToPreload = [
+                'logo.png',
+                'bangladesh.png',
+                'mascot_waving.png',
+                'mascot_talking.png',
+                'mascot_happy.png',
+                'mascot_jumping.png',
+                'mascot_idle.png'  // For hero section
+            ];
 
-            // 500ms: Map starts growing
-            setTimeout(() => {
-                map.classList.add('show');
-            }, 500);
+            let imagesLoaded = 0;
+            const totalImages = imagesToPreload.length;
 
-            // 1800ms: First mascot (Tiger)
-            setTimeout(() => {
-                showMascot(0);
-            }, 1800);
+            function preloadImages(callback) {
+                imagesToPreload.forEach(src => {
+                    const img = new Image();
+                    img.onload = () => {
+                        imagesLoaded++;
+                        if (imagesLoaded === totalImages) {
+                            callback();
+                        }
+                    };
+                    img.onerror = () => {
+                        imagesLoaded++;
+                        if (imagesLoaded === totalImages) {
+                            callback();
+                        }
+                    };
+                    img.src = src;
+                });
+            }
 
-            // 2800ms: Second mascot (Doel)
-            setTimeout(() => {
-                showMascot(1);
-            }, 2800);
+            // Start intro animation only after all images are loaded
+            preloadImages(startIntroAnimation);
 
-            // 3800ms: Third mascot (Bunny) + Text appears
-            setTimeout(() => {
-                showMascot(2);
-                text.classList.add('show');
-            }, 3800);
+            function startIntroAnimation() {
 
-            // 4800ms: Fourth mascot (Peacock)
-            setTimeout(() => {
-                showMascot(3);
-            }, 4800);
-
-            // 6500ms: Start fade out
-            setTimeout(() => {
-                logo.style.opacity = '0';
-                map.style.opacity = '0';
-                text.style.opacity = '0';
-                if (mascotElement) mascotElement.classList.add('hide');
-            }, 6500);
-
-            // 7300ms: Hide overlay completely
-            setTimeout(() => {
-                overlay.style.opacity = '0';
-                overlay.style.visibility = 'hidden';
-                body.style.overflowY = 'auto';
-            }, 7300);
-
-            function showMascot(index) {
-                // Hide previous mascot
-                if (mascotElement) {
-                    mascotElement.classList.remove('show');
-                    mascotElement.classList.add('hide');
-                }
-
-                // Create new mascot
-                mascotElement = document.createElement('img');
-                mascotElement.src = mascotSequence[index];
-                mascotElement.className = 'intro-mascot drop-shadow-2xl';
-                
-                // Apply specific size classes
-                if (index === 0) {
-                    // Tiger - smaller
-                    mascotElement.classList.add('tiger');
-                } else if (index === 2) {
-                    // Bunny - bigger
-                    mascotElement.classList.add('bunny');
-                }
-                
-                mascotElement.alt = 'Mascot';
-                mascotsContainer.appendChild(mascotElement);
-
-                // Trigger show animation
+            function startIntroAnimation() {
+                // Timeline (Total: ~7 seconds)
+                // 0ms: Logo appears
                 setTimeout(() => {
-                    mascotElement.classList.add('show');
-                }, 50);
+                    logo.classList.add('show');
+                }, 100);
+
+                // 500ms: Map starts growing
+                setTimeout(() => {
+                    map.classList.add('show');
+                }, 500);
+
+                // 1800ms: First mascot (Tiger)
+                setTimeout(() => {
+                    showMascot(0);
+                }, 1800);
+
+                // 2800ms: Second mascot (Doel)
+                setTimeout(() => {
+                    showMascot(1);
+                }, 2800);
+
+                // 3800ms: Third mascot (Bunny) + Text appears
+                setTimeout(() => {
+                    showMascot(2);
+                    text.classList.add('show');
+                }, 3800);
+
+                // 4800ms: Fourth mascot (Peacock)
+                setTimeout(() => {
+                    showMascot(3);
+                }, 4800);
+
+                // 6500ms: Start fade out
+                setTimeout(() => {
+                    logo.style.opacity = '0';
+                    map.style.opacity = '0';
+                    text.style.opacity = '0';
+                    if (mascotElement) mascotElement.classList.add('hide');
+                }, 6500);
+
+                // 7300ms: Hide overlay completely
+                setTimeout(() => {
+                    overlay.style.opacity = '0';
+                    overlay.style.visibility = 'hidden';
+                    body.style.overflowY = 'auto';
+                }, 7300);
+
+                // Voice intro
+                setTimeout(speakIntro, 1000);
             }
 
             // Voice intro
@@ -958,7 +971,35 @@
                 window.speechSynthesis.onvoiceschanged = () => { };
             }
 
-            setTimeout(speakIntro, 1000);
+            function showMascot(index) {
+                // Hide previous mascot
+                if (mascotElement) {
+                    mascotElement.classList.remove('show');
+                    mascotElement.classList.add('hide');
+                }
+
+                // Create new mascot
+                mascotElement = document.createElement('img');
+                mascotElement.src = mascotSequence[index];
+                mascotElement.className = 'intro-mascot drop-shadow-2xl';
+                
+                // Apply specific size classes
+                if (index === 0) {
+                    // Tiger - smaller
+                    mascotElement.classList.add('tiger');
+                } else if (index === 2) {
+                    // Bunny - bigger
+                    mascotElement.classList.add('bunny');
+                }
+                
+                mascotElement.alt = 'Mascot';
+                mascotsContainer.appendChild(mascotElement);
+
+                // Trigger show animation
+                setTimeout(() => {
+                    mascotElement.classList.add('show');
+                }, 50);
+            }
         });
 
         // ===== HERO MASCOT CYCLING =====
