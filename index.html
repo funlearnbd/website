@@ -164,6 +164,9 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            display: inline;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
         }
 
         .mascot-contain {
@@ -430,7 +433,7 @@
 
                 <div class="flex items-center gap-3">
                     <button onclick="toggleLanguage()" id="langToggle" class="hidden md:block text-brand-green px-4 py-2 rounded-full text-sm font-bold hover:bg-brand-green/10 transition-all border border-brand-green/20">
-                        বাংলা
+                        English
                     </button>
                     <button onclick="showLogin()" class="text-brand-green px-4 py-2 rounded-full text-sm font-bold hover:bg-brand-green/10 transition-all">
                         <span data-lang-en="Login" data-lang-bn="লগইন">Login</span>
@@ -649,27 +652,26 @@
     </section>
 
     <!-- Curriculum Preview with Jumping Mascot -->
-    <section id="curriculum" class="py-24 bg-brand-cream relative border-t border-orange-50/50 overflow-hidden">
+    <section id="curriculum" class="py-24 bg-brand-cream relative border-t border-orange-50/50">
         <img src="mascot_jumping.png" alt="Mascot Jumping" class="absolute top-12 right-4 md:right-10 w-32 md:w-48 opacity-90 animate-fly z-0 hidden md:block drop-shadow-xl pointer-events-none">
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 fade-up">
+            <div class="flex flex-col mb-16 gap-6 fade-up">
                 <div>
                     <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4"
                         data-lang-en="Everything Your Child Needs to Excel"
                         data-lang-bn="আপনার সন্তানের উৎকর্ষের জন্য সবকিছু">
                         Everything Your Child Needs to Excel
                     </h2>
-                    <p class="text-slate-500 max-w-lg leading-relaxed text-lg"
-                       data-lang-en='<strong>16+ carefully crafted modules</strong> covering literacy, numeracy, logic, and cultural awareness. From ABCs to world geography—we've got it all! 🌟'
-                       data-lang-bn='<strong>১৬+ সাবধানে তৈরি মডিউল</strong> সাক্ষরতা, সংখ্যাবিজ্ঞান, যুক্তি এবং সাংস্কৃতিক সচেতনতা কভার করে। এবিসি থেকে বিশ্ব ভূগোল পর্যন্ত—আমাদের সবকিছু আছে! 🌟'>
-                        <strong>16+ carefully crafted modules</strong> covering literacy, numeracy, logic, and cultural awareness. 
-                        From ABCs to world geography—we've got it all! 🌟
+                    <p class="text-slate-500 leading-relaxed text-lg mb-6"
+                       data-lang-en='<strong>16+ carefully crafted modules</strong> covering literacy, numeracy, logic, and cultural awareness. We have everything! 🌟'
+                       data-lang-bn='<strong>১৬+ সাবধানে তৈরি মডিউল</strong> সাক্ষরতা, সংখ্যাবিজ্ঞান, যুক্তি এবং সাংস্কৃতিক সচেতনতা কভার করে। আমাদের সবকিছু আছে! 🌟'>
+                        <strong>16+ carefully crafted modules</strong> covering literacy, numeracy, logic, and cultural awareness. We have everything! 🌟
                     </p>
+                    <button class="relative z-20 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-lg text-brand-green font-bold hover:text-green-700 hover:bg-white transition-all inline-flex items-center gap-2 group text-sm uppercase tracking-wide border border-green-100 shadow-sm">
+                        <span data-lang-en="View Full Syllabus" data-lang-bn="সম্পূর্ণ পাঠ্যসূচি দেখুন">View Full Syllabus</span> <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </button>
                 </div>
-                <button class="relative z-20 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-lg text-brand-green font-bold hover:text-green-700 hover:bg-white transition-all flex items-center gap-2 group text-sm uppercase tracking-wide border border-green-100 shadow-sm">
-                    <span data-lang-en="View Full Syllabus" data-lang-bn="সম্পূর্ণ পাঠ্যসূচি দেখুন">View Full Syllabus</span> <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                </button>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
@@ -1485,7 +1487,7 @@
                             callback();
                         }
                     };
-                    img.onerror = () => {
+                    img.onerror = (e) => {
                         imagesLoaded++;
                         if (imagesLoaded === totalImages) {
                             callback();
@@ -1541,7 +1543,6 @@
 
                 // 7300ms: Hide overlay completely and show language selector
                 setTimeout(() => {
-                    overlay.style.opacity = '0';
                     // Fade out and hide overlay
                     overlay.style.opacity = '0';
                     setTimeout(() => {
@@ -1562,7 +1563,6 @@
                         }
                     } catch (e) {
                         // If localStorage fails (some browsers/GitHub Pages), show language selector
-                        console.error('localStorage error:', e);
                         document.getElementById('languageSelector').classList.remove('hidden');
                     }
                 }, 7300);
@@ -1570,7 +1570,6 @@
                 // Safety timeout - ensure overlay is removed even if something goes wrong
                 setTimeout(() => {
                     if (overlay && overlay.style.display !== 'none') {
-                        console.warn('Safety timeout: forcing overlay removal');
                         overlay.style.opacity = '0';
                         overlay.style.display = 'none';
                         body.style.overflowY = 'auto';
@@ -1581,6 +1580,9 @@
                             const savedLang = localStorage.getItem('selectedLanguage');
                             if (!savedLang) {
                                 document.getElementById('languageSelector').classList.remove('hidden');
+                            } else {
+                                applyTranslations(savedLang);
+                                currentLanguage = savedLang;
                             }
                         } catch (e) {
                             document.getElementById('languageSelector').classList.remove('hidden');
