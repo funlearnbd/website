@@ -145,6 +145,34 @@
         .delay-400 { animation-delay: 400ms; }
         .delay-500 { animation-delay: 500ms; }
 
+        /* Brand text styling for FunLearnBD */
+        .brand-text-fun {
+            color: #006a4e;
+            font-weight: inherit;
+        }
+        .brand-text-learn {
+            color: #f42a41;
+            font-weight: inherit;
+        }
+        .brand-text-bd {
+            color: #006a4e;
+            font-weight: inherit;
+        }
+        
+        /* Lighter version for dark backgrounds */
+        .brand-text-fun-light {
+            color: #10b981;
+            font-weight: inherit;
+        }
+        .brand-text-learn-light {
+            color: #ef4444;
+            font-weight: inherit;
+        }
+        .brand-text-bd-light {
+            color: #10b981;
+            font-weight: inherit;
+        }
+
         /* --- INTRO ANIMATION STYLES --- */
         #intro-overlay {
             position: fixed;
@@ -360,38 +388,42 @@
                     </div>
                     
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.15] mb-6 tracking-tight">
-                        Empowering the Next Generation with 
-                        <span class="text-gradient">Smart Learning.</span>
+                        Give Your Child the <span class="text-gradient">Gift of Smart Learning</span>
                     </h1>
                     
                     <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0">
-                        FunLearnBD combines <strong>English, Bangla, and Arabic</strong> curriculums into one gamified platform. Built for cognitive development, loved by parents, and trusted by educators.
+                        Where <strong>English, Bangla, and Arabic</strong> come together in one joyful learning journey. 
+                        Designed by educators and built with love for Bangladeshi families.
                     </p>
                     
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="#" class="flex items-center justify-center gap-3 bg-brand-dark text-white px-7 py-4 rounded-xl hover:bg-slate-800 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 group">
-                            <i class="fab fa-google-play text-2xl group-hover:scale-110 transition-transform"></i>
-                            <div class="text-left">
+                        <a href="#" class="flex items-center justify-center gap-3 bg-brand-dark text-white px-7 py-4 rounded-xl hover:bg-slate-800 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 group relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-brand-green/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <i class="fab fa-google-play text-2xl group-hover:scale-110 transition-transform relative z-10"></i>
+                            <div class="text-left relative z-10">
                                 <div class="text-[10px] uppercase font-bold text-slate-400">Get it on</div>
                                 <div class="text-sm font-bold -mt-0.5">Google Play</div>
                             </div>
                         </a>
-                        <a href="#" class="flex items-center justify-center gap-3 bg-white text-brand-dark border border-slate-200 px-7 py-4 rounded-xl hover:bg-slate-50 transition-all shadow-md hover:shadow-lg hover:-translate-y-1 group">
+                        <a href="#" class="flex items-center justify-center gap-3 bg-white text-brand-dark border-2 border-brand-green px-7 py-4 rounded-xl hover:bg-brand-green hover:text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-1 group">
                             <i class="fab fa-apple text-2xl group-hover:scale-110 transition-transform"></i>
                             <div class="text-left">
-                                <div class="text-[10px] uppercase font-bold text-slate-500">Download on the</div>
+                                <div class="text-[10px] uppercase font-bold opacity-75">Download on the</div>
                                 <div class="text-sm font-bold -mt-0.5">App Store</div>
                             </div>
                         </a>
                     </div>
                     
-                    <div class="mt-8 flex items-center justify-center lg:justify-start gap-4 text-sm text-slate-500 font-medium">
-                        <div class="flex -space-x-3">
-                            <div class="w-9 h-9 rounded-full bg-gray-200 border-2 border-white shadow-sm"></div>
-                            <div class="w-9 h-9 rounded-full bg-gray-300 border-2 border-white shadow-sm"></div>
-                            <div class="w-9 h-9 rounded-full bg-gray-400 border-2 border-white shadow-sm"></div>
+                    <div class="mt-8 flex items-center justify-center lg:justify-start gap-4">
+                        <div class="inline-flex items-center gap-3 px-5 py-3 bg-white/80 backdrop-blur-sm rounded-full shadow-md border border-slate-100">
+                            <div class="w-10 h-10 bg-brand-green/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-shield-check text-brand-green text-lg"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-xs text-slate-500 font-medium">100% Safe & Ad-Free</p>
+                                <p class="text-sm text-slate-800 font-bold">Trusted by Parents</p>
+                            </div>
                         </div>
-                        <p>Trusted by <span class="text-brand-green font-bold">10,000+</span> Parents</p>
                     </div>
                 </div>
                 
@@ -425,7 +457,7 @@
                                         <div class="w-8 h-8 bg-brand-orange/20 rounded-full flex items-center justify-center text-brand-orange text-xs">
                                             <i class="fas fa-bars"></i>
                                         </div>
-                                        <span class="font-bold text-slate-700 text-sm">FunLearn</span>
+                                        <span class="font-bold text-sm"><span style="color: #006a4e;">Fun</span><span style="color: #f42a41;">Learn</span><span style="color: #006a4e;">BD</span></span>
                                     </div>
                                     <div class="w-8 h-8 rounded-full bg-slate-200 border-2 border-white"></div>
                                 </div>
@@ -472,8 +504,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col md:flex-row items-center gap-12 mb-20">
                 <div class="md:w-2/3 fade-up">
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6">Why Parents Choose <span class="text-brand-green">FunLearnBD</span></h2>
-                    <p class="text-slate-500 leading-relaxed text-lg border-l-4 border-brand-orange pl-6">We prioritize education quality, child safety, and cultural relevance above all else. Our content is crafted by experts.</p>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6">Why Parents Choose <span style="color: #006a4e;">Fun</span><span style="color: #f42a41;">Learn</span><span style="color: #006a4e;">BD</span></h2>
+                    <p class="text-slate-500 leading-relaxed text-lg border-l-4 border-brand-orange pl-6">We believe every Bangladeshi child deserves access to world-class education. Our platform combines cutting-edge pedagogy with cultural relevance, creating a safe and engaging learning environment.</p>
                 </div>
                 <div class="md:w-1/3 flex justify-center fade-up delay-100">
                     <img id="feature-mascot" src="mascot_talking.png" alt="Mascot Talking" class="w-40 h-40 object-cover rounded-full border-8 border-slate-50 shadow-2xl hover:rotate-3 transition-transform duration-300">
@@ -487,7 +519,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-green transition-colors">100% Safe & Ad-Free</h3>
                     <p class="text-slate-600 text-sm leading-relaxed">
-                        No pop-ups, no external links, and absolutely no ads. A secure walled garden for your child's digital exploration.
+                        Your child's safety is our priority. Zero ads, zero pop-ups, zero distractions. Just a pure, secure learning environment where your little one can explore freely.
                     </p>
                 </div>
 
@@ -497,17 +529,17 @@
                     </div>
                     <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-orange transition-colors">Truly Trilingual</h3>
                     <p class="text-slate-600 text-sm leading-relaxed">
-                        Seamlessly switch between English, Bangla, and Arabic. Designed by linguists to foster early multi-language acquisition.
+                        Give your child the advantage of speaking three languages fluently. English for global opportunities, Bangla for cultural roots, Arabic for Islamic education—all in one app!
                     </p>
                 </div>
 
                 <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover-lift fade-up delay-400 group">
                     <div class="w-14 h-14 bg-red-100 rounded-2xl shadow-sm flex items-center justify-center text-brand-red text-2xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-chart-pie"></i>
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-red transition-colors">Progress Tracking</h3>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-red transition-colors">Watch Them Grow</h3>
                     <p class="text-slate-600 text-sm leading-relaxed">
-                        Weekly reports sent to parents detailing screen time, skills mastered, and areas for improvement.
+                        Receive weekly progress reports showing exactly what your child learned, time spent, and skills mastered. Celebrate every milestone together!
                     </p>
                 </div>
             </div>
@@ -521,9 +553,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 fade-up">
                 <div>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Comprehensive Curriculum</h2>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Everything Your Child Needs to Excel</h2>
                     <p class="text-slate-500 max-w-lg leading-relaxed text-lg">
-                        16+ Modules covering everything from basic literacy to logic and cognitive skills. Explore the learning journey.
+                        <strong>16+ carefully crafted modules</strong> covering literacy, numeracy, logic, and cultural awareness. 
+                        From ABCs to world geography—we've got it all! 🌟
                     </p>
                 </div>
                 <button class="relative z-20 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-lg text-brand-green font-bold hover:text-green-700 hover:bg-white transition-all flex items-center gap-2 group text-sm uppercase tracking-wide border border-green-100 shadow-sm">
@@ -596,13 +629,15 @@
                 </div>
                 
                 <div class="bg-teal-50 p-5 rounded-2xl border border-teal-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
-                    <span class="text-4xl mb-3 filter drop-shadow-sm">🇧🇩</span>
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🗺️</span>
                     <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Countries</span>
                 </div>
 
-                <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
-                    <span class="text-4xl mb-3 filter drop-shadow-sm">💪</span>
-                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Body Parts</span>
+                <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500 relative overflow-hidden">
+                    <div class="w-12 h-12 mb-3 flex items-center justify-center">
+                        <img src="bangladesh.png" alt="Bangladesh" class="w-full h-full object-contain opacity-80">
+                    </div>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Bangladesh</span>
                 </div>
 
                 <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
@@ -626,9 +661,16 @@
                 </div>
             </div>
             
-            <p class="text-center text-sm text-slate-400 mt-16 italic fade-up delay-500">
-                <i class="fas fa-wifi mr-1"></i> Content is downloaded once and available offline.
-            </p>
+            <div class="text-center mt-16 fade-up delay-500">
+                <div class="inline-flex items-center gap-3 px-6 py-3 bg-white rounded-full shadow-lg border border-slate-100">
+                    <div class="w-10 h-10 bg-brand-green/10 rounded-full flex items-center justify-center">
+                        <i class="fas fa-wifi text-brand-green text-lg"></i>
+                    </div>
+                    <p class="text-sm text-slate-600 font-semibold">
+                        <span class="text-brand-green font-bold">Download once, learn forever!</span> All content works offline—perfect for car rides & travel ✈️
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -747,11 +789,17 @@
                 
                 <div class="relative z-10 grid md:grid-cols-2 gap-16 items-center">
                     <div class="fade-up">
-                        <div class="inline-block px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-white/5">Mission & Vision</div>
-                        <h2 class="text-3xl md:text-5xl font-extrabold mb-8 leading-tight">Building the Future of Education in Bangladesh</h2>
-                        <p class="text-slate-300 mb-10 leading-relaxed text-lg">With over 45 million students in Bangladesh, the demand for quality, accessible digital education is skyrocketing. FunLearnBD is positioned to lead the early childhood EdTech market with our proprietary trilingual curriculum. We are seeking partners to expand our reach and impact.</p>
+                        <div class="inline-block px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-white/5">🇧🇩 Made in Bangladesh, For Bangladesh</div>
+                        <h2 class="text-3xl md:text-5xl font-extrabold mb-8 leading-tight">Shaping the Future of 37 Million Young Minds</h2>
+                        <p class="text-slate-300 mb-6 leading-relaxed text-lg">Every child in Bangladesh deserves world-class education in their mother tongue. We're building that future—one app, one child, one family at a time.</p>
+                        <p class="text-slate-300 mb-10 leading-relaxed text-lg">With our proprietary trilingual curriculum and proven track record, <span style="color: #10b981;">Fun</span><span style="color: #ef4444;">Learn</span><span style="color: #10b981;">BD</span> is positioned to become the #1 early childhood EdTech platform in South Asia.</p>
                         <div class="flex gap-4">
-                            <button class="bg-brand-orange text-white px-8 py-4 rounded-2xl font-bold hover:bg-orange-600 transition shadow-lg hover:shadow-orange-500/30 hover:-translate-y-1">Request Pitch Deck</button>
+                            <button class="bg-brand-orange text-white px-8 py-4 rounded-2xl font-bold hover:bg-orange-600 transition shadow-lg hover:shadow-orange-500/30 hover:-translate-y-1 flex items-center gap-2">
+                                <i class="fas fa-file-pdf"></i> Request Pitch Deck
+                            </button>
+                            <button class="bg-white/10 backdrop-blur-md text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/20 transition border border-white/20">
+                                <i class="fas fa-handshake"></i> Partner With Us
+                            </button>
                         </div>
                     </div>
                     
@@ -818,7 +866,7 @@
             </div>
             
             <div class="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-xs text-slate-400 font-medium">© 2025 FunLearnBD Technologies Ltd. All rights reserved.</p>
+                <p class="text-xs text-slate-400 font-medium">© 2025 <span style="color: #006a4e;">Fun</span><span style="color: #f42a41;">Learn</span><span style="color: #006a4e;">BD</span> Technologies Ltd. All rights reserved.</p>
                 <div class="flex gap-6">
                     <a href="#" class="text-slate-400 hover:text-brand-green transition-colors transform hover:scale-110"><i class="fab fa-linkedin text-xl"></i></a>
                     <a href="#" class="text-slate-400 hover:text-brand-green transition-colors transform hover:scale-110"><i class="fab fa-twitter text-xl"></i></a>
