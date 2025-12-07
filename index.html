@@ -356,6 +356,1947 @@
 </head>
 <body class="antialiased flex flex-col min-h-screen" id="main-body" style="overflow-x: hidden; max-width: 100vw;">
 
+    <!-- Language Selection Overlay (appears after intro animation) -->
+    <div id="languageSelector" class="fixed inset-0 bg-white z-[50] flex items-center justify-center hidden">
+        <div class="text-center px-4">
+            <img src="logo.png" alt="FunLearnBD" class="h-32 mx-auto mb-8 drop-shadow-2xl animate-bounce-fun">
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-4">
+                Welcome to <span style="color: #003d2e;">Fun</span><span style="color: #b71c2c;">Learn</span><span style="color: #003d2e;">BD</span>
+            </h1>
+            <p class="text-slate-600 text-lg md:text-xl mb-12">Select Your Language / আপনার ভাষা নির্বাচন করুন</p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto">
+                <button onclick="selectLanguage('en')" class="group bg-white text-brand-green px-8 md:px-12 py-5 md:py-6 rounded-2xl font-bold shadow-2xl hover:shadow-3xl hover:-translate-y-2 transition-all duration-300 border-4 border-white/50 hover:border-yellow-300 hover:scale-105">
+                    <div class="flex items-center gap-3 md:gap-4">
+                        <span class="text-3xl md:text-4xl">🇬🇧</span>
+                        <div class="text-left">
+                            <div class="text-xl md:text-2xl font-extrabold">English</div>
+                            <div class="text-xs md:text-sm text-slate-500 font-normal">Continue in English</div>
+                        </div>
+                    </div>
+                </button>
+                
+                <button onclick="selectLanguage('bn')" class="group bg-white text-brand-green px-8 md:px-12 py-5 md:py-6 rounded-2xl font-bold shadow-2xl hover:shadow-3xl hover:-translate-y-2 transition-all duration-300 border-4 border-white/50 hover:border-yellow-300 hover:scale-105">
+                    <div class="flex items-center gap-3 md:gap-4">
+                        <span class="text-3xl md:text-4xl">🇧🇩</span>
+                        <div class="text-left">
+                            <div class="text-xl md:text-2xl font-extrabold">বাংলা</div>
+                            <div class="text-xs md:text-sm text-slate-500 font-normal">বাংলায় চালিয়ে যান</div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTRO OVERLAY -->
+    <div id="intro-overlay">
+        <!-- Logo -->
+        <img id="intro-logo" src="logo.png" alt="FunLearnBD Logo" class="intro-logo">
+        
+        <!-- Bangladesh Map -->
+        <img id="intro-map" src="bangladesh.png" alt="Bangladesh Map" class="intro-map">
+        
+        <!-- Mascots Container -->
+        <div id="intro-mascots-container"></div>
+        
+        <!-- Text -->
+        <p id="intro-text" class="intro-text">PROUD TO BE BANGLADESHI!</p>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-slate-100 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center cursor-pointer group" onclick="window.scrollTo(0,0)">
+                    <!-- Logo Only -->
+                    <img src="logo.png" alt="FunLearnBD Logo" class="h-14 md:h-20 w-auto rounded-lg shadow-sm transform group-hover:scale-105 transition-transform duration-300">
+                </div>
+                
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#features" class="text-sm font-semibold text-slate-600 hover:text-brand-green transition-colors relative group">
+                        <span data-lang-en="Features" data-lang-bn="বৈশিষ্ট্য">Features</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-green transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#curriculum" class="text-sm font-semibold text-slate-600 hover:text-brand-green transition-colors relative group">
+                        <span data-lang-en="Curriculum" data-lang-bn="পাঠ্যক্রম">Curriculum</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-green transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#investors" class="text-sm font-semibold text-slate-600 hover:text-brand-green transition-colors relative group">
+                        <span data-lang-en="Mission & Vision" data-lang-bn="লক্ষ্য ও দৃষ্টিভঙ্গি">Mission & Vision</span>
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-green transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleLanguage()" id="langToggle" class="hidden md:block text-brand-green px-4 py-2 rounded-full text-sm font-bold hover:bg-brand-green/10 transition-all border border-brand-green/20">
+                        বাংলা
+                    </button>
+                    <button onclick="showLogin()" class="text-brand-green px-4 py-2 rounded-full text-sm font-bold hover:bg-brand-green/10 transition-all">
+                        <span data-lang-en="Login" data-lang-bn="লগইন">Login</span>
+                    </button>
+                    <button onclick="showSignup()" class="bg-brand-green text-white px-5 py-2 md:px-6 md:py-2.5 rounded-full text-xs md:text-sm font-bold shadow-glow hover:bg-green-700 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="fas fa-user-plus"></i> <span data-lang-en="Create Account" data-lang-bn="অ্যাকাউন্ট তৈরি করুন">Create Account</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative overflow-hidden bg-brand-cream border-b border-orange-50/50">
+        <div class="absolute inset-0 bg-pattern pointer-events-none text-brand-green"></div>
+        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-b from-green-50 to-transparent rounded-full blur-3xl opacity-60 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 lg:pt-16 pb-24 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div class="fade-up order-2 lg:order-1 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-green-100 text-brand-green text-xs font-bold uppercase tracking-wide mb-6 shadow-sm">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-green"></span>
+                        </span>
+                        <span data-lang-en="#1 Trilingual App in Bangladesh" data-lang-bn="বাংলাদেশের #১ ত্রিভাষিক অ্যাপ">#1 Trilingual App in Bangladesh</span>
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.15] mb-6 tracking-tight break-words" 
+                        data-lang-en='Give Your Child the <span class="text-gradient">Gift of Smart Learning</span>'
+                        data-lang-bn='আপনার সন্তানকে দিন <span class="text-gradient">আধুনিক শিক্ষার সুযোগ</span>'>
+                        Give Your Child the <span class="text-gradient">Gift of Smart Learning</span>
+                    </h1>
+                    
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0"
+                       data-lang-en='Where <strong>English, Bangla, and Arabic</strong> come together in one joyful learning journey. Designed by educators and built with love for Bangladeshi families.'
+                       data-lang-bn='যেখানে <strong>ইংরেজি, বাংলা এবং আরবি</strong> একসাথে আসে আনন্দময় শিক্ষার যাত্রায়। শিক্ষাবিদদের দ্বারা ডিজাইন করা এবং বাংলাদেশী পরিবারের জন্য ভালোবাসা দিয়ে তৈরি।'>
+                        Where <strong>English, Bangla, and Arabic</strong> come together in one joyful learning journey. 
+                        Designed by educators and built with love for Bangladeshi families.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#" class="flex items-center justify-center gap-3 bg-brand-dark text-white px-7 py-4 rounded-xl hover:bg-slate-800 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 group relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-brand-green/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <i class="fab fa-google-play text-2xl group-hover:scale-110 transition-transform relative z-10"></i>
+                            <div class="text-left relative z-10">
+                                <div class="text-[10px] uppercase font-bold text-slate-400" data-lang-en="Get it on" data-lang-bn="ডাউনলোড করুন">Get it on</div>
+                                <div class="text-sm font-bold -mt-0.5" data-lang-en="Google Play" data-lang-bn="গুগল প্লে">Google Play</div>
+                            </div>
+                        </a>
+                        <div class="inline-flex items-center gap-2 px-6 py-4 bg-slate-100 text-slate-500 rounded-xl border-2 border-slate-200">
+                            <i class="fab fa-apple text-2xl"></i>
+                            <div class="text-left">
+                                <div class="text-[10px] uppercase font-bold" data-lang-en="Coming Soon" data-lang-bn="শীঘ্রই আসছে">Coming Soon</div>
+                                <div class="text-sm font-bold -mt-0.5" data-lang-en="App Store" data-lang-bn="অ্যাপ স্টোর">App Store</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex items-center justify-center lg:justify-start gap-4">
+                        <div class="inline-flex items-center gap-3 px-5 py-3 bg-white/80 backdrop-blur-sm rounded-full shadow-md border border-slate-100">
+                            <div class="w-10 h-10 bg-brand-green/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-gift text-brand-green text-lg"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-xs text-slate-500 font-medium" data-lang-en="Try First Levels Free" data-lang-bn="প্রথম লেভেল ফ্রি ব্যবহার করুন">Try First Levels Free</p>
+                                <p class="text-sm text-slate-800 font-bold" data-lang-en="Then Subscribe" data-lang-bn="তারপর সাবস্ক্রাইব করুন">Then Subscribe</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visual / Mockup with HTML Content inside Phone -->
+                <div class="relative fade-up delay-200 order-1 lg:order-2 h-[600px] flex items-center justify-center">
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] lg:w-[500px] h-[300px] lg:h-[500px] bg-gradient-to-tr from-brand-orange/20 to-brand-green/20 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
+                    
+                    <div class="relative flex justify-center items-center w-full">
+                        <!-- Cycling Mascot (Bottom Right) -->
+                        <div class="absolute -right-4 bottom-0 md:-right-8 md:bottom-4 z-20 mascot-float w-36 h-36 md:w-48 md:h-48">
+                            <img id="hero-mascot" src="mascot_waving.png" alt="Mascot" class="mascot-contain drop-shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer">
+                        </div>
+
+                        <!-- Phone Mockup with HTML Interface -->
+                        <div class="phone-mockup w-[220px] md:w-[260px] h-[480px] md:h-[540px] bg-white z-10 mx-auto transform rotate-[-2deg] hover:rotate-0 transition-all duration-500">
+                            <!-- Status Bar -->
+                            <div class="h-7 w-full bg-slate-100 flex items-center justify-between px-5 text-[10px] text-slate-500 border-b border-slate-200">
+                                <span class="font-bold">9:41</span>
+                                <div class="flex gap-1.5">
+                                    <i class="fas fa-signal"></i>
+                                    <i class="fas fa-wifi"></i>
+                                    <i class="fas fa-battery-full"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Internal App UI -->
+                            <div class="p-4 h-full bg-brand-cream overflow-hidden flex flex-col">
+                                <!-- App Header -->
+                                <div class="flex justify-between items-center mb-6">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 bg-brand-orange/20 rounded-full flex items-center justify-center text-brand-orange text-xs">
+                                            <i class="fas fa-bars"></i>
+                                        </div>
+                                        <span class="font-bold text-sm"><span style="color: #003d2e;">Fun</span><span style="color: #b71c2c;">Learn</span><span style="color: #003d2e;">BD</span></span>
+                                    </div>
+                                    <div class="w-8 h-8 rounded-full bg-slate-200 border-2 border-white"></div>
+                                </div>
+
+                                <!-- Hero Banner inside Phone -->
+                                <div class="bg-gradient-to-r from-brand-green to-emerald-500 rounded-2xl p-4 text-white mb-6 shadow-md relative overflow-hidden">
+                                    <div class="relative z-10">
+                                        <h4 class="font-bold text-sm mb-1">Start Learning!</h4>
+                                        <p class="text-[10px] opacity-90 mb-2">Continue where you left off.</p>
+                                        <div class="bg-white text-brand-green text-[10px] font-bold px-3 py-1 rounded-full inline-block">Play ▶</div>
+                                    </div>
+                                    <div class="absolute -right-2 -bottom-4 text-6xl opacity-20">🦁</div>
+                                </div>
+
+                                <!-- App Grid -->
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center gap-2 aspect-square">
+                                        <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center text-xl">🅰️</div>
+                                        <span class="text-[10px] font-bold text-slate-600">English</span>
+                                    </div>
+                                    <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center gap-2 aspect-square">
+                                        <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center text-xl text-brand-green font-bold">অ</div>
+                                        <span class="text-[10px] font-bold text-slate-600">Bangla</span>
+                                    </div>
+                                    <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center gap-2 aspect-square">
+                                        <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center text-xl text-amber-500 font-bold">ا</div>
+                                        <span class="text-[10px] font-bold text-slate-600">Arabic</span>
+                    </div>
+                                    <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center gap-2 aspect-square">
+                                        <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-xl text-blue-500"><i class="fas fa-shapes"></i></div>
+                                        <span class="text-[10px] font-bold text-slate-600">Shapes</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Value Proposition with Talking Mascot -->
+    <section id="features" class="py-24 bg-white relative overflow-hidden" onmouseenter="changeMascot('happy')" onmouseleave="changeMascot('talking')">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row items-center gap-12 mb-20">
+                <div class="md:w-2/3 fade-up">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6" 
+                        data-lang-en='Why Parents Choose <span style="color: #003d2e;">Fun</span><span style="color: #b71c2c;">Learn</span><span style="color: #003d2e;">BD</span>'
+                        data-lang-bn='কেন অভিভাবকরা বেছে নেন <span style="color: #003d2e;">ফান</span><span style="color: #b71c2c;">লার্ন</span><span style="color: #003d2e;">বিডি</span>'>
+                        Why Parents Choose <span style="color: #003d2e;">Fun</span><span style="color: #b71c2c;">Learn</span><span style="color: #003d2e;">BD</span>
+                    </h2>
+                    <p class="text-slate-500 leading-relaxed text-lg border-l-4 border-brand-orange pl-6"
+                       data-lang-en="We believe every Bangladeshi child deserves access to world-class education. Our platform combines cutting-edge pedagogy with cultural relevance, creating a safe and engaging learning environment."
+                       data-lang-bn="আমরা বিশ্বাস করি প্রতিটি বাংলাদেশী শিশু বিশ্বমানের শিক্ষার অধিকার পাওয়ার যোগ্য। আমাদের প্ল্যাটফর্ম আধুনিক শিক্ষাবিজ্ঞান এবং সাংস্কৃতিক প্রাসঙ্গিকতা একত্রিত করে একটি নিরাপদ এবং আকর্ষণীয় শিক্ষার পরিবেশ তৈরি করে।">
+                        We believe every Bangladeshi child deserves access to world-class education. Our platform combines cutting-edge pedagogy with cultural relevance, creating a safe and engaging learning environment.
+                    </p>
+                </div>
+                <div class="md:w-1/3 flex justify-center fade-up delay-100">
+                    <img id="feature-mascot" src="mascot_talking.png" alt="Mascot Talking" class="w-40 h-40 object-cover rounded-full border-8 border-slate-50 shadow-2xl hover:rotate-3 transition-transform duration-300">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover-lift fade-up delay-200 group">
+                    <div class="w-14 h-14 bg-green-100 rounded-2xl shadow-sm flex items-center justify-center text-brand-green text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-green transition-colors"
+                        data-lang-en="100% Safe & Ad-Free"
+                        data-lang-bn="১০০% নিরাপদ এবং বিজ্ঞাপন মুক্ত">
+                        100% Safe & Ad-Free
+                    </h3>
+                    <p class="text-slate-600 text-sm leading-relaxed"
+                       data-lang-en="Premium subscribers enjoy a completely safe environment. Zero ads, zero pop-ups, zero distractions. Your child explores freely in a secure, parent-approved space."
+                       data-lang-bn="প্রিমিয়াম সদস্যরা সম্পূর্ণ নিরাপদ পরিবেশ উপভোগ করেন। কোন বিজ্ঞাপন নেই, কোন পপ-আপ নেই, কোন বিক্ষিপ্ততা নেই। আপনার সন্তান নিরাপদ, অভিভাবক-অনুমোদিত পরিবেশে অবাধে অন্বেষণ করে।">
+                        Premium subscribers enjoy a completely safe environment. Zero ads, zero pop-ups, zero distractions. Your child explores freely in a secure, parent-approved space.
+                    </p>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover-lift fade-up delay-300 group">
+                    <div class="w-14 h-14 bg-orange-100 rounded-2xl shadow-sm flex items-center justify-center text-brand-orange text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-orange transition-colors"
+                        data-lang-en="Truly Trilingual"
+                        data-lang-bn="সত্যিকারের ত্রিভাষিক">
+                        Truly Trilingual
+                    </h3>
+                    <p class="text-slate-600 text-sm leading-relaxed"
+                       data-lang-en="Give your child the advantage of speaking three languages fluently. English for global opportunities, Bangla for cultural roots, Arabic for Islamic education—all in one app!"
+                       data-lang-bn="আপনার সন্তানকে তিনটি ভাষা সাবলীলভাবে বলার সুবিধা দিন। বৈশ্বিক সুযোগের জন্য ইংরেজি, সাংস্কৃতিক শিকড়ের জন্য বাংলা, ইসলামিক শিক্ষার জন্য আরবি—সবকিছু একটি অ্যাপে!">
+                        Give your child the advantage of speaking three languages fluently. English for global opportunities, Bangla for cultural roots, Arabic for Islamic education—all in one app!
+                    </p>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover-lift fade-up delay-400 group">
+                    <div class="w-14 h-14 bg-red-100 rounded-2xl shadow-sm flex items-center justify-center text-brand-red text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-red transition-colors"
+                        data-lang-en="Watch Them Grow"
+                        data-lang-bn="তাদের বৃদ্ধি দেখুন">
+                        Watch Them Grow
+                    </h3>
+                    <p class="text-slate-600 text-sm leading-relaxed"
+                       data-lang-en="Receive weekly progress reports showing exactly what your child learned, time spent, and skills mastered. Celebrate every milestone together!"
+                       data-lang-bn="সাপ্তাহিক অগ্রগতি রিপোর্ট পান যা দেখায় আপনার সন্তান ঠিক কী শিখেছে, কতটা সময় ব্যয় করেছে এবং কী দক্ষতা অর্জন করেছে। প্রতিটি মাইলফলক একসাথে উদযাপন করুন!">
+                        Receive weekly progress reports showing exactly what your child learned, time spent, and skills mastered. Celebrate every milestone together!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum Preview with Jumping Mascot -->
+    <section id="curriculum" class="py-24 bg-brand-cream relative border-t border-orange-50/50 overflow-hidden">
+        <img src="mascot_jumping.png" alt="Mascot Jumping" class="absolute top-12 right-4 md:right-10 w-32 md:w-48 opacity-90 animate-fly z-0 hidden md:block drop-shadow-xl pointer-events-none">
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 fade-up">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4"
+                        data-lang-en="Everything Your Child Needs to Excel"
+                        data-lang-bn="আপনার সন্তানের উৎকর্ষের জন্য সবকিছু">
+                        Everything Your Child Needs to Excel
+                    </h2>
+                    <p class="text-slate-500 max-w-lg leading-relaxed text-lg"
+                       data-lang-en='<strong>16+ carefully crafted modules</strong> covering literacy, numeracy, logic, and cultural awareness. From ABCs to world geography—we've got it all! 🌟'
+                       data-lang-bn='<strong>১৬+ সাবধানে তৈরি মডিউল</strong> সাক্ষরতা, সংখ্যাবিজ্ঞান, যুক্তি এবং সাংস্কৃতিক সচেতনতা কভার করে। এবিসি থেকে বিশ্ব ভূগোল পর্যন্ত—আমাদের সবকিছু আছে! 🌟'>
+                        <strong>16+ carefully crafted modules</strong> covering literacy, numeracy, logic, and cultural awareness. 
+                        From ABCs to world geography—we've got it all! 🌟
+                    </p>
+                </div>
+                <button class="relative z-20 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-lg text-brand-green font-bold hover:text-green-700 hover:bg-white transition-all flex items-center gap-2 group text-sm uppercase tracking-wide border border-green-100 shadow-sm">
+                    <span data-lang-en="View Full Syllabus" data-lang-bn="সম্পূর্ণ পাঠ্যসূচি দেখুন">View Full Syllabus</span> <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
+                
+                <!-- Alphabets -->
+                <div class="bg-red-50 p-5 rounded-2xl border border-red-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-100">
+                    <span class="text-4xl mb-3 text-red-500 font-extrabold drop-shadow-sm">Aa</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="English" data-lang-bn="ইংরেজি">English</span>
+                </div>
+                <div class="bg-green-50 p-5 rounded-2xl border border-green-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-100">
+                    <span class="text-4xl mb-3 text-brand-green font-extrabold drop-shadow-sm">অ</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Bangla" data-lang-bn="বাংলা">Bangla</span>
+                </div>
+                <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-100">
+                    <span class="text-4xl mb-3 text-amber-600 font-extrabold drop-shadow-sm">ا</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Arabic" data-lang-bn="আরবি">Arabic</span>
+                </div>
+                
+                <!-- Numbers -->
+                <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-200">
+                    <span class="text-4xl mb-3 text-blue-600 font-extrabold font-display drop-shadow-sm">123</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="English #" data-lang-bn="ইংরেজি #">English #</span>
+                </div>
+                <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-200">
+                    <span class="text-4xl mb-3 text-emerald-600 font-extrabold font-display drop-shadow-sm">১২৩</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Bangla #" data-lang-bn="বাংলা #">Bangla #</span>
+                </div>
+                <div class="bg-orange-50 p-5 rounded-2xl border border-orange-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-200">
+                    <span class="text-4xl mb-3 text-orange-600 font-extrabold font-display drop-shadow-sm">١٢٣</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Arabic #" data-lang-bn="আরবি #">Arabic #</span>
+                </div>
+                
+                <!-- Topics -->
+                <div class="bg-purple-50 p-5 rounded-2xl border border-purple-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-300">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🔷</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Shapes" data-lang-bn="আকার">Shapes</span>
+                </div>
+                <div class="bg-pink-50 p-5 rounded-2xl border border-pink-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-300">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🎨</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Colors" data-lang-bn="রঙ">Colors</span>
+                </div>
+                <div class="bg-yellow-50 p-5 rounded-2xl border border-yellow-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-300">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🐯</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Animals" data-lang-bn="প্রাণী">Animals</span>
+                </div>
+                <div class="bg-sky-50 p-5 rounded-2xl border border-sky-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-400">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🦜</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Birds" data-lang-bn="পাখি">Birds</span>
+                </div>
+                <div class="bg-lime-50 p-5 rounded-2xl border border-lime-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-400">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🦋</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Insects" data-lang-bn="পোকামাকড়">Insects</span>
+                </div>
+                <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-400">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🪁</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Objects" data-lang-bn="বস্তু">Objects</span>
+                </div>
+                <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🤸</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Actions" data-lang-bn="ক্রিয়া">Actions</span>
+                </div>
+                <div class="bg-cyan-50 p-5 rounded-2xl border border-cyan-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🌗</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Opposites" data-lang-bn="বিপরীত">Opposites</span>
+                </div>
+                
+                <div class="bg-teal-50 p-5 rounded-2xl border border-teal-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🗺️</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Countries" data-lang-bn="দেশসমূহ">Countries</span>
+                </div>
+
+                <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500 relative overflow-hidden">
+                    <div class="w-12 h-12 mb-3 flex items-center justify-center">
+                        <img src="bangladesh.png" alt="Bangladesh" class="w-full h-full object-contain opacity-80">
+                    </div>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Bangladesh" data-lang-bn="বাংলাদেশ">Bangladesh</span>
+                </div>
+
+                <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🪐</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Solar System" data-lang-bn="সৌরজগৎ">Solar System</span>
+                </div>
+
+                <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🪑</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Furniture" data-lang-bn="আসবাবপত্র">Furniture</span>
+                </div>
+
+                <div class="bg-cyan-50 p-5 rounded-2xl border border-cyan-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🍽️</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Crockeries" data-lang-bn="থালাবাসন">Crockeries</span>
+                </div>
+
+                <div class="bg-yellow-50 p-5 rounded-2xl border border-yellow-100 shadow-sm flex flex-col items-center text-center hover-lift cursor-pointer fade-up delay-500">
+                    <span class="text-4xl mb-3 filter drop-shadow-sm">🚍</span>
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide" data-lang-en="Vehicles" data-lang-bn="যানবাহন">Vehicles</span>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16 fade-up delay-500">
+                <div class="inline-flex items-center gap-3 px-6 py-3 bg-white rounded-full shadow-lg border border-slate-100">
+                    <div class="w-10 h-10 bg-brand-green/10 rounded-full flex items-center justify-center">
+                        <i class="fas fa-wifi text-brand-green text-lg"></i>
+                    </div>
+                    <p class="text-sm text-slate-600 font-semibold">
+                        <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-green/10 text-brand-green rounded-full font-bold">
+                            <i class="fas fa-crown text-xs"></i>
+                            <span data-lang-en="Premium: Offline Mode" data-lang-bn="প্রিমিয়াম: অফলাইন মোড">Premium: Offline Mode</span>
+                        </span>
+                        <span class="block mt-2 text-slate-500" data-lang-en="Download once, learn anywhere! Perfect for car rides & travel ✈️" data-lang-bn="একবার ডাউনলোড করুন, যেকোনো জায়গায় শিখুন! গাড়ি ভ্রমণ এবং ভ্রমণের জন্য নিখুঁত ✈️">Download once, learn anywhere! Perfect for car rides & travel ✈️</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscription Plans -->
+    <section class="py-24 bg-gradient-to-b from-white to-brand-cream relative overflow-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-5"></div>
+        
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 fade-up">
+                <div class="inline-block px-4 py-1.5 bg-brand-orange/10 text-brand-orange rounded-full text-xs font-bold uppercase tracking-widest mb-4 border border-brand-orange/20">
+                    <span data-lang-en="💎 Premium Quality" data-lang-bn="💎 প্রিমিয়াম মান">💎 Premium Quality</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4"
+                    data-lang-en="Choose Your Plan"
+                    data-lang-bn="আপনার প্ল্যান বেছে নিন">
+                    Choose Your Plan
+                </h2>
+                <p class="text-slate-600 max-w-2xl mx-auto text-lg"
+                   data-lang-en="Try the first few levels free. Unlock full access with a subscription."
+                   data-lang-bn="প্রথম কয়েকটি লেভেল ফ্রি ব্যবহার করুন। সাবস্ক্রিপশন দিয়ে সম্পূর্ণ অ্যাক্সেস আনলক করুন।">
+                    Try the first few levels free. Unlock full access with a subscription.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Free Trial -->
+                <div class="bg-white rounded-3xl p-8 border-2 border-slate-200 hover:border-brand-green transition-all hover:shadow-xl fade-up delay-100">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
+                            <i class="fas fa-gift text-slate-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-900" data-lang-en="Free Trial" data-lang-bn="ফ্রি ট্রায়াল">Free Trial</h3>
+                            <p class="text-sm text-slate-500" data-lang-en="Try Before You Buy" data-lang-bn="কেনার আগে ব্যবহার করুন">Try Before You Buy</p>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="text-4xl font-extrabold text-slate-900 mb-2" data-lang-en="First Levels" data-lang-bn="প্রথম লেভেল">First Levels</div>
+                        <p class="text-slate-600 text-sm" data-lang-en="Experience the magic before subscribing" data-lang-bn="সাবস্ক্রাইব করার আগে জাদু অনুভব করুন">Experience the magic before subscribing</p>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-slate-600">
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check text-brand-green mt-0.5"></i>
+                            <span data-lang-en="Access to introductory lessons" data-lang-bn="পরিচিতি পাঠে অ্যাক্সেস">Access to introductory lessons</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check text-brand-green mt-0.5"></i>
+                            <span data-lang-en="All 3 languages available" data-lang-bn="সব ৩টি ভাষা উপলব্ধ">All 3 languages available</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check text-brand-green mt-0.5"></i>
+                            <span data-lang-en="Meet our friendly mascots" data-lang-bn="আমাদের বন্ধুত্বপূর্ণ ম্যাসকটদের সাথে দেখা করুন">Meet our friendly mascots</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-times text-slate-300 mt-0.5"></i>
+                            <span class="text-slate-400" data-lang-en="Full curriculum access" data-lang-bn="সম্পূর্ণ পাঠ্যক্রম অ্যাক্সেস">Full curriculum access</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-times text-slate-300 mt-0.5"></i>
+                            <span class="text-slate-400" data-lang-en="Progress reports" data-lang-bn="অগ্রগতি রিপোর্ট">Progress reports</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-times text-slate-300 mt-0.5"></i>
+                            <span class="text-slate-400" data-lang-en="Offline mode" data-lang-bn="অফলাইন মোড">Offline mode</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-slate-100 text-slate-700 px-6 py-4 rounded-xl font-bold hover:bg-slate-200 transition-all">
+                        <span data-lang-en="Download & Try Free" data-lang-bn="ডাউনলোড করুন এবং ফ্রি ব্যবহার করুন">Download & Try Free</span>
+                    </button>
+                </div>
+
+                <!-- Premium Subscription -->
+                <div class="bg-gradient-to-br from-brand-green to-emerald-600 rounded-3xl p-8 text-white relative overflow-hidden hover:shadow-2xl transition-all fade-up delay-200">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+                    <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="inline-block px-3 py-1 bg-brand-orange rounded-full text-xs font-bold uppercase mb-4">
+                            <span data-lang-en="⭐ Most Popular" data-lang-bn="⭐ সবচেয়ে জনপ্রিয়">⭐ Most Popular</span>
+                        </div>
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+                                <i class="fas fa-crown text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold" data-lang-en="Premium" data-lang-bn="প্রিমিয়াম">Premium</h3>
+                                <p class="text-sm text-white/80" data-lang-en="Full Access" data-lang-bn="সম্পূর্ণ অ্যাক্সেস">Full Access</p>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <div class="text-4xl font-extrabold mb-2" data-lang-en="Subscribe" data-lang-bn="সাবস্ক্রাইব করুন">Subscribe</div>
+                            <p class="text-white/90 text-sm" data-lang-en="Unlock everything for your child" data-lang-bn="আপনার সন্তানের জন্য সবকিছু আনলক করুন">Unlock everything for your child</p>
+                        </div>
+                        <ul class="space-y-3 mb-8 text-sm">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle mt-0.5"></i>
+                                <span data-lang-en="<strong>All 16+ modules</strong> unlocked" data-lang-bn="<strong>সব ১৬+ মডিউল</strong> আনলক করা"><strong>All 16+ modules</strong> unlocked</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle mt-0.5"></i>
+                                <span data-lang-en="<strong>100% Ad-Free</strong> experience" data-lang-bn="<strong>১০০% বিজ্ঞাপন মুক্ত</strong> অভিজ্ঞতা"><strong>100% Ad-Free</strong> experience</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle mt-0.5"></i>
+                                <span data-lang-en="<strong>Offline mode</strong> - learn anywhere" data-lang-bn="<strong>অফলাইন মোড</strong> - যেকোনো জায়গায় শিখুন"><strong>Offline mode</strong> - learn anywhere</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle mt-0.5"></i>
+                                <span data-lang-en="<strong>Weekly progress reports</strong>" data-lang-bn="<strong>সাপ্তাহিক অগ্রগতি রিপোর্ট</strong>"><strong>Weekly progress reports</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle mt-0.5"></i>
+                                <span data-lang-en="<strong>Multi-device</strong> sync" data-lang-bn="<strong>মাল্টি-ডিভাইস</strong> সিঙ্ক"><strong>Multi-device</strong> sync</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle mt-0.5"></i>
+                                <span data-lang-en="<strong>Priority support</strong>" data-lang-bn="<strong>অগ্রাধিকার সহায়তা</strong>"><strong>Priority support</strong></span>
+                            </li>
+                        </ul>
+                        <button class="w-full bg-white text-brand-green px-6 py-4 rounded-xl font-bold hover:bg-slate-50 transition-all shadow-lg">
+                            <span data-lang-en="Start Subscription" data-lang-bn="সাবস্ক্রিপশন শুরু করুন">Start Subscription</span>
+                        </button>
+                        <p class="text-center text-xs text-white/70 mt-4" data-lang-en="Cancel anytime. No commitment." data-lang-bn="যেকোনো সময় বাতিল করুন। কোনো বাধ্যবাধকতা নেই।">Cancel anytime. No commitment.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referral Program - Earn Cash/Credit -->
+            <div class="mt-12">
+                <div class="max-w-5xl mx-auto">
+                    <!-- Header -->
+                    <div class="text-center mb-8">
+                        <div class="inline-block px-4 py-2 bg-gradient-to-r from-brand-green/20 to-emerald-500/20 backdrop-blur-sm rounded-full border border-brand-green/30 text-brand-green text-xs font-bold uppercase mb-4 shadow-sm">
+                            <span data-lang-en="💰 Referral Program" data-lang-bn="💰 রেফারেল প্রোগ্রাম">💰 Referral Program</span>
+                        </div>
+                        <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3"
+                            data-lang-en="Subscribe, Refer & Earn Cash"
+                            data-lang-bn="সাবস্ক্রাইব করুন, রেফার করুন এবং আয় করুন">
+                            Subscribe, Refer & Earn Cash
+                        </h3>
+                        <p class="text-slate-600 text-lg max-w-2xl mx-auto"
+                           data-lang-en='Turn your network into income. Earn <span class="text-brand-green font-bold">cash/credit</span> for every successful referral!'
+                           data-lang-bn='আপনার নেটওয়ার্ককে আয়ে পরিণত করুন। প্রতিটি সফল রেফারেলের জন্য <span class="text-brand-green font-bold">টাকা/ক্রেডিট</span> আয় করুন!'>
+                            Turn your network into income. Earn <span class="text-brand-green font-bold">cash/credit</span> for every successful referral!
+                        </p>
+                    </div>
+                    
+                    <!-- Steps - Desktop: Horizontal, Mobile: Vertical -->
+                    <div class="bg-white/70 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-xl border border-white/50">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative">
+                            
+                            <!-- Step 1 -->
+                            <div class="relative group">
+                                <div class="bg-gradient-to-br from-white/80 to-white/40 backdrop-blur-md rounded-2xl p-6 border border-white/60 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-brand-green/10 rounded-xl flex items-center justify-center border border-brand-green/20">
+                                            <span class="text-brand-green font-bold text-xl">1</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-slate-900 text-lg mb-1"
+                                                data-lang-en="Subscribe"
+                                                data-lang-bn="সাবস্ক্রাইব করুন">
+                                                Subscribe
+                                            </h4>
+                                            <p class="text-slate-600 text-sm leading-relaxed"
+                                               data-lang-en="Get premium access and unlock your referral code"
+                                               data-lang-bn="প্রিমিয়াম অ্যাক্সেস পান এবং আপনার রেফারেল কোড আনলক করুন">
+                                                Get premium access and unlock your referral code
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="text-6xl mb-2 animate-bounce">🎯</div>
+                                </div>
+                                <!-- Desktop Arrow -->
+                                <div class="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 text-brand-green text-2xl z-10">
+                                    →
+                                </div>
+                                <!-- Mobile Arrow -->
+                                <div class="md:hidden flex justify-center my-2 text-brand-green text-2xl">
+                                    ↓
+                                </div>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="relative group">
+                                <div class="bg-gradient-to-br from-white/80 to-white/40 backdrop-blur-md rounded-2xl p-6 border border-white/60 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-brand-orange/10 rounded-xl flex items-center justify-center border border-brand-orange/20">
+                                            <span class="text-brand-orange font-bold text-xl">2</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-slate-900 text-lg mb-1"
+                                                data-lang-en="Share Code"
+                                                data-lang-bn="কোড শেয়ার করুন">
+                                                Share Code
+                                            </h4>
+                                            <p class="text-slate-600 text-sm leading-relaxed"
+                                               data-lang-en="Share with friends, family and on social media"
+                                               data-lang-bn="বন্ধু, পরিবার এবং সোশ্যাল মিডিয়ায় শেয়ার করুন">
+                                                Share with friends, family and on social media
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="text-6xl mb-2 hover:scale-110 transition-transform">📢</div>
+                                </div>
+                                <!-- Desktop Arrow -->
+                                <div class="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 text-brand-orange text-2xl z-10">
+                                    →
+                                </div>
+                                <!-- Mobile Arrow -->
+                                <div class="md:hidden flex justify-center my-2 text-brand-orange text-2xl">
+                                    ↓
+                                </div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="relative group">
+                                <div class="bg-gradient-to-br from-white/80 to-white/40 backdrop-blur-md rounded-2xl p-6 border border-white/60 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-brand-red/10 rounded-xl flex items-center justify-center border border-brand-red/20">
+                                            <span class="text-brand-red font-bold text-xl">3</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-slate-900 text-lg mb-1"
+                                                data-lang-en="Earn Money"
+                                                data-lang-bn="টাকা আয় করুন">
+                                                Earn Money
+                                            </h4>
+                                            <p class="text-slate-600 text-sm leading-relaxed"
+                                               data-lang-en="Receive cash/credit when they subscribe or renew"
+                                               data-lang-bn="যখন তারা সাবস্ক্রাইব বা নবায়ন করে টাকা/ক্রেডিট পান">
+                                                Receive cash/credit when they subscribe or renew
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="text-6xl mb-2 animate-pulse">💸</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom CTA -->
+                        <div class="mt-8 pt-6 border-t border-slate-200">
+                            <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-gradient-to-r from-brand-green/5 to-emerald-500/5 rounded-2xl p-4 md:p-6 border border-brand-green/10">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 bg-brand-green/10 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-gift text-brand-green text-xl"></i>
+                                    </div>
+                                    <div class="text-center md:text-left">
+                                        <p class="font-bold text-slate-900"
+                                           data-lang-en="Earn on Every Successful Referral"
+                                           data-lang-bn="প্রতিটি সফল রেফারেলে আয় করুন">
+                                            Earn on Every Successful Referral
+                                        </p>
+                                        <p class="text-xs text-slate-500"
+                                           data-lang-en="*Terms & conditions apply"
+                                           data-lang-bn="*শর্ত প্রযোজ্য">
+                                            *Terms & conditions apply
+                                        </p>
+                                    </div>
+                                </div>
+                                <button class="bg-brand-green text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-green-700 hover:shadow-xl transition-all hover:-translate-y-0.5 whitespace-nowrap">
+                                    <span data-lang-en="Start Earning Today" data-lang-bn="আজই আয় শুরু করুন">Start Earning Today</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW Upcoming Projects Section -->
+    <section id="upcoming" class="py-24 bg-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] opacity-30"></div>
+        <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-brand-cream to-transparent"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <div class="inline-block px-4 py-1.5 bg-brand-orange/10 text-brand-orange rounded-full text-xs font-bold uppercase tracking-widest mb-4 border border-brand-orange/20 shadow-sm">
+                    <span data-lang-en="Future Roadmap" data-lang-bn="ভবিষ্যৎ পরিকল্পনা">Future Roadmap</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6"
+                    data-lang-en="Growing With Your Child 🚀"
+                    data-lang-bn="আপনার সন্তানের প্রবৃদ্ধির জন্য 🚀">
+                    Growing With Your Child 🚀
+                </h2>
+                <p class="text-slate-500 max-w-2xl mx-auto text-lg"
+                   data-lang-en="We are building a complete educational ecosystem. Here is what's coming next for primary education."
+                   data-lang-bn="আমরা একটি সম্পূর্ণ শিক্ষা ব্যবস্থা তৈরি করছি। প্রাথমিক শিক্ষার জন্য পরবর্তীতে কী আসছে তা এখানে রয়েছে।">
+                    We are building a complete educational ecosystem. Here is what's coming next for primary education.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Class 1 -->
+                <div class="relative bg-white rounded-3xl p-8 border-2 border-orange-100 border-b-[8px] border-b-orange-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden hover:shadow-2xl">
+                    <div class="absolute -right-4 top-4 w-28 h-28 bg-gradient-to-br from-orange-400 to-red-400 rounded-3xl shadow-2xl flex items-center justify-center text-6xl text-white transform rotate-12 group-hover:rotate-0 group-hover:scale-125 transition-all duration-500 z-10 animate-bounce-fun">🎒</div>
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-orange-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
+                    <div class="relative z-10 mt-4">
+                        <span class="bg-orange-100 text-orange-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-orange-200" data-lang-en="Coming Soon" data-lang-bn="শীঘ্রই আসছে">Coming Soon</span>
+                        <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2" data-lang-en="Class 1" data-lang-bn="ক্লাস ১">Class 1</h3>
+                        <div class="h-1 w-12 bg-orange-400 rounded-full mb-4"></div>
+                        <p class="text-slate-500 font-medium leading-relaxed" data-lang-en="Foundational literacy & numeracy modules designed to make the first step into school fun and engaging." data-lang-bn="মৌলিক সাক্ষরতা এবং সংখ্যাবিজ্ঞান মডিউল যা স্কুলের প্রথম পদক্ষেপকে মজাদার এবং আকর্ষণীয় করে তোলে।">Foundational literacy & numeracy modules designed to make the first step into school fun and engaging.</p>
+                        <div class="mt-6 flex gap-2"><span class="text-2xl opacity-50 hover:opacity-100 transition">🧮</span><span class="text-2xl opacity-50 hover:opacity-100 transition">📖</span></div>
+                    </div>
+                </div>
+
+                <!-- Class 2 -->
+                <div class="relative bg-white rounded-3xl p-8 border-2 border-blue-100 border-b-[8px] border-b-blue-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden hover:shadow-2xl">
+                    <div class="absolute -right-4 top-4 w-28 h-28 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-3xl shadow-2xl flex items-center justify-center text-6xl text-white transform rotate-12 group-hover:rotate-0 group-hover:scale-125 transition-all duration-500 z-10 animate-bounce-fun">🔭</div>
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
+                    <div class="relative z-10 mt-4">
+                        <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-blue-200" data-lang-en="Coming Soon" data-lang-bn="শীঘ্রই আসছে">Coming Soon</span>
+                        <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2" data-lang-en="Class 2" data-lang-bn="ক্লাস ২">Class 2</h3>
+                        <div class="h-1 w-12 bg-blue-400 rounded-full mb-4"></div>
+                        <p class="text-slate-500 font-medium leading-relaxed" data-lang-en="Expanding horizons with environmental studies and advanced language structures." data-lang-bn="পরিবেশ অধ্যয়ন এবং উন্নত ভাষা কাঠামো দিয়ে দিগন্ত প্রসারিত করা।">Expanding horizons with environmental studies and advanced language structures.</p>
+                        <div class="mt-6 flex gap-2"><span class="text-2xl opacity-50 hover:opacity-100 transition">🌱</span><span class="text-2xl opacity-50 hover:opacity-100 transition">✍️</span></div>
+                    </div>
+                </div>
+
+                <!-- Class 3 -->
+                <div class="relative bg-white rounded-3xl p-8 border-2 border-green-100 border-b-[8px] border-b-green-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">🌍</div>
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-green-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
+                    <div class="relative z-10 mt-4">
+                        <span class="bg-green-100 text-green-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-green-200" data-lang-en="Coming Soon" data-lang-bn="শীঘ্রই আসছে">Coming Soon</span>
+                        <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2" data-lang-en="Class 3" data-lang-bn="ক্লাস ৩">Class 3</h3>
+                        <div class="h-1 w-12 bg-green-400 rounded-full mb-4"></div>
+                        <p class="text-slate-500 font-medium leading-relaxed" data-lang-en="Introduction to broader scientific concepts, geography, and critical thinking puzzles." data-lang-bn="বৃহত্তর বৈজ্ঞানিক ধারণা, ভূগোল এবং সমালোচনামূলক চিন্তার ধাঁধার পরিচয়।">Introduction to broader scientific concepts, geography, and critical thinking puzzles.</p>
+                        <div class="mt-6 flex gap-2"><span class="text-2xl opacity-50 hover:opacity-100 transition">🗺️</span><span class="text-2xl opacity-50 hover:opacity-100 transition">🧩</span></div>
+                    </div>
+                </div>
+
+                <!-- Class 4 -->
+                <div class="relative bg-white rounded-3xl p-8 border-2 border-purple-100 border-b-[8px] border-b-purple-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-purple-400 to-fuchsia-500 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">🔬</div>
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-purple-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
+                    <div class="relative z-10 mt-4">
+                        <span class="bg-purple-100 text-purple-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-purple-200" data-lang-en="Coming Soon" data-lang-bn="শীঘ্রই আসছে">Coming Soon</span>
+                        <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2" data-lang-en="Class 4" data-lang-bn="ক্লাস ৪">Class 4</h3>
+                        <div class="h-1 w-12 bg-purple-400 rounded-full mb-4"></div>
+                        <p class="text-slate-500 font-medium leading-relaxed" data-lang-en="Deep dives into grammar, complex arithmetic, and elementary science experiments." data-lang-bn="ব্যাকরণ, জটিল গণিত এবং প্রাথমিক বিজ্ঞান পরীক্ষায় গভীর অনুসন্ধান।">Deep dives into grammar, complex arithmetic, and elementary science experiments.</p>
+                        <div class="mt-6 flex gap-2"><span class="text-2xl opacity-50 hover:opacity-100 transition">⚛️</span><span class="text-2xl opacity-50 hover:opacity-100 transition">💻</span></div>
+                    </div>
+                </div>
+
+                <!-- Class 5 -->
+                <div class="relative bg-white rounded-3xl p-8 border-2 border-rose-100 border-b-[8px] border-b-rose-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-rose-400 to-pink-500 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">🎓</div>
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-rose-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
+                    <div class="relative z-10 mt-4">
+                        <span class="bg-rose-100 text-rose-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-rose-200" data-lang-en="Coming Soon" data-lang-bn="শীঘ্রই আসছে">Coming Soon</span>
+                        <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2" data-lang-en="Class 5" data-lang-bn="ক্লাস ৫">Class 5</h3>
+                        <div class="h-1 w-12 bg-rose-400 rounded-full mb-4"></div>
+                        <p class="text-slate-500 font-medium leading-relaxed" data-lang-en="Comprehensive preparatory system for secondary education and final primary exams." data-lang-bn="মাধ্যমিক শিক্ষা এবং চূড়ান্ত প্রাথমিক পরীক্ষার জন্য ব্যাপক প্রস্তুতি ব্যবস্থা।">Comprehensive preparatory system for secondary education and final primary exams.</p>
+                        <div class="mt-6 flex gap-2"><span class="text-2xl opacity-50 hover:opacity-100 transition">🏆</span><span class="text-2xl opacity-50 hover:opacity-100 transition">📜</span></div>
+                    </div>
+                </div>
+
+                <!-- Class 6 -->
+                <div class="relative bg-white rounded-3xl p-8 border-2 border-cyan-100 border-b-[8px] border-b-cyan-200 shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden">
+                    <div class="absolute -right-2 top-6 w-20 h-20 bg-gradient-to-br from-cyan-400 to-teal-400 rounded-2xl shadow-lg flex items-center justify-center text-4xl text-white transform rotate-12 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 z-10">📐</div>
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-cyan-50 rounded-full group-hover:scale-150 transition-transform duration-700 opacity-70"></div>
+                    <div class="relative z-10 mt-4">
+                        <span class="bg-cyan-100 text-cyan-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-cyan-200" data-lang-en="Coming Soon" data-lang-bn="শীঘ্রই আসছে">Coming Soon</span>
+                        <h3 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2" data-lang-en="Class 6" data-lang-bn="ক্লাস ৬">Class 6</h3>
+                        <div class="h-1 w-12 bg-cyan-400 rounded-full mb-4"></div>
+                        <p class="text-slate-500 font-medium leading-relaxed" data-lang-en="Transitioning to secondary education with advanced algebra, geometry, and creative writing." data-lang-bn="উন্নত বীজগণিত, জ্যামিতি এবং সৃজনশীল লেখার সাথে মাধ্যমিক শিক্ষায় রূপান্তর।">Transitioning to secondary education with advanced algebra, geometry, and creative writing.</p>
+                        <div class="mt-6 flex gap-2"><span class="text-2xl opacity-50 hover:opacity-100 transition">📐</span><span class="text-2xl opacity-50 hover:opacity-100 transition">📚</span></div>
+                    </div>
+                </div>
+                
+                <!-- Placeholder -->
+                <div class="relative bg-slate-50 rounded-3xl p-8 border-2 border-dashed border-slate-200 shadow-inner flex flex-col justify-center items-center text-center opacity-75">
+                    <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center text-3xl text-slate-300 mb-4"><i class="fas fa-plus"></i></div>
+                    <h3 class="text-xl font-bold text-slate-400" data-lang-en="More to Come" data-lang-bn="আরও আসছে">More to Come</h3>
+                    <p class="text-sm text-slate-400 mt-2" data-lang-en="We are constantly innovating." data-lang-bn="আমরা ক্রমাগত উদ্ভাবন করছি।">We are constantly innovating.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investor / Mission Section -->
+    <section id="investors" class="py-24 bg-white border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-brand-dark rounded-[3rem] p-10 md:p-20 text-white relative overflow-hidden shadow-2xl">
+                <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-green opacity-20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"></div>
+                
+                <div class="relative z-10 grid md:grid-cols-2 gap-16 items-center">
+                    <div class="fade-up">
+                        <div class="inline-block px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-white/5">
+                            <span data-lang-en="🇧🇩 Made in Bangladesh, For Bangladesh" data-lang-bn="🇧🇩 বাংলাদেশে তৈরি, বাংলাদেশের জন্য">🇧🇩 Made in Bangladesh, For Bangladesh</span>
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-extrabold mb-8 leading-tight"
+                            data-lang-en="Shaping the Future of 37 Million Young Minds"
+                            data-lang-bn="৩.৭ কোটি তরুণ মনের ভবিষ্যৎ গঠন করা">
+                            Shaping the Future of 37 Million Young Minds
+                        </h2>
+                        <p class="text-slate-300 mb-6 leading-relaxed text-lg"
+                           data-lang-en="Every child in Bangladesh deserves world-class education in their mother tongue. We're building that future—one app, one child, one family at a time."
+                           data-lang-bn="বাংলাদেশের প্রতিটি শিশু তাদের মাতৃভাষায় বিশ্বমানের শিক্ষা পাওয়ার যোগ্য। আমরা সেই ভবিষ্যৎ তৈরি করছি—একটি অ্যাপ, একটি শিশু, একটি পরিবার এক সময়ে।">
+                            Every child in Bangladesh deserves world-class education in their mother tongue. We're building that future—one app, one child, one family at a time.
+                        </p>
+                        <p class="text-slate-300 mb-10 leading-relaxed text-lg"
+                           data-lang-en='With our proprietary trilingual curriculum and proven track record, <span style="color: #10b981;">Fun</span><span style="color: #ef4444;">Learn</span><span style="color: #10b981;">BD</span> is positioned to become the #1 early childhood EdTech platform in South Asia.'
+                           data-lang-bn='আমাদের স্বত্বাধিকারী ত্রিভাষিক পাঠ্যক্রম এবং প্রমাণিত ট্র্যাক রেকর্ডের সাথে, <span style="color: #10b981;">ফান</span><span style="color: #ef4444;">লার্ন</span><span style="color: #10b981;">বিডি</span> দক্ষিণ এশিয়ার #১ প্রারম্ভিক শৈশব এডটেক প্ল্যাটফর্ম হতে প্রস্তুত।'>
+                            With our proprietary trilingual curriculum and proven track record, <span style="color: #10b981;">Fun</span><span style="color: #ef4444;">Learn</span><span style="color: #10b981;">BD</span> is positioned to become the #1 early childhood EdTech platform in South Asia.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                            <button class="bg-brand-orange text-white px-4 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold hover:bg-orange-600 transition shadow-lg hover:shadow-orange-500/30 hover:-translate-y-1 flex items-center justify-center gap-2 text-sm sm:text-base">
+                                <i class="fas fa-file-pdf"></i> <span data-lang-en="Request Pitch Deck" data-lang-bn="পিচ ডেক অনুরোধ করুন">Request Pitch Deck</span>
+                            </button>
+                            <button class="bg-white/10 backdrop-blur-md text-white px-4 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold hover:bg-white/20 transition border border-white/20 flex items-center justify-center gap-2 text-sm sm:text-base">
+                                <i class="fas fa-handshake"></i> <span data-lang-en="Partner With Us" data-lang-bn="আমাদের সাথে পার্টনার হন">Partner With Us</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="relative fade-up delay-200">
+                        <img src="mascot_happy.png" alt="Mascot Happy" loading="lazy" class="absolute -top-40 -right-10 w-60 h-60 object-cover z-20 hidden md:block mascot-float drop-shadow-2xl">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
+                                <div class="text-4xl font-extrabold text-brand-green mb-2">B2C</div>
+                                <div class="text-xs text-slate-400 font-bold uppercase tracking-wide" data-lang-en="Individual Subscription" data-lang-bn="ব্যক্তিগত সাবস্ক্রিপশন">Individual Subscription</div>
+                            </div>
+                            <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
+                                <div class="text-4xl font-extrabold text-brand-red mb-2">3</div>
+                                <div class="text-xs text-slate-400 font-bold uppercase tracking-wide" data-lang-en="Core Languages" data-lang-bn="মূল ভাষা">Core Languages</div>
+                            </div>
+                            <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
+                                <div class="text-4xl font-extrabold text-brand-yellow mb-2">16+</div>
+                                <div class="text-xs text-slate-400 font-bold uppercase tracking-wide" data-lang-en="Learning Modules" data-lang-bn="শিক্ষা মডিউল">Learning Modules</div>
+                            </div>
+                            <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
+                                <div class="text-4xl font-extrabold text-white mb-2">B2B</div>
+                                <div class="text-xs text-slate-400 font-bold uppercase tracking-wide" data-lang-en="School Partnerships" data-lang-bn="স্কুল পার্টনারশিপ">School Partnerships</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section for Parents -->
+    <section class="py-24 bg-white border-t border-slate-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4"
+                    data-lang-en="Questions Parents Ask"
+                    data-lang-bn="অভিভাবকদের প্রশ্ন">
+                    Questions Parents Ask
+                </h2>
+                <p class="text-slate-600 text-lg"
+                   data-lang-en="We've got answers"
+                   data-lang-bn="আমাদের কাছে উত্তর আছে">
+                    We've got answers
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <details class="group bg-slate-50 rounded-2xl border border-slate-200 hover:border-brand-green transition-all overflow-hidden fade-up delay-100">
+                    <summary class="cursor-pointer p-6 font-bold text-slate-900 flex items-center justify-between list-none">
+                        <span class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green font-bold text-sm">Q</span>
+                            <span data-lang-en="Is FunLearnBD really 100% safe for my child?" data-lang-bn="FunLearnBD কি সত্যিই আমার সন্তানের জন্য ১০০% নিরাপদ?">Is FunLearnBD really 100% safe for my child?</span>
+                        </span>
+                        <span class="text-brand-green text-xl group-open:rotate-45 transition-transform">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">
+                        <p data-lang-en='<strong>Absolutely!</strong> With a premium subscription, <span style="color: #003d2e;">Fun</span><span style="color: #b71c2c;">Learn</span><span style="color: #003d2e;">BD</span> provides a completely safe, closed environment:' 
+                           data-lang-bn='<strong>একদম!</strong> প্রিমিয়াম সাবস্ক্রিপশনের সাথে, <span style="color: #003d2e;">ফান</span><span style="color: #b71c2c;">লার্ন</span><span style="color: #003d2e;">বিডি</span> একটি সম্পূর্ণ নিরাপদ, বন্ধ পরিবেশ প্রদান করে:'><strong>Absolutely!</strong> With a premium subscription, <span style="color: #003d2e;">Fun</span><span style="color: #b71c2c;">Learn</span><span style="color: #003d2e;">BD</span> provides a completely safe, closed environment:</p>
+                        <ul class="mt-3 space-y-2 ml-4">
+                            <li data-lang-en="• <strong>Zero advertisements</strong> for subscribers" data-lang-bn="• সাবস্ক্রাইবারদের জন্য <strong>শূন্য বিজ্ঞাপন</strong>">• <strong>Zero advertisements</strong> for subscribers</li>
+                            <li data-lang-en="• No external links or web browsing" data-lang-bn="• কোন বাহ্যিক লিঙ্ক বা ওয়েব ব্রাউজিং নেই">• No external links or web browsing</li>
+                            <li data-lang-en="• No pop-ups or distractions" data-lang-bn="• কোন পপ-আপ বা বিক্ষিপ্ততা নেই">• No pop-ups or distractions</li>
+                            <li data-lang-en="• Offline-capable for premium members" data-lang-bn="• প্রিমিয়াম সদস্যদের জন্য অফলাইন-সক্ষম">• Offline-capable for premium members</li>
+                            <li data-lang-en="• Parent-controlled settings and screen time limits" data-lang-bn="• অভিভাবক-নিয়ন্ত্রিত সেটিংস এবং স্ক্রিন টাইম সীমা">• Parent-controlled settings and screen time limits</li>
+                        </ul>
+                        <p class="mt-3 text-sm italic text-slate-500" 
+                           data-lang-en="Free trial users can explore basic levels safely before subscribing."
+                           data-lang-bn="ফ্রি ট্রায়াল ব্যবহারকারীরা সাবস্ক্রাইব করার আগে নিরাপদে মৌলিক লেভেল অন্বেষণ করতে পারেন।">Free trial users can explore basic levels safely before subscribing.</p>
+                    </div>
+                </details>
+
+                <!-- FAQ 2 -->
+                <details class="group bg-slate-50 rounded-2xl border border-slate-200 hover:border-brand-green transition-all overflow-hidden fade-up delay-200">
+                    <summary class="cursor-pointer p-6 font-bold text-slate-900 flex items-center justify-between list-none">
+                        <span class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green font-bold text-sm">Q</span>
+                            <span data-lang-en="How much screen time should my child have?" data-lang-bn="আমার সন্তানের কতটা স্ক্রিন টাইম থাকা উচিত?">How much screen time should my child have?</span>
+                        </span>
+                        <span class="text-brand-green text-xl group-open:rotate-45 transition-transform">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">
+                        <p data-lang-en="We recommend <strong>15-30 minutes daily</strong> for children under 5, and up to <strong>45 minutes</strong> for ages 6-7. Our app includes:"
+                           data-lang-bn="আমরা ৫ বছরের কম বয়সী শিশুদের জন্য <strong>দৈনিক ১৫-৩০ মিনিট</strong> এবং ৬-৭ বছর বয়সীদের জন্য <strong>৪৫ মিনিট</strong> পর্যন্ত সুপারিশ করি। আমাদের অ্যাপে অন্তর্ভুক্ত:">We recommend <strong>15-30 minutes daily</strong> for children under 5, and up to <strong>45 minutes</strong> for ages 6-7. Our app includes:</p>
+                        <ul class="mt-3 space-y-2 ml-4">
+                            <li data-lang-en="• Built-in timers with gentle reminders" data-lang-bn="• মৃদু অনুস্মারক সহ বিল্ট-ইন টাইমার">• Built-in timers with gentle reminders</li>
+                            <li data-lang-en="• Automatic break suggestions every 15 minutes" data-lang-bn="• প্রতি ১৫ মিনিটে স্বয়ংক্রিয় বিরতির পরামর্শ">• Automatic break suggestions every 15 minutes</li>
+                            <li data-lang-en="• Parent dashboard to monitor and set daily limits" data-lang-bn="• দৈনিক সীমা নিরীক্ষণ এবং সেট করার জন্য অভিভাবক ড্যাশবোর্ড">• Parent dashboard to monitor and set daily limits</li>
+                            <li data-lang-en="• Quality content that makes every minute count" data-lang-bn="• মানসম্পন্ন কন্টেন্ট যা প্রতিটি মিনিটকে গুরুত্বপূর্ণ করে তোলে">• Quality content that makes every minute count</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <!-- FAQ 3 -->
+                <details class="group bg-slate-50 rounded-2xl border border-slate-200 hover:border-brand-green transition-all overflow-hidden fade-up delay-300">
+                    <summary class="cursor-pointer p-6 font-bold text-slate-900 flex items-center justify-between list-none">
+                        <span class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green font-bold text-sm">Q</span>
+                            <span data-lang-en="Does my child need to know how to read to use the app?" data-lang-bn="আমার সন্তানের কি অ্যাপ ব্যবহারের জন্য পড়তে জানা প্রয়োজন?">Does my child need to know how to read to use the app?</span>
+                        </span>
+                        <span class="text-brand-green text-xl group-open:rotate-45 transition-transform">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">
+                        <p data-lang-en="<strong>Not at all!</strong> FunLearnBD is designed for pre-readers. Every lesson includes:"
+                           data-lang-bn="<strong>মোটেও না!</strong> FunLearnBD প্রাক-পাঠকদের জন্য ডিজাইন করা হয়েছে। প্রতিটি পাঠে অন্তর্ভুক্ত:"><strong>Not at all!</strong> FunLearnBD is designed for pre-readers. Every lesson includes:</p>
+                        <ul class="mt-3 space-y-2 ml-4">
+                            <li data-lang-en="• <strong>Voice narration</strong> in English, Bangla, or Arabic" data-lang-bn="• ইংরেজি, বাংলা বা আরবিতে <strong>ভয়েস বর্ণনা</strong>">• <strong>Voice narration</strong> in English, Bangla, or Arabic</li>
+                            <li data-lang-en="• <strong>Visual instructions</strong> with friendly mascot guides" data-lang-bn="• বন্ধুত্বপূর্ণ ম্যাসকট গাইড সহ <strong>ভিজ্যুয়াল নির্দেশনা</strong>">• <strong>Visual instructions</strong> with friendly mascot guides</li>
+                            <li data-lang-en="• <strong>Touch-based interaction</strong> - just tap and play!" data-lang-bn="• <strong>টাচ-ভিত্তিক ইন্টারঅ্যাকশন</strong> - শুধু ট্যাপ করুন এবং খেলুন!">• <strong>Touch-based interaction</strong> - just tap and play!</li>
+                            <li data-lang-en="• Perfect for ages 2+ (yes, even toddlers can navigate independently)" data-lang-bn="• ২+ বছর বয়সীদের জন্য নিখুঁত (হ্যাঁ, এমনকি ছোট শিশুরাও স্বাধীনভাবে নেভিগেট করতে পারে)">• Perfect for ages 2+ (yes, even toddlers can navigate independently)</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <!-- FAQ 4 -->
+                <details class="group bg-slate-50 rounded-2xl border border-slate-200 hover:border-brand-green transition-all overflow-hidden fade-up delay-400">
+                    <summary class="cursor-pointer p-6 font-bold text-slate-900 flex items-center justify-between list-none">
+                        <span class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green font-bold text-sm">Q</span>
+                            <span data-lang-en="How do I track my child's learning progress?" data-lang-bn="আমি কীভাবে আমার সন্তানের শেখার অগ্রগতি ট্র্যাক করব?">How do I track my child's learning progress?</span>
+                        </span>
+                        <span class="text-brand-green text-xl group-open:rotate-45 transition-transform">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">
+                        <p data-lang-en="Our <strong>Parent Dashboard</strong> gives you complete visibility:"
+                           data-lang-bn="আমাদের <strong>অভিভাবক ড্যাশবোর্ড</strong> আপনাকে সম্পূর্ণ দৃশ্যমানতা দেয়:">Our <strong>Parent Dashboard</strong> gives you complete visibility:</p>
+                        <ul class="mt-3 space-y-2 ml-4">
+                            <li data-lang-en="• <strong>Weekly progress reports</strong> via email" data-lang-bn="• ইমেইলের মাধ্যমে <strong>সাপ্তাহিক অগ্রগতি রিপোর্ট</strong>">• <strong>Weekly progress reports</strong> via email</li>
+                            <li data-lang-en="• <strong>Real-time insights:</strong> lessons completed, skills mastered, time spent" data-lang-bn="• <strong>রিয়েল-টাইম অন্তর্দৃষ্টি:</strong> সম্পন্ন পাঠ, দক্ষতা অর্জন, ব্যয় করা সময়">• <strong>Real-time insights:</strong> lessons completed, skills mastered, time spent</li>
+                            <li data-lang-en="• <strong>Milestone celebrations:</strong> certificates when they complete modules" data-lang-bn="• <strong>মাইলস্টোন উদযাপন:</strong> মডিউল সম্পূর্ণ করলে সার্টিফিকেট">• <strong>Milestone celebrations:</strong> certificates when they complete modules</li>
+                            <li data-lang-en="• <strong>Personalized recommendations:</strong> what to focus on next" data-lang-bn="• <strong>ব্যক্তিগতকৃত সুপারিশ:</strong> পরবর্তীতে কোথায় ফোকাস করতে হবে">• <strong>Personalized recommendations:</strong> what to focus on next</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <!-- FAQ 5 -->
+                <details class="group bg-slate-50 rounded-2xl border border-slate-200 hover:border-brand-green transition-all overflow-hidden fade-up delay-500">
+                    <summary class="cursor-pointer p-6 font-bold text-slate-900 flex items-center justify-between list-none">
+                        <span class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green font-bold text-sm">Q</span>
+                            <span data-lang-en="Can I use FunLearnBD on multiple devices?" data-lang-bn="আমি কি একাধিক ডিভাইসে FunLearnBD ব্যবহার করতে পারি?">Can I use FunLearnBD on multiple devices?</span>
+                        </span>
+                        <span class="text-brand-green text-xl group-open:rotate-45 transition-transform">+</span>
+                    </summary>
+                    <div class="px-6 pb-6 text-slate-600 leading-relaxed">
+                        <p data-lang-en="<strong>Yes!</strong> Your subscription includes:"
+                           data-lang-bn="<strong>হ্যাঁ!</strong> আপনার সাবস্ক্রিপশনে অন্তর্ভুক্ত:"><strong>Yes!</strong> Your subscription includes:</p>
+                        <ul class="mt-3 space-y-2 ml-4">
+                            <li data-lang-en="• Use on <strong>up to 3 devices</strong> (phone, tablet, iPad)" data-lang-bn="• <strong>৩টি পর্যন্ত ডিভাইসে</strong> ব্যবহার করুন (ফোন, ট্যাবলেট, আইপ্যাড)">• Use on <strong>up to 3 devices</strong> (phone, tablet, iPad)</li>
+                            <li data-lang-en="• <strong>Cloud sync:</strong> progress automatically syncs across devices" data-lang-bn="• <strong>ক্লাউড সিঙ্ক:</strong> অগ্রগতি স্বয়ংক্রিয়ভাবে সমস্ত ডিভাইসে সিঙ্ক হয়">• <strong>Cloud sync:</strong> progress automatically syncs across devices</li>
+                            <li data-lang-en="• <strong>Multiple child profiles:</strong> different kids, different devices" data-lang-bn="• <strong>একাধিক শিশু প্রোফাইল:</strong> বিভিন্ন শিশু, বিভিন্ন ডিভাইস">• <strong>Multiple child profiles:</strong> different kids, different devices</li>
+                            <li data-lang-en="• Works on both Android and iOS" data-lang-bn="• Android এবং iOS উভয়েই কাজ করে">• Works on both Android and iOS</li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+
+            <!-- CTA at bottom of FAQ -->
+            <div class="mt-12 text-center bg-gradient-to-r from-brand-green/10 to-brand-orange/10 rounded-3xl p-8 border border-brand-green/20">
+                <h3 class="text-2xl font-bold text-slate-900 mb-3"
+                    data-lang-en="Still have questions?"
+                    data-lang-bn="এখনও প্রশ্ন আছে?">
+                    Still have questions?
+                </h3>
+                <p class="text-slate-600 mb-6"
+                   data-lang-en="Our support team is here to help you!"
+                   data-lang-bn="আমাদের সাপোর্ট টিম আপনাকে সাহায্য করতে এখানে আছে!">
+                    Our support team is here to help you!
+                </p>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="#" class="inline-flex items-center gap-2 bg-brand-green text-white px-6 py-3 rounded-xl font-bold hover:bg-green-700 transition-all shadow-md hover:shadow-lg">
+                        <i class="fas fa-envelope"></i> <span data-lang-en="Contact Support" data-lang-bn="সাপোর্টের সাথে যোগাযোগ করুন">Contact Support</span>
+                    </a>
+                    <a href="#" class="inline-flex items-center gap-2 bg-white text-brand-green border-2 border-brand-green px-6 py-3 rounded-xl font-bold hover:bg-brand-green hover:text-white transition-all">
+                        <i class="fab fa-whatsapp"></i> <span data-lang-en="WhatsApp Us" data-lang-bn="আমাদের WhatsApp করুন">WhatsApp Us</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-100 pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="mb-6 flex gap-4 items-center">
+                        <img src="logo.png" alt="FunLearnBD Logo" loading="lazy" class="h-20 w-auto rounded-lg shadow-sm transform hover:scale-105 transition-transform duration-300">
+                        <img src="mascot_idle.png" class="h-16 w-16 object-contain">
+                    </div>
+                    <p class="text-sm text-slate-500 leading-relaxed">Making learning accessible, fun, and culturally relevant for every child in Bangladesh.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-6 text-sm uppercase tracking-wider">Product</h4>
+                    <ul class="space-y-3 text-sm text-slate-500">
+                        <li><a href="#" class="hover:text-brand-green transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-brand-green transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-brand-green transition-colors">For Schools</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-6 text-sm uppercase tracking-wider">Company</h4>
+                    <ul class="space-y-3 text-sm text-slate-500">
+                        <li><a href="#" class="hover:text-brand-green transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-brand-green transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-brand-green transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-6 text-sm uppercase tracking-wider">Legal</h4>
+                    <ul class="space-y-3 text-sm text-slate-500">
+                        <li><a href="#" class="hover:text-brand-green transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-green transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-slate-400 font-medium">© 2025 <span style="color: #003d2e;">Fun</span><span style="color: #b71c2c;">Learn</span><span style="color: #003d2e;">BD</span> Technologies Ltd. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="text-slate-400 hover:text-brand-green transition-colors transform hover:scale-110"><i class="fab fa-linkedin text-xl"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-brand-green transition-colors transform hover:scale-110"><i class="fab fa-twitter text-xl"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-brand-green transition-colors transform hover:scale-110"><i class="fab fa-facebook text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== INTRO ANIMATION =====
+        window.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.getElementById('intro-overlay');
+            const body = document.getElementById('main-body');
+            const logo = document.getElementById('intro-logo');
+            const map = document.getElementById('intro-map');
+            const text = document.getElementById('intro-text');
+            const mascotsContainer = document.getElementById('intro-mascots-container');
+
+            // Mascot sequence: Tiger, Doel, Bunny, Peacock
+            const mascotSequence = [
+                'mascot_waving.png',     // Tiger
+                'mascot_talking.png',    // Doel
+                'mascot_happy.png',      // Bunny
+                'mascot_jumping.png'     // Peacock
+            ];
+
+            let currentMascotIndex = 0;
+            let mascotElement = null;
+
+            // ===== PRELOAD ALL IMAGES =====
+            const imagesToPreload = [
+                'logo.png',
+                'bangladesh.png',
+                'mascot_waving.png',
+                'mascot_talking.png',
+                'mascot_happy.png',
+                'mascot_jumping.png',
+                'mascot_idle.png'  // For hero section
+            ];
+
+            let imagesLoaded = 0;
+            const totalImages = imagesToPreload.length;
+
+            function preloadImages(callback) {
+                imagesToPreload.forEach(src => {
+                    const img = new Image();
+                    img.onload = () => {
+                        imagesLoaded++;
+                        if (imagesLoaded === totalImages) {
+                            callback();
+                        }
+                    };
+                    img.onerror = () => {
+                        imagesLoaded++;
+                        if (imagesLoaded === totalImages) {
+                            callback();
+                        }
+                    };
+                    img.src = src;
+                });
+            }
+
+            // Start intro animation only after all images are loaded
+            preloadImages(startIntroAnimation);
+
+            function startIntroAnimation() {
+                // Timeline (Total: ~7 seconds)
+                // 0ms: Logo appears
+                setTimeout(() => {
+                    logo.classList.add('show');
+                }, 100);
+
+                // 500ms: Map starts growing
+                setTimeout(() => {
+                    map.classList.add('show');
+                }, 500);
+
+                // 1800ms: First mascot (Tiger)
+                setTimeout(() => {
+                    showMascot(0);
+                }, 1800);
+
+                // 2800ms: Second mascot (Doel)
+                setTimeout(() => {
+                    showMascot(1);
+                }, 2800);
+
+                // 3800ms: Third mascot (Bunny) + Text appears
+                setTimeout(() => {
+                    showMascot(2);
+                    text.classList.add('show');
+                }, 3800);
+
+                // 4800ms: Fourth mascot (Peacock)
+                setTimeout(() => {
+                    showMascot(3);
+                }, 4800);
+
+                // 6500ms: Start fade out
+                setTimeout(() => {
+                    logo.style.opacity = '0';
+                    map.style.opacity = '0';
+                    text.style.opacity = '0';
+                    if (mascotElement) mascotElement.classList.add('hide');
+                }, 6500);
+
+                // 7300ms: Hide overlay completely and show language selector
+                setTimeout(() => {
+                    overlay.style.opacity = '0';
+                    overlay.style.visibility = 'hidden';
+                    body.style.overflowY = 'auto';
+                    body.style.overflowX = 'hidden';
+                    
+                    // Show language selector if no saved language
+                    const savedLang = localStorage.getItem('selectedLanguage');
+                    if (!savedLang) {
+                        document.getElementById('languageSelector').classList.remove('hidden');
+                    } else {
+                        applyTranslations(savedLang);
+                        currentLanguage = savedLang;
+                    }
+                }, 7300);
+
+                // Voice intro
+                setTimeout(speakIntro, 1000);
+            }
+
+            // Voice intro
+            function speakIntro() {
+                const synth = window.speechSynthesis;
+                synth.cancel(); 
+
+                function speakChunk(text, pitch, rate) {
+                    const msg = new SpeechSynthesisUtterance(text);
+                    msg.volume = 1;
+                    msg.pitch = pitch;
+                    msg.rate = rate;
+                    msg.lang = 'en-US'; 
+
+                    const voices = synth.getVoices();
+                    const preferredVoice = voices.find(voice => 
+                        voice.name.includes('Google US English') || 
+                        voice.name.includes('Samantha') || 
+                        voice.name.includes('Female')
+                    );
+                    if (preferredVoice) msg.voice = preferredVoice;
+
+                    synth.speak(msg);
+                }
+
+                speakChunk("Welcome to FunLearnBD", 1.2, 0.9);
+                setTimeout(() => speakChunk("Are you ready to Play and Learn", 1.3, 1.0), 1500);
+                setTimeout(() => speakChunk("Lets Go!", 1.5, 1.2), 3500);
+            }
+
+            if (window.speechSynthesis.getVoices().length === 0) {
+                window.speechSynthesis.onvoiceschanged = () => { };
+            }
+
+            function showMascot(index) {
+                // Hide previous mascot
+                if (mascotElement) {
+                    mascotElement.classList.remove('show');
+                    mascotElement.classList.add('hide');
+                }
+
+                // Create new mascot
+                mascotElement = document.createElement('img');
+                mascotElement.src = mascotSequence[index];
+                mascotElement.className = 'intro-mascot drop-shadow-2xl';
+                
+                // Apply specific size classes
+                if (index === 0) {
+                    // Tiger - smaller
+                    mascotElement.classList.add('tiger');
+                } else if (index === 2) {
+                    // Bunny - bigger
+                    mascotElement.classList.add('bunny');
+                }
+                
+                mascotElement.alt = 'Mascot';
+                mascotsContainer.appendChild(mascotElement);
+
+                // Trigger show animation
+                setTimeout(() => {
+                    mascotElement.classList.add('show');
+                }, 50);
+            }
+        });
+
+        // ===== HERO MASCOT CYCLING =====
+        const heroPoses = ['mascot_waving.png', 'mascot_talking.png', 'mascot_idle.png'];
+        let currentPoseIndex = 0;
+        const heroMascot = document.getElementById('hero-mascot');
+
+        setInterval(() => {
+            if (heroMascot) {
+                heroMascot.style.opacity = '0'; 
+                heroMascot.style.transform = 'scale(0.9)';
+                
+                setTimeout(() => {
+                    currentPoseIndex = (currentPoseIndex + 1) % heroPoses.length;
+                    heroMascot.src = heroPoses[currentPoseIndex];
+                    
+                    heroMascot.style.opacity = '1';
+                    heroMascot.style.transform = 'scale(1)';
+                }, 500); 
+            }
+        }, 4000); 
+
+        // ===== FEATURE MASCOT CHANGE =====
+        function changeMascot(pose) {
+            const mascot = document.getElementById('feature-mascot');
+            if (mascot) {
+                const filename = pose === 'happy' ? 'mascot_happy.png' : 'mascot_talking.png';
+                mascot.style.transform = 'scale(0.9) rotate(-5deg)';
+                setTimeout(() => {
+                    mascot.src = filename;
+                    mascot.style.transform = 'scale(1) rotate(0deg)';
+                }, 200);
+            }
+        }
+    </script>
+
+    <!-- Login/Signup Modals -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 relative">
+            <button onclick="closeModals()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all">
+                <i class="fas fa-times text-slate-600"></i>
+            </button>
+            
+            <div class="text-center mb-8">
+                <img src="logo.png" alt="FunLearnBD" class="h-16 mx-auto mb-4">
+                <h2 class="text-2xl font-bold text-slate-900">Welcome Back!</h2>
+                <p class="text-slate-600 text-sm">Login to continue your learning journey</p>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Phone Number or Email</label>
+                    <input type="text" id="loginIdentifier" placeholder="Enter phone or email" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                </div>
+                <button type="submit" class="w-full bg-brand-green text-white py-3 rounded-xl font-bold hover:bg-green-700 transition-all shadow-lg">
+                    Login
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-sm text-slate-600">Don't have an account? <button onclick="switchToSignup()" class="text-brand-green font-bold hover:underline">Create Account</button></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="signupModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 relative">
+            <button onclick="closeModals()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all">
+                <i class="fas fa-times text-slate-600"></i>
+            </button>
+            
+            <div class="text-center mb-8">
+                <img src="logo.png" alt="FunLearnBD" class="h-16 mx-auto mb-4">
+                <h2 class="text-2xl font-bold text-slate-900">Create Account</h2>
+                <p class="text-slate-600 text-sm">Start your child's learning journey today</p>
+            </div>
+
+            <form onsubmit="handleSignup(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Parent's Full Name</label>
+                    <input type="text" id="signupParentName" placeholder="Enter your full name" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Phone Number or Email</label>
+                    <input type="text" id="signupIdentifier" placeholder="Enter phone or email" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create password" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                </div>
+                <div class="flex items-start gap-2">
+                    <input type="checkbox" id="agreeTerms" required class="mt-1 w-4 h-4 text-brand-green border-slate-300 rounded focus:ring-brand-green">
+                    <label for="agreeTerms" class="text-xs text-slate-600">I agree to the Terms & Conditions and Privacy Policy</label>
+                </div>
+                <button type="submit" class="w-full bg-brand-green text-white py-3 rounded-xl font-bold hover:bg-green-700 transition-all shadow-lg">
+                    Create Account
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-sm text-slate-600">Already have an account? <button onclick="switchToLogin()" class="text-brand-green font-bold hover:underline">Login</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Children Modal (appears after signup) -->
+    <div id="addChildrenModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full p-8 relative my-8">
+            <div class="text-center mb-8">
+                <img src="logo.png" alt="FunLearnBD" class="h-16 mx-auto mb-4">
+                <h2 class="text-2xl font-bold text-slate-900">Add Your Children</h2>
+                <p class="text-slate-600 text-sm">You can add up to 3 children (This is a demo - database will be integrated later)</p>
+            </div>
+
+            <form onsubmit="handleAddChildren(event)" class="space-y-6">
+                <!-- Child 1 -->
+                <div class="p-6 bg-slate-50 rounded-2xl border-2 border-slate-200">
+                    <h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-full bg-brand-green text-white flex items-center justify-center text-sm">1</span>
+                        Child 1
+                    </h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Child's Name *</label>
+                            <input type="text" id="child1Name" placeholder="Enter child's name" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Date of Birth *</label>
+                            <input type="date" id="child1DOB" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Sex *</label>
+                            <select id="child1Sex" required class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                                <option value="">Select</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Child 2 (Optional) -->
+                <div class="p-6 bg-slate-50 rounded-2xl border-2 border-slate-200">
+                    <h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-full bg-slate-400 text-white flex items-center justify-center text-sm">2</span>
+                        Child 2 <span class="text-xs text-slate-500 font-normal">(Optional)</span>
+                    </h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Child's Name</label>
+                            <input type="text" id="child2Name" placeholder="Enter child's name" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Date of Birth</label>
+                            <input type="date" id="child2DOB" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Sex</label>
+                            <select id="child2Sex" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                                <option value="">Select</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Child 3 (Optional) -->
+                <div class="p-6 bg-slate-50 rounded-2xl border-2 border-slate-200">
+                    <h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-full bg-slate-400 text-white flex items-center justify-center text-sm">3</span>
+                        Child 3 <span class="text-xs text-slate-500 font-normal">(Optional)</span>
+                    </h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Child's Name</label>
+                            <input type="text" id="child3Name" placeholder="Enter child's name" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Date of Birth</label>
+                            <input type="date" id="child3DOB" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Sex</label>
+                            <select id="child3Sex" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-green focus:outline-none transition-all">
+                                <option value="">Select</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" onclick="skipAddChildren()" class="flex-1 bg-slate-100 text-slate-700 py-3 rounded-xl font-bold hover:bg-slate-200 transition-all">
+                        Skip for Now
+                    </button>
+                    <button type="submit" class="flex-1 bg-brand-green text-white py-3 rounded-xl font-bold hover:bg-green-700 transition-all shadow-lg">
+                        Save Children
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showLogin() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showSignup() {
+            document.getElementById('signupModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModals() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('signupModal').classList.add('hidden');
+            document.getElementById('addChildrenModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function switchToSignup() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('signupModal').classList.remove('hidden');
+        }
+
+        function switchToLogin() {
+            document.getElementById('signupModal').classList.add('hidden');
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const identifier = document.getElementById('loginIdentifier').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // TODO: Integrate with backend database
+            alert('Login functionality will be connected to database in production version.\n\nPhone/Email: ' + identifier);
+            closeModals();
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            const parentName = document.getElementById('signupParentName').value;
+            const identifier = document.getElementById('signupIdentifier').value;
+            const password = document.getElementById('signupPassword').value;
+            
+            // TODO: Integrate with backend database
+            // For demo: Close signup modal and show add children modal
+            document.getElementById('signupModal').classList.add('hidden');
+            document.getElementById('addChildrenModal').classList.remove('hidden');
+        }
+
+        function handleAddChildren(event) {
+            event.preventDefault();
+            
+            // Collect all children data
+            const children = [];
+            for (let i = 1; i <= 3; i++) {
+                const name = document.getElementById(`child${i}Name`).value;
+                const dob = document.getElementById(`child${i}DOB`).value;
+                const sex = document.getElementById(`child${i}Sex`).value;
+                
+                if (name && dob && sex) {
+                    children.push({ name, dob, sex });
+                }
+            }
+            
+            // TODO: Integrate with backend database
+            alert(`Account created! Children added: ${children.length}\n\nDatabase integration coming in production version.`);
+            closeModals();
+        }
+
+        function skipAddChildren() {
+            alert('Account created! You can add children later from your profile.\n\nDatabase integration coming in production version.');
+            closeModals();
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModals();
+            }
+        });
+
+        // Language Selection System
+        let currentLanguage = 'en';
+
+        function selectLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('selectedLanguage', lang);
+            
+            // Hide language selector
+            document.getElementById('languageSelector').classList.add('hidden');
+            
+            // Apply translations
+            applyTranslations(lang);
+        }
+
+        function applyTranslations(lang) {
+            // Get all elements with data-lang attributes
+            const elements = document.querySelectorAll('[data-lang-en]');
+            
+            elements.forEach(element => {
+                if (lang === 'bn' && element.dataset.langBn) {
+                    element.innerHTML = element.dataset.langBn;
+                } else if (lang === 'en' && element.dataset.langEn) {
+                    element.innerHTML = element.dataset.langEn;
+                }
+            });
+
+            // Update language toggle button
+            const langToggle = document.getElementById('langToggle');
+            if (langToggle) {
+                langToggle.textContent = lang === 'en' ? 'বাংলা' : 'English';
+            }
+        }
+
+        function toggleLanguage() {
+            const newLang = currentLanguage === 'en' ? 'bn' : 'en';
+            selectLanguage(newLang);
+        }
+    </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="description" content="FunLearnBD - The premier trilingual educational app for children in Bangladesh. Learn English, Bangla, and Arabic.">
+    
+    <title>FunLearnBD - Trilingual EdTech Platform</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            green: '#006a4e',
+                            red: '#f42a41',
+                            orange: '#FF9933',
+                            yellow: '#FFC107',
+                            cream: '#FDFCF7',
+                            dark: '#0f172a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Open Sans', 'Helvetica Neue', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                        'glow': '0 0 15px rgba(0, 106, 78, 0.3)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-fun': 'bounce-fun 1s infinite',
+                        'fly': 'fly 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'bounce-fun': {
+                            '0%, 100%': { transform: 'translateY(-5%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
+                        },
+                        'fly': {
+                            '0%, 100%': { transform: 'translateY(0) rotate(6deg)' },
+                            '50%': { transform: 'translateY(-20px) rotate(0deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="manifest" href='data:application/manifest+json;base64,eyJuYW1lIjoiRnVuTGVhcm5CRCIs"short_name":"FunLearn","start_url":".","display":"standalone","background_color":"#FFFDF5","theme_color":"#006a4e","icons":[{"src":"logo.png","sizes":"192x192","type":"image/png"}]}'>
+
+    <style>
+        html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFCF7;
+            color: #1e293b;
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+            position: relative;
+        }
+        
+        /* Prevent sections from causing horizontal scroll */
+        section, header, footer {
+            overflow-x: hidden;
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Enhanced hover lift effect */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Improved button hover states */
+        button, a {
+            transition: all 0.2s ease;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        .bg-pattern {
+            background-image: radial-gradient(#006a4e 0.5px, transparent 0.5px);
+            background-size: 28px 28px;
+            opacity: 0.15;
+        }
+
+        .phone-mockup {
+            border-radius: 2.5rem;
+            border: 8px solid #1e293b;
+            overflow: hidden;
+            position: relative;
+            background: white;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            transition: transform 0.3s ease;
+        }
+        
+        .phone-mockup:hover {
+            transform: translateY(-5px);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        .mascot-float {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-soft {
+            0% { box-shadow: 0 0 0 0 rgba(0, 106, 78, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 106, 78, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 106, 78, 0); }
+        }
+        
+        .btn-pulse {
+            animation: pulse-soft 2s infinite;
+        }
+
+        .hover-lift {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 106, 78, 0.2);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #006a4e 0%, #0d9488 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mascot-contain {
+            object-fit: contain;
+            width: 100%;
+            height: 100%;
+        }
+
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
+
+        /* Brand text styling for FunLearnBD */
+        .brand-text-fun {
+            color: #003d2e;
+            font-weight: inherit;
+        }
+        .brand-text-learn {
+            color: #b71c2c;
+            font-weight: inherit;
+        }
+        .brand-text-bd {
+            color: #003d2e;
+            font-weight: inherit;
+        }
+        
+        /* Lighter version for dark backgrounds */
+        .brand-text-fun-light {
+            color: #10b981;
+            font-weight: inherit;
+        }
+        .brand-text-learn-light {
+            color: #ef4444;
+            font-weight: inherit;
+        }
+        .brand-text-bd-light {
+            color: #10b981;
+            font-weight: inherit;
+        }
+
+        /* --- INTRO ANIMATION STYLES --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #FFFDF5;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+            overflow: hidden;
+        }
+
+        /* Logo - Top Center */
+        .intro-logo {
+            position: absolute;
+            top: 5%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            opacity: 0;
+            transition: all 0.6s ease-out;
+            z-index: 105;
+            width: 280px;
+            max-width: 85%;
+        }
+        
+        @media (min-width: 768px) {
+            .intro-logo {
+                width: 400px;
+                top: 8%;
+            }
+        }
+
+        .intro-logo.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Bangladesh Map - Center Background */
+        .intro-map {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.01);
+            opacity: 0;
+            transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 90;
+            width: 90%;
+            height: auto;
+            max-height: 75vh;
+        }
+
+        @media (min-width: 768px) {
+            .intro-map {
+                width: auto;
+                height: 80vh;
+                max-height: none;
+            }
+        }
+
+        .intro-map.show {
+            opacity: 0.25;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Mascots - Center */
+        .intro-mascot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 100;
+            width: 280px;
+        }
+
+        @media (min-width: 768px) {
+            .intro-mascot {
+                width: 300px;
+            }
+        }
+
+        .intro-mascot.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .intro-mascot.hide {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+
+        /* Tiger - 60% of base size */
+        .intro-mascot.tiger {
+            width: 168px;
+        }
+
+        @media (min-width: 768px) {
+            .intro-mascot.tiger {
+                width: 180px;
+            }
+        }
+
+        /* Bunny - 150% of base size */
+        .intro-mascot.bunny {
+            width: 340px;
+        }
+
+        @media (min-width: 768px) {
+            .intro-mascot.bunny {
+                width: 450px;
+            }
+        }
+        
+        /* Text - Bottom Center */
+        .intro-text {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease-out;
+            z-index: 102;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #006a4e;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            text-align: center;
+        }
+        
+        @media (min-width: 768px) {
+            .intro-text { 
+                font-size: 2rem; 
+                bottom: 8%;
+            }
+        }
+
+        .intro-text.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased flex flex-col min-h-screen" id="main-body" style="overflow-x: hidden; max-width: 100vw;">
+
     <!-- INTRO OVERLAY -->
     <div id="intro-overlay">
         <!-- Logo -->
